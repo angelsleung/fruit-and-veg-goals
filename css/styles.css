@@ -2,6 +2,11 @@
   font-family: sans-serif;
 }
 
+body {
+  min-height: 100vh;
+  display: flex;
+}
+
 .header {
   color: white;
   background-color: lightgreen;
@@ -12,4 +17,16 @@
   text-align: center;
   padding: 1rem;
   font-size: 2em;
+}
+
+.footer {
+  margin-top: auto;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.nav {
+  font-size: 2em;
+  flex-basis: 25%;
+  color: lightgreen;
 }
