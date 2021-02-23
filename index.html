@@ -7,16 +7,54 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <body>
   <div class="container">
     <header class="header row">
-      <h1 class="app-name">Fruit &amp; Veggie Goals</h1>
+      <h1 class="app-name">Fruit &amp; Veg Goals</h1>
     </header>
     <main>
-      <div class="row">
-      </div>
+      <form class="form">
+        <h2 class="goal-question">What is my goal for today?</h2>
+        <p>I want to eat...</p>
+        <div class="form-inputs">
+          <div class="input row">
+            <select name="fruit-input">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option selected value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+              <p>servings of fruits</p>
+          </div>
+          <div class="input row">
+              <select name="veg-input">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option selected value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+              <p>servings of vegetables</p>
+          </div>
+        </div>
+        <button class="next">Next</button>
+      </form>
+
     </main>
     <footer class="footer row">
       <i class="nav fas fa-home"></i>

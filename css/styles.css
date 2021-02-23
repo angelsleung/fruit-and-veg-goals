@@ -1,32 +1,64 @@
 * {
-  font-family: sans-serif;
+  font-family: Poppins, cursive;
 }
 
 body {
   min-height: 100vh;
   display: flex;
+  text-align: center;
 }
 
 .header {
   color: white;
   background-color: lightgreen;
+  border-bottom: 1px solid lightgray;
 }
 
 .app-name {
   margin: 0 auto;
-  text-align: center;
   padding: 1rem;
-  font-size: 2em;
+  font-size: 2.2em;
+  font-family: 'Caveat', cursive;
+  letter-spacing: 0.2em;
+}
+
+.goal-question {
+  padding: 2rem;
+  font-size: 1.4em;
+}
+
+.form-inputs {
+  padding-left: 4rem;
+}
+
+.form p {
+  font-size: 1.2em;
+}
+
+.input {
+  padding: 1rem 0;
+}
+
+.input > select {
+  font-size: 1.2em;
+}
+
+.next {
+  padding: 0.5rem 1.5rem;
+  margin: 2rem;
+  font-size: 1.2em;
+  border-radius: 10%;
 }
 
 .footer {
   margin-top: auto;
   justify-content: space-around;
-  text-align: center;
+  border-top: 1px solid lightgray;
 }
 
 .nav {
   font-size: 2em;
   flex-basis: 25%;
   color: lightgreen;
+  padding: 0.2em 0;
 }
