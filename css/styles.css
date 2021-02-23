@@ -1,0 +1,15 @@
+* {
+  font-family: sans-serif;
+}
+
+.header {
+  color: white;
+  background-color: lightgreen;
+}
+
+.app-name {
+  margin: 0 auto;
+  text-align: center;
+  padding: 1rem;
+  font-size: 2em;
+}
