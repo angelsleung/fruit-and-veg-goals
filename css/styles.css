@@ -27,11 +27,22 @@ body {
   font-size: 1.4em;
 }
 
-.form-inputs {
-  padding-left: 4rem;
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.form p {
+.form-inputs {
+  margin: 0 auto;
+  padding: 0;
+  text-align: left;
+  justify-content: center;
+  display: inline;
+}
+
+.form > p,
+.input > span {
   font-size: 1.2em;
 }
 
@@ -44,8 +55,8 @@ body {
 }
 
 .next {
-  padding: 0.5rem 1.5rem;
-  margin: 2rem;
+  width: 5rem;
+  margin: 2rem auto;
   font-size: 1.2em;
   border-radius: 10px;
 }
@@ -60,5 +71,5 @@ body {
   font-size: 2em;
   flex-basis: 25%;
   color: lightgreen;
-  padding: 0.2em 0;
+  padding: 0.5em 0;
 }
