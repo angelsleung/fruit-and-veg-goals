@@ -23,8 +23,8 @@ body {
 }
 
 .goal-question {
-  padding: 2rem;
-  font-size: 1.4em;
+  padding: 2rem 0 1rem;
+  font-size: 1.5em;
 }
 
 .form {
@@ -35,29 +35,23 @@ body {
 
 .form-inputs {
   margin: 0 auto;
-  padding: 0;
   text-align: left;
-  justify-content: center;
-  display: inline;
 }
 
 .form > p,
-.input > span {
-  font-size: 1.2em;
+.input > span,
+.input > select {
+  font-size: 1.3em;
 }
 
 .input {
   padding: 1rem 0;
 }
 
-.input > select {
-  font-size: 1.2em;
-}
-
 .next {
   width: 5rem;
-  margin: 2rem auto;
-  font-size: 1.2em;
+  margin: 3rem auto;
+  font-size: 1.3em;
   border-radius: 10px;
 }
 
