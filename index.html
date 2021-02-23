@@ -7,12 +7,62 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <body>
-  <header>
-  </header>
-  <main>
-  </main>
+  <div class="container">
+    <header class="header row">
+      <h1 class="app-name">Fruit &amp; Veg Goals</h1>
+    </header>
+    <main>
+      <form class="form">
+        <h2 class="goal-question">What is my goal today?</h2>
+        <p>I want to eat...</p>
+        <div class="form-inputs">
+          <div class="input">
+            <select name="fruit">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option selected value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+              <span>servings of fruits</span>
+          </div>
+          <div class="input">
+              <select name="veg">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option selected value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+              <span>servings of vegetables</span>
+          </div>
+        </div>
+        <input type="submit" value="Next" class="next">
+      </form>
+
+    </main>
+    <footer class="footer row">
+      <i class="nav fas fa-home"></i>
+      <i class="nav fas fa-search"></i>
+      <i class="nav fas fa-list"></i>
+      <i class="nav fas fa-chart-bar"></i>
+    </footer>
+  </div>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
 </body>
