@@ -22,7 +22,7 @@ body {
   letter-spacing: 0.2em;
 }
 
-.goal-question {
+.goal-title {
   padding: 2rem 0 1rem;
   font-size: 1.5em;
 }
@@ -48,12 +48,16 @@ body {
   padding: 1rem 0;
 }
 
-.next {
-  width: 5rem;
+.button {
   margin: 3rem auto;
+  padding: 0.2rem 1rem;
   font-size: 1.3em;
   border-radius: 10px;
 }
+
+/* .search {
+  width: 5rem;
+} */
 
 .footer {
   margin-top: auto;
@@ -66,4 +70,8 @@ body {
   flex-basis: 25%;
   color: lightgreen;
   padding: 0.5em 0;
+}
+
+.hidden {
+  display: none;
 }
