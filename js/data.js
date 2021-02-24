@@ -1,5 +1,6 @@
 /* exported data */
 var data = {
   view: 'home',
-  results: []
+  results: [],
+  selected: null
 };

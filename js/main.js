@@ -1,4 +1,4 @@
-function clickNext(event) {
+function setGoal(event) {
   event.preventDefault();
   navSearch();
 }
@@ -6,16 +6,17 @@ function clickNext(event) {
 function searchInput(event) {
   var input = $searchBar.value;
   if (input.length < 2) {
+    data.results = [];
     for (var i = 0; i < 4; i++) {
       $results[i].className = 'result hidden';
     }
     return;
   }
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://trackapi.nutritionix.com/v2/search/instant?query=' + input);
+  xhr.open('GET', 'https://trackapi.nutritionix.com/v2/search/instant?branded=false&query=' + input);
   xhr.responseType = 'json';
-  xhr.setRequestHeader('x-app-id', 'bfc55df9');
-  xhr.setRequestHeader('x-app-key', '1f25dd0b4d78d51f94978f4a597c4a21');
+  xhr.setRequestHeader('x-app-id', 'c1479c3a');
+  xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
   xhr.setRequestHeader('x-remote-user-id', 0);
   xhr.addEventListener('load', function () {
     data.results = xhr.response.common;
@@ -26,6 +27,14 @@ function searchInput(event) {
     }
   });
   xhr.send();
+}
+
+function delayAutofill() {
+  setTimeout(searchInput, 1000);
+}
+
+function searchItem(event) {
+  event.preventDefault();
 }
 
 function navHome(event) {
@@ -39,10 +48,7 @@ function navSearch(event) {
 }
 
 var $goalForm = document.querySelector('.goal.form');
-var $searchForm = document.querySelector('.search.form');
-
-var $next = document.querySelector('.next');
-$next.addEventListener('click', clickNext);
+$goalForm.addEventListener('submit', setGoal);
 
 var $navHome = document.querySelector('.fa-home');
 $navHome.addEventListener('click', navHome);
@@ -51,8 +57,11 @@ var $navSearch = document.querySelector('.fa-search');
 $navSearch.addEventListener('click', navSearch);
 
 var $searchBar = document.querySelector('.search-bar');
-$searchBar.addEventListener('input', searchInput);
+$searchBar.addEventListener('input', delayAutofill);
 
 var $results = document.querySelectorAll('.result');
 var $imgResults = document.querySelectorAll('.img-result');
 var $textResults = document.querySelectorAll('.text-result');
+
+var $searchForm = document.querySelector('.search.form');
+$searchForm.addEventListener('submit', searchItem);
