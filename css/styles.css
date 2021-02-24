@@ -68,6 +68,11 @@ body {
   width: 15rem;
   display: flex;
   align-items: center;
+  cursor: pointer;
+}
+
+.result:hover {
+  background-color: lightgray;
 }
 
 .img-div {
