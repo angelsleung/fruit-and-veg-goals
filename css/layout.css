@@ -7,3 +7,8 @@
 .row {
   display: flex;
 }
+
+.column-one-fourth {
+  flex-basis: 25%;
+  display: flex;
+}
