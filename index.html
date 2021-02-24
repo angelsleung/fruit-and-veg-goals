@@ -17,8 +17,8 @@
       <h1 class="app-name">Fruit &amp; Veg Goals</h1>
     </header>
     <main>
-      <form class="form hidden" data-view="goal-form">
-        <h2 class="goal-title">What is my goal today?</h2>
+      <form class="goal form hidden" data-view="goal-form">
+        <h2 class="page-title">What is my goal today?</h2>
         <p>I want to eat...</p>
         <div class="form-inputs">
           <div class="input">
@@ -52,12 +52,15 @@
               <span>servings of veggies</span>
           </div>
         </div>
-        <input type="submit" value="Next" class="button">
+        <input type="submit" value="Next" class="next button">
       </form>
-      <form class="form" data-view="search-form">
-        <h2 class="search-title">Search for a fruit or veggie</h2>
-        <input type="text">
-        <input type="submit" value="Search" class="button">
+      <form class="search form" data-view="search-form">
+        <h2 class="page-title">Look up a fruit or veggie</h2>
+        <div class="center row">
+          <input type="text" class="search-bar">
+        <input type="submit" value="Search" class="search">
+        </div>
+
       </form>
 
     </main>

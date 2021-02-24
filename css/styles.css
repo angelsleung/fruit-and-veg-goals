@@ -22,7 +22,7 @@ body {
   letter-spacing: 0.2em;
 }
 
-.goal-title {
+.page-title {
   padding: 2rem 0 1rem;
   font-size: 1.5em;
 }
@@ -41,11 +41,23 @@ body {
 .form > p,
 .input > span,
 .input > select {
-  font-size: 1.3em;
+  font-size: 1.3rem;
 }
 
 .input {
   padding: 1rem 0;
+}
+
+.center {
+  margin: 0 auto;
+}
+
+.search-bar {
+  width: 15rem;
+}
+
+.search {
+  font-size: 1em;
 }
 
 .button {
@@ -55,10 +67,6 @@ body {
   border-radius: 10px;
 }
 
-/* .search {
-  width: 5rem;
-} */
-
 .footer {
   margin-top: auto;
   justify-content: space-around;
@@ -67,9 +75,9 @@ body {
 
 .nav {
   font-size: 2em;
-  flex-basis: 25%;
   color: lightgreen;
   padding: 0.5em 0;
+  cursor: pointer;
 }
 
 .hidden {
