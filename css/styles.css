@@ -27,7 +27,8 @@ body {
   font-size: 1.5em;
 }
 
-.form {
+.form,
+.results {
   display: flex;
   flex-direction: column;
 }
@@ -92,6 +93,10 @@ body {
 .img-result {
   width: 100%;
   object-fit: contain;
+}
+
+.result-list {
+  padding: 0 2rem;
 }
 
 .footer {

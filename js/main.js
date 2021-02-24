@@ -46,8 +46,9 @@ function searchInput(event) {
     data.results = xhr.response.common;
     for (var i = 0; i < 4; i++) {
       $results[i].className = 'result';
-      $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
       $textResults[i].textContent = data.results[i].food_name;
+      $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
+      $imgResults[i].setAttribute('alt', data.results[i].food_name + ' image');
     }
   });
   xhr.send();
