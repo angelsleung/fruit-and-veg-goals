@@ -17,8 +17,8 @@
       <h1 class="app-name">Fruit &amp; Veg Goals</h1>
     </header>
     <main>
-      <form class="form">
-        <h2 class="goal-question">What is my goal today?</h2>
+      <form class="goal form hidden" data-view="goal-form">
+        <h2 class="page-title">What is my goal today?</h2>
         <p>I want to eat...</p>
         <div class="form-inputs">
           <div class="input">
@@ -49,10 +49,47 @@
                 <option value="9">9</option>
                 <option value="10">10</option>
               </select>
-              <span>servings of vegetables</span>
+              <span>servings of veggies</span>
           </div>
         </div>
         <input type="submit" value="Next" class="next">
+      </form>
+      <form class="search form" data-view="search-form">
+        <h2 class="page-title">Look up a fruit or veggie</h2>
+        <div class="search-div row">
+          <div class="results">
+            <input type="text" class="search-bar" placeholder="apple, banana, carrot, ...">
+            <div class="result hidden">
+              <div class="img-div">
+                <img class="img-result" alt="result image">
+              </div>
+              <div class="text-result"></div>
+            </div>
+            <div class="result hidden">
+              <div class="img-div">
+                <img class="img-result" alt="result image">
+              </div>
+              <div class="text-result"></div>
+            </div>
+            <div class="result hidden">
+              <div class="img-div">
+                <img class="img-result" alt="result image">
+              </div>
+              <div class="text-result"></div>
+            </div>
+            <div class="result hidden">
+              <div class="img-div">
+                <img class="img-result" alt="result image">
+              </div>
+              <div class="text-result"></div>
+            </div>
+          </div>
+
+          <input type="submit" value="Search" class="search-button">
+        </div>
+
+
+
       </form>
 
     </main>
