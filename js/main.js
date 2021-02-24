@@ -5,7 +5,16 @@ function clickNext(event) {
 
 function searchInput(event) {
   var input = $searchBar.value;
-  return input;
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://trackapi.nutritionix.com/v2/search/instant?query=' + input);
+  xhr.responseType = 'json';
+  xhr.setRequestHeader('x-app-id', 'bfc55df9');
+  xhr.setRequestHeader('x-app-key', '1f25dd0b4d78d51f94978f4a597c4a21');
+  xhr.setRequestHeader('x-remote-user-id', 0);
+  xhr.addEventListener('load', function () {
+    return xhr.response;
+  });
+  xhr.send();
 }
 
 function navHome(event) {
