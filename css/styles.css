@@ -30,7 +30,6 @@ body {
 .form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 .form-inputs {
@@ -48,18 +47,26 @@ body {
   padding: 1rem 0;
 }
 
-.center {
-  margin: 0 auto;
+.next {
+  font-size: 1.3em;
+  margin: 3rem auto;
+  padding: 0.2rem 1rem;
 }
 
-.search-bar {
-  width: 15rem;
+.search-div {
+  padding: 1rem 0;
+  margin: 0 auto;
 }
 
 .search-bar,
 .search-button {
-  font-size: 1em;
+  font-size: 1.2em;
   height: 2rem;
+}
+
+.next,
+.search-button {
+  cursor: pointer;
 }
 
 .result {
@@ -72,7 +79,7 @@ body {
 }
 
 .result:hover {
-  background-color: lightgray;
+  background-color: rgb(235, 235, 235);
 }
 
 .img-div {
@@ -85,13 +92,6 @@ body {
 .img-result {
   width: 100%;
   object-fit: contain;
-}
-
-.button {
-  margin: 3rem auto;
-  padding: 0.2rem 1rem;
-  font-size: 1.3em;
-  border-radius: 10px;
 }
 
 .footer {
