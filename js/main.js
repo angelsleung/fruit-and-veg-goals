@@ -3,6 +3,11 @@ function clickNext(event) {
   navSearch();
 }
 
+function searchInput(event) {
+  var input = $searchBar.value;
+  return input;
+}
+
 function navHome(event) {
   $goalForm.className = 'goal form';
   $searchForm.className = 'search form hidden';
@@ -24,3 +29,6 @@ $navHome.addEventListener('click', navHome);
 
 var $navSearch = document.querySelector('.fa-search');
 $navSearch.addEventListener('click', navSearch);
+
+var $searchBar = document.querySelector('.search-bar');
+$searchBar.addEventListener('input', searchInput);
