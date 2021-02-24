@@ -37,6 +37,10 @@ function searchItem(event) {
   event.preventDefault();
 }
 
+function clickResult(event) {
+  searchItem();
+}
+
 function navHome(event) {
   $goalForm.className = 'goal form';
   $searchForm.className = 'search form hidden';
@@ -65,3 +69,6 @@ var $textResults = document.querySelectorAll('.text-result');
 
 var $searchForm = document.querySelector('.search.form');
 $searchForm.addEventListener('submit', searchItem);
+
+var $searchResults = document.querySelector('.results');
+$searchResults.addEventListener('click', clickResult);
