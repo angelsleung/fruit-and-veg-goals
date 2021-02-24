@@ -5,6 +5,12 @@ function clickNext(event) {
 
 function searchInput(event) {
   var input = $searchBar.value;
+  if (input.length < 2) {
+    for (var i = 0; i < 4; i++) {
+      $results[i].className = 'result hidden';
+    }
+    return;
+  }
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://trackapi.nutritionix.com/v2/search/instant?query=' + input);
   xhr.responseType = 'json';
@@ -12,7 +18,12 @@ function searchInput(event) {
   xhr.setRequestHeader('x-app-key', '1f25dd0b4d78d51f94978f4a597c4a21');
   xhr.setRequestHeader('x-remote-user-id', 0);
   xhr.addEventListener('load', function () {
-    return xhr.response;
+    data.results = xhr.response.common;
+    for (var i = 0; i < 4; i++) {
+      $results[i].className = 'result';
+      $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
+      $textResults[i].textContent = data.results[i].food_name;
+    }
   });
   xhr.send();
 }
@@ -41,3 +52,7 @@ $navSearch.addEventListener('click', navSearch);
 
 var $searchBar = document.querySelector('.search-bar');
 $searchBar.addEventListener('input', searchInput);
+
+var $results = document.querySelectorAll('.result');
+var $imgResults = document.querySelectorAll('.img-result');
+var $textResults = document.querySelectorAll('.text-result');

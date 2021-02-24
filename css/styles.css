@@ -65,6 +65,21 @@ body {
 .result {
   border: 1px solid gray;
   height: 5rem;
+  width: 15rem;
+  display: flex;
+  align-items: center;
+}
+
+.img-div {
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  margin: 0.2rem 1rem 0.2rem 0.2rem;
+}
+
+.img-result {
+  width: 100%;
+  object-fit: contain;
 }
 
 .button {

@@ -1,4 +1,5 @@
 /* exported data */
 var data = {
-  view: 'home'
+  view: 'home',
+  results: []
 };
