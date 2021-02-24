@@ -1,6 +1,30 @@
+var $goalForm = document.querySelector('.goal.form');
+$goalForm.addEventListener('submit', setGoal);
+
+var $navHome = document.querySelector('.fa-home');
+$navHome.addEventListener('click', navHome);
+
+var $navSearch = document.querySelector('.fa-search');
+$navSearch.addEventListener('click', navSearch);
+
+var $searchBar = document.querySelector('.search-bar');
+$searchBar.addEventListener('input', delaySuggestions);
+
+var $results = document.querySelectorAll('.result');
+var $imgResults = document.querySelectorAll('.img-result');
+var $textResults = document.querySelectorAll('.text-result');
+
+var $searchForm = document.querySelector('.search.form');
+$searchForm.addEventListener('submit', searchItem);
+
+var $searchResults = document.querySelector('.results');
+$searchResults.addEventListener('click', searchItem);
+
+var delaySuggestionsID = null;
+
 function setGoal(event) {
   event.preventDefault();
-  navSearch();
+  navHome();
 }
 
 function searchInput(event) {
@@ -29,16 +53,13 @@ function searchInput(event) {
   xhr.send();
 }
 
-function delayAutofill() {
-  setTimeout(searchInput, 500);
+function delaySuggestions() {
+  clearTimeout(delaySuggestionsID);
+  delaySuggestionsID = setTimeout(searchInput, 500);
 }
 
 function searchItem(event) {
   event.preventDefault();
-}
-
-function clickResult(event) {
-  searchItem();
 }
 
 function navHome(event) {
@@ -50,25 +71,3 @@ function navSearch(event) {
   $searchForm.className = 'search form';
   $goalForm.className = 'goal form hidden';
 }
-
-var $goalForm = document.querySelector('.goal.form');
-$goalForm.addEventListener('submit', setGoal);
-
-var $navHome = document.querySelector('.fa-home');
-$navHome.addEventListener('click', navHome);
-
-var $navSearch = document.querySelector('.fa-search');
-$navSearch.addEventListener('click', navSearch);
-
-var $searchBar = document.querySelector('.search-bar');
-$searchBar.addEventListener('input', delayAutofill);
-
-var $results = document.querySelectorAll('.result');
-var $imgResults = document.querySelectorAll('.img-result');
-var $textResults = document.querySelectorAll('.text-result');
-
-var $searchForm = document.querySelector('.search.form');
-$searchForm.addEventListener('submit', searchItem);
-
-var $searchResults = document.querySelector('.results');
-$searchResults.addEventListener('click', clickResult);
