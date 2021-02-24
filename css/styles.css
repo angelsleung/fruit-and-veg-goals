@@ -28,7 +28,7 @@ body {
 }
 
 .form,
-.results {
+.results-page {
   display: flex;
   flex-direction: column;
 }
