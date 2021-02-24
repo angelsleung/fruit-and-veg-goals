@@ -30,7 +30,7 @@ function searchInput(event) {
 }
 
 function delayAutofill() {
-  setTimeout(searchInput, 1000);
+  setTimeout(searchInput, 500);
 }
 
 function searchItem(event) {
