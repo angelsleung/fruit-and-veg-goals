@@ -54,10 +54,17 @@ body {
 
 .search-bar {
   width: 15rem;
+  height: 2rem;
 }
 
-.search {
+.search-button {
   font-size: 1em;
+  height: 2rem;
+}
+
+.result {
+  border: 1px solid gray;
+  height: 5rem;
 }
 
 .button {
