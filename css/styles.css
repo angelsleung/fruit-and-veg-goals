@@ -182,6 +182,34 @@ body {
   margin: 0 auto;
   border: 1px solid black;
   padding: 0.2rem;
+  border-spacing: 0;
+
+  /* border-collapse: collapse; */
+}
+
+.nutrition-header-last-row {
+  border-bottom: 8px solid;
+}
+
+.nutrition-calories-last-row {
+  border-bottom: 4px solid;
+}
+
+.nutrition-table > tbody td {
+  border-top: 1px solid black;
+}
+
+.nutrition-category {
+  font-weight: bold;
+}
+
+.nutrition-subcategory {
+  padding-left: 2rem;
+}
+
+.serving-amount {
+  font-size: 0.8em;
+  font-weight: bold;
 }
 
 .footer {
