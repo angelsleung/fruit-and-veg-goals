@@ -21,6 +21,7 @@ var $searchBarSuggestions = document.querySelector('.search-bar-suggestions');
 $searchBarSuggestions.addEventListener('click', clickSuggestion);
 
 var $resultsPage = document.querySelector('.results-page');
+var $resultsPageTitle = document.querySelector('.search-results');
 
 var $resultList = document.querySelector('.result-list');
 $resultList.addEventListener('click', clickResultList);
@@ -35,35 +36,36 @@ function setGoal(event) {
 function searchInput(event) {
   var input = $searchBar.value;
   if (input.length < 2) {
-    data.results = [];
+    // data.results = [];
     for (var i = 0; i < 4; i++) {
       $results[i].className = 'result hidden';
     }
     return;
   }
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://trackapi.nutritionix.com/v2/search/instant?branded=false&query=' + input);
-  xhr.responseType = 'json';
-  xhr.setRequestHeader('x-app-id', 'c1479c3a');
-  xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
-  xhr.setRequestHeader('x-remote-user-id', 0);
-  xhr.addEventListener('load', function () {
-    data.results = xhr.response.common;
-    if (data.view === 'search-input') {
-      for (var i = 0; i < 4; i++) {
-        $results[i].className = 'result';
-        $textResults[i].textContent = data.results[i].food_name;
-        $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
-        $imgResults[i].setAttribute('alt', data.results[i].food_name + ' image');
-      }
-    } else {
-      for (i = 0; i < data.results.length; i++) {
-        var resultDiv = renderResult(data.results[i]);
-        $resultList.append(resultDiv);
-      }
+  // var xhr = new XMLHttpRequest();
+  // xhr.open('GET', 'https://trackapi.nutritionix.com/v2/search/instant?branded=false&query=' + input);
+  // xhr.responseType = 'json';
+  // xhr.setRequestHeader('x-app-id', 'c1479c3a');
+  // xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
+  // xhr.setRequestHeader('x-remote-user-id', 0);
+  // xhr.addEventListener('load', function () {
+  // data.results = xhr.response.common;
+  if (data.view === 'search-input') {
+    for (i = 0; i < 4; i++) {
+      $results[i].className = 'result';
+      $textResults[i].textContent = data.results[i].food_name;
+      $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
+      $imgResults[i].setAttribute('alt', data.results[i].food_name + ' image');
     }
-  });
-  xhr.send();
+  } else {
+    $resultsPageTitle.textContent = 'Search results for "' + input + '"';
+    for (i = 0; i < data.results.length; i++) {
+      var resultDiv = renderResult(data.results[i]);
+      $resultList.append(resultDiv);
+    }
+  }
+  // });
+  // xhr.send();
 }
 
 function delaySuggestions() {
@@ -115,10 +117,19 @@ function renderResult(foodItem) {
   imgResult.setAttribute('alt', foodItem.food_name + ' image');
   imgDiv.append(imgResult);
 
+  var resultText = document.createElement('div');
+  resultText.className = 'result-text';
+  result.append(resultText);
+
+  var resultName = document.createElement('div');
+  resultName.className = 'result-name';
+  resultName.textContent = foodItem.food_name;
+  resultText.append(resultName);
+
   var resultDescription = document.createElement('div');
   resultDescription.className = 'result-description';
-  resultDescription.textContent = foodItem.food_name;
-  result.append(resultDescription);
+  resultDescription.textContent = foodItem.serving_qty + ' ' + foodItem.serving_unit;
+  resultText.append(resultDescription);
 
   var columnFourth = document.createElement('div');
   columnFourth.className = 'column-one-fourth';

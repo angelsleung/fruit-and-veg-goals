@@ -54,9 +54,17 @@ body {
   padding: 0.2rem 1rem;
 }
 
+.search-bar-suggestions {
+  width: 70%;
+}
+
 .search-div {
-  padding: 1.5rem 0;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar {
+  width: 100%;
 }
 
 .search-bar,
@@ -74,7 +82,6 @@ body {
 .result {
   border: 1px solid gray;
   height: 5rem;
-  width: 15rem;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -86,10 +93,8 @@ body {
 
 .img-div {
   width: 4rem;
-  height: 4rem;
+  height: 5rem;
   display: flex;
-
-  /* margin: 0.2rem 1rem 0.2rem 0.2rem; */
 }
 
 .img-result {
@@ -99,39 +104,56 @@ body {
 
 .result-list {
   padding: 0 1rem;
+  margin: 0 auto 5rem;
+  text-align: center;
+  width: 90%;
 }
 
 .result-header {
   justify-content: flex-end;
-  width: 22rem;
+}
+
+.column-one-fourth {
+  justify-content: flex-end;
 }
 
 .result-div {
   align-items: center;
   border-top: 1px solid lightgray;
-  width: 22rem;
+  margin: 0;
+}
+
+.result-name {
+  font-size: 1.1em;
+}
+
+.result-text {
+  width: 90%;
+  text-align: left;
+  margin-left: 10%;
 }
 
 .result-description {
-  width: 50%;
+  color: rgb(175, 182, 190);
+  display: none;
 }
 
 .result-header-div {
   width: 4rem;
-  height: 4rem;
+  height: 3rem;
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
 
 .result-header-text {
-  font-size: 0.8em;
+  font-size: 1em;
   color: rgb(175, 182, 190);
   margin: 0;
 }
 
 .add {
-  font-size: 1.2em;
+  font-size: 1.4em;
   color: rgb(175, 182, 190);
 }
 
@@ -153,9 +175,12 @@ body {
 }
 
 .footer {
-  margin-top: auto;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   justify-content: space-around;
   border-top: 1px solid lightgray;
+  background-color: white;
 }
 
 .nav {
@@ -167,4 +192,17 @@ body {
 
 .hidden {
   display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .result-description {
+    display: block;
+  }
+
+  .form,
+  .results-page {
+    max-width: 900px;
+    text-align: center;
+    margin: 0 auto;
+  }
 }
