@@ -26,6 +26,8 @@ var $resultsPageTitle = document.querySelector('.search-results');
 var $resultList = document.querySelector('.result-list');
 $resultList.addEventListener('click', clickResultList);
 
+var $itemDetailsPage = document.querySelector('.item-details-page');
+
 var delaySuggestionsID = null;
 
 function setGoal(event) {
@@ -119,6 +121,8 @@ function navHome(event) {
   $goalForm.className = 'goal form';
   $searchForm.className = 'search form hidden';
   $resultsPage.className = 'results-page hidden';
+  $itemDetailsPage.className = 'item-details-page hidden';
+
 }
 
 function navSearch(event) {
@@ -126,6 +130,7 @@ function navSearch(event) {
   $searchForm.className = 'search form';
   $goalForm.className = 'goal form hidden';
   $resultsPage.className = 'results-page hidden';
+  $itemDetailsPage.className = 'item-details-page hidden';
   $searchBar.focus();
 }
 
