@@ -28,6 +28,24 @@ $resultList.addEventListener('click', clickResultList);
 
 var $itemDetailsPage = document.querySelector('.item-details-page');
 
+var $servingSize = document.querySelector('.serving-size');
+var $calories = document.querySelector('.calories');
+// var $caloriesFat = document.querySelector('.');
+// var $totalFat = document.querySelector('.');
+// var $sodium = document.querySelector('.');
+// var $potassium = document.querySelector('.');
+// var totalCarbs = document.querySelector('.');
+// var $fiber = document.querySelector('.');
+// var $sugar = document.querySelector('.');
+// var $protein = document.querySelector('.');
+// var $totalFatPercent = document.querySelector('.');
+// var $sodiumPercent = document.querySelector('.');
+// var $potassiumPercent = document.querySelector('.');
+// var $totalCarbsPercent = document.querySelector('.');
+// var $fiberPercent = document.querySelector('.');
+// var $sugarPercent = document.querySelector('.');
+// var $proteinPercent = document.querySelector('.');
+
 var delaySuggestionsID = null;
 
 function setGoal(event) {
@@ -70,23 +88,26 @@ function searchInput(event) {
   xhr.send();
 }
 
-// function getNutritionFacts() {
-//   var body = {
-//     query: 'kale'
-//   };
-//   var xhr = new XMLHttpRequest();
-//   xhr.open('POST', 'https://trackapi.nutritionix.com/v2/natural/nutrients');
-//   xhr.responseType = 'json';
-//   xhr.setRequestHeader('Content-Type', 'application/json');
-//   xhr.setRequestHeader('x-app-id', 'c1479c3a');
-//   xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
-//   xhr.setRequestHeader('x-remote-user-id', 0);
-//   xhr.addEventListener('load', function () {
-//     data.results = xhr.response.foods;
-//     console.log(data.results)
-//   });
-//   xhr.send(JSON.stringify(body));
-// }
+function getNutritionFacts() {
+  var body = {
+    query: 'kale'
+  };
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://trackapi.nutritionix.com/v2/natural/nutrients');
+  xhr.responseType = 'json';
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('x-app-id', 'c1479c3a');
+  xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
+  xhr.setRequestHeader('x-remote-user-id', 0);
+  xhr.addEventListener('load', function () {
+    data.nutrition = xhr.response.foods;
+    // console.log(data.results);
+  });
+  xhr.send(JSON.stringify(body));
+  $servingSize.textContent = data.nutrition.serving_qty + ' ' + data.nutrition.serving_unit + ' (' + data.nutrition.serving_weight_grams + 'g)';
+  $calories.textContent = data.nutrition.nf_calories;
+  return data.nutrition;
+}
 
 function delaySuggestions() {
   clearTimeout(delaySuggestionsID);
@@ -97,7 +118,7 @@ function clickSuggestion(event) {
   if (event.target.className === 'search-bar') {
     return;
   }
-  return event.target;
+  getNutritionFacts();
 }
 
 function submitSearch(event) {

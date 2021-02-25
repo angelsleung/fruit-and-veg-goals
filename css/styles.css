@@ -235,20 +235,17 @@ body {
 }
 
 .add-button {
-  /* display: flex; */
   justify-content: center;
   align-items: center;
   border: 1px solid;
   border-radius: 10px;
   margin: 0 0.5rem;
-
-  /* padding: 0 0.5rem; */
   width: 10rem;
 }
 
 .add-log-title {
-  padding: 1rem 0 0.5rem;
-  font-size: 1.5rem;
+  padding: 0.8rem 0 0.5rem;
+  font-size: 1.2rem;
   text-decoration: underline;
 }
 
