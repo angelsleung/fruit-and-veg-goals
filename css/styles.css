@@ -23,11 +23,11 @@ body {
 }
 
 .page-title {
-  padding: 2rem 0 1rem;
-  font-size: 1.5em;
+  padding-top: 2rem;
 }
 
-.form {
+.form,
+.results-page {
   display: flex;
   flex-direction: column;
 }
@@ -53,9 +53,17 @@ body {
   padding: 0.2rem 1rem;
 }
 
+.search-bar-suggestions {
+  width: 70%;
+}
+
 .search-div {
-  padding: 1.5rem 0;
-  margin: 0 auto;
+  padding-top: 1rem;
+  justify-content: center;
+}
+
+.search-bar {
+  width: 100%;
 }
 
 .search-bar,
@@ -65,14 +73,14 @@ body {
 }
 
 .next,
-.search-button {
+.search-button,
+.item-icon {
   cursor: pointer;
 }
 
 .result {
   border: 1px solid gray;
   height: 5rem;
-  width: 15rem;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -82,22 +90,82 @@ body {
   background-color: rgb(235, 235, 235);
 }
 
+.text-result {
+  padding-left: 2rem;
+}
+
 .img-div {
   width: 4rem;
-  height: 4rem;
+  height: 5rem;
   display: flex;
-  margin: 0.2rem 1rem 0.2rem 0.2rem;
 }
 
 .img-result {
   width: 100%;
+  margin: 0.1rem;
   object-fit: contain;
 }
 
-.footer {
-  margin-top: auto;
-  justify-content: space-around;
+.result-list {
+  padding: 0 1rem;
+  padding-bottom: 4rem;
+}
+
+.result-div {
+  align-items: center;
   border-top: 1px solid lightgray;
+}
+
+.result-text {
+  flex-grow: 1;
+  text-align: left;
+  padding-left: 2rem;
+}
+
+.result-description {
+  color: rgb(175, 182, 190);
+  display: none;
+}
+
+.result-header-div {
+  width: 4rem;
+  height: 3rem;
+}
+
+.result-header-text {
+  color: rgb(175, 182, 190);
+  margin: 0;
+}
+
+.add {
+  font-size: 1.4em;
+  color: rgb(175, 182, 190);
+}
+
+.fruit {
+  border-right: 1px solid lightgray;
+}
+
+.icon-div {
+  display: flex;
+  height: 4rem;
+  width: 4rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-icon {
+  font-size: 1.5em;
+  color: rgb(175, 182, 190);
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  justify-content: space-evenly;
+  border-top: 1px solid lightgray;
+  background-color: white;
 }
 
 .nav {
@@ -109,4 +177,16 @@ body {
 
 .hidden {
   display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .result-description {
+    display: block;
+  }
+
+  .form,
+  .results-page {
+    max-width: 900px;
+    margin: 0 auto;
+  }
 }

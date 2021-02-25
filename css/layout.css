@@ -2,8 +2,15 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: 100%;
 }
 
 .row {
   display: flex;
+}
+
+.column-one-fourth {
+  flex-basis: 25%;
+  display: flex;
+  justify-content: flex-end;
 }

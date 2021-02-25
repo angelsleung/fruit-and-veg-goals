@@ -15,22 +15,28 @@ var $imgResults = document.querySelectorAll('.img-result');
 var $textResults = document.querySelectorAll('.text-result');
 
 var $searchForm = document.querySelector('.search.form');
-$searchForm.addEventListener('submit', searchItem);
+$searchForm.addEventListener('submit', submitSearch);
 
-var $searchResults = document.querySelector('.results');
-$searchResults.addEventListener('click', searchItem);
+var $searchBarSuggestions = document.querySelector('.search-bar-suggestions');
+$searchBarSuggestions.addEventListener('click', clickSuggestion);
+
+var $resultsPage = document.querySelector('.results-page');
+var $resultsPageTitle = document.querySelector('.search-results');
+
+var $resultList = document.querySelector('.result-list');
+$resultList.addEventListener('click', clickResultList);
 
 var delaySuggestionsID = null;
 
 function setGoal(event) {
   event.preventDefault();
-  navHome();
+  navSearch();
 }
 
 function searchInput(event) {
   var input = $searchBar.value;
   if (input.length < 2) {
-    data.results = [];
+    input = '';
     for (var i = 0; i < 4; i++) {
       $results[i].className = 'result hidden';
     }
@@ -44,10 +50,19 @@ function searchInput(event) {
   xhr.setRequestHeader('x-remote-user-id', 0);
   xhr.addEventListener('load', function () {
     data.results = xhr.response.common;
-    for (var i = 0; i < 4; i++) {
-      $results[i].className = 'result';
-      $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
-      $textResults[i].textContent = data.results[i].food_name;
+    if (data.view === 'search-input') {
+      for (i = 0; i < 4; i++) {
+        $results[i].className = 'result';
+        $textResults[i].textContent = data.results[i].food_name;
+        $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
+        $imgResults[i].setAttribute('alt', data.results[i].food_name + ' image');
+      }
+    } else {
+      $resultsPageTitle.textContent = 'Search results for "' + input + '"';
+      for (i = 0; i < data.results.length; i++) {
+        var resultDiv = renderResult(data.results[i]);
+        $resultList.append(resultDiv);
+      }
     }
   });
   xhr.send();
@@ -58,16 +73,106 @@ function delaySuggestions() {
   delaySuggestionsID = setTimeout(searchInput, 500);
 }
 
-function searchItem(event) {
-  event.preventDefault();
+function clickSuggestion(event) {
+  if (event.target.className === 'search-bar') {
+    return;
+  }
+  return event.target;
 }
 
-function navHome(event) {
-  $goalForm.className = 'goal form';
+function submitSearch(event) {
+  event.preventDefault();
+  data.view = 'search-results';
+  clearTimeout(delaySuggestionsID);
+  while ($resultList.firstChild) {
+    $resultList.removeChild($resultList.firstChild);
+  }
+  searchInput();
+  $searchForm.reset();
+  for (var i = 0; i < 4; i++) {
+    $results[i].className = 'result hidden';
+  }
+  $resultsPage.className = 'results-page';
   $searchForm.className = 'search form hidden';
 }
 
+function navHome(event) {
+  data.view = 'home';
+  $goalForm.className = 'goal form';
+  $searchForm.className = 'search form hidden';
+  $resultsPage.className = 'results-page hidden';
+}
+
 function navSearch(event) {
+  data.view = 'search-input';
   $searchForm.className = 'search form';
   $goalForm.className = 'goal form hidden';
+  $resultsPage.className = 'results-page hidden';
+  $searchBar.focus();
+}
+
+function renderResult(foodItem) {
+  var result = document.createElement('div');
+  result.className = 'result-div row';
+
+  var imgDiv = document.createElement('div');
+  imgDiv.className = 'img-div';
+  result.append(imgDiv);
+
+  var imgResult = document.createElement('img');
+  imgResult.className = 'img-result';
+  imgResult.setAttribute('src', foodItem.photo.thumb);
+  imgResult.setAttribute('alt', foodItem.food_name + ' image');
+  imgDiv.append(imgResult);
+
+  var resultText = document.createElement('div');
+  resultText.className = 'result-text';
+  result.append(resultText);
+
+  var resultName = document.createElement('div');
+  resultName.className = 'result-name';
+  resultName.textContent = foodItem.food_name;
+  resultText.append(resultName);
+
+  var resultDescription = document.createElement('div');
+  resultDescription.className = 'result-description';
+  resultDescription.textContent = foodItem.serving_qty + ' ' + foodItem.serving_unit;
+  resultText.append(resultDescription);
+
+  var columnFourth = document.createElement('div');
+  columnFourth.className = 'column-one-fourth';
+  result.append(columnFourth);
+
+  var fruitIconDiv = document.createElement('div');
+  fruitIconDiv.className = 'icon-div fruit';
+  columnFourth.append(fruitIconDiv);
+
+  var fruitItemIcon = document.createElement('i');
+  fruitItemIcon.className = 'item-icon fas fa-apple-alt';
+  fruitItemIcon.setAttribute('data-food-name', foodItem.food_name);
+  fruitIconDiv.append(fruitItemIcon);
+
+  var vegIconDiv = document.createElement('div');
+  vegIconDiv.className = 'icon-div veg';
+  columnFourth.append(vegIconDiv);
+
+  var vegItemIcon = document.createElement('i');
+  vegItemIcon.className = 'item-icon fas fa-carrot';
+  vegItemIcon.setAttribute('data-food-name', foodItem.food_name);
+  vegIconDiv.append(vegItemIcon);
+
+  return result;
+}
+
+function clickResultList(event) {
+  if (!event.target.matches('.item-icon')) {
+    return;
+  }
+  var foodName = event.target.dataset.foodName;
+  event.target.style.color = 'lightgreen';
+  if (event.target.matches('.fa-apple-alt')) {
+    data.fruits.push(foodName);
+  } else {
+    data.veggies.push(foodName);
+  }
 }
