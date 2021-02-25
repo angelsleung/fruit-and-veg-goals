@@ -48,15 +48,18 @@ function searchInput(event) {
   xhr.setRequestHeader('x-remote-user-id', 0);
   xhr.addEventListener('load', function () {
     data.results = xhr.response.common;
-    for (var i = 0; i < 4; i++) {
-      $results[i].className = 'result';
-      $textResults[i].textContent = data.results[i].food_name;
-      $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
-      $imgResults[i].setAttribute('alt', data.results[i].food_name + ' image');
-    }
-    for (i = 0; i < data.results.length; i++) {
-      var resultDiv = renderResult(data.results[i]);
-      $resultList.append(resultDiv);
+    if (data.view === 'search-input') {
+      for (var i = 0; i < 4; i++) {
+        $results[i].className = 'result';
+        $textResults[i].textContent = data.results[i].food_name;
+        $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
+        $imgResults[i].setAttribute('alt', data.results[i].food_name + ' image');
+      }
+    } else {
+      for (i = 0; i < data.results.length; i++) {
+        var resultDiv = renderResult(data.results[i]);
+        $resultList.append(resultDiv);
+      }
     }
   });
   xhr.send();
@@ -76,18 +79,22 @@ function clickSuggestion(event) {
 
 function submitSearch(event) {
   event.preventDefault();
+  data.view = 'search-results';
+  clearTimeout(delaySuggestionsID);
   searchInput();
   $resultsPage.className = 'results-page';
   $searchForm.className = 'search form hidden';
 }
 
 function navHome(event) {
+  data.view = 'home';
   $goalForm.className = 'goal form';
   $searchForm.className = 'search form hidden';
   $resultsPage.className = 'results-page hidden';
 }
 
 function navSearch(event) {
+  data.view = 'search-input';
   $searchForm.className = 'search form';
   $goalForm.className = 'goal form hidden';
   $resultsPage.className = 'results-page hidden';
