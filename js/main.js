@@ -101,6 +101,7 @@ function navSearch(event) {
   $searchForm.className = 'search form';
   $goalForm.className = 'goal form hidden';
   $resultsPage.className = 'results-page hidden';
+  $searchBar.focus();
 }
 
 function renderResult(foodItem) {

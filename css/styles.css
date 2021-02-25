@@ -23,8 +23,7 @@ body {
 }
 
 .page-title {
-  padding: 2rem 0 1rem;
-  font-size: 1.5em;
+  padding-top: 2rem;
 }
 
 .form,
@@ -59,7 +58,7 @@ body {
 }
 
 .search-div {
-  display: flex;
+  padding-top: 1rem;
   justify-content: center;
 }
 
@@ -91,6 +90,10 @@ body {
   background-color: rgb(235, 235, 235);
 }
 
+.text-result {
+  padding-left: 2rem;
+}
+
 .img-div {
   width: 4rem;
   height: 5rem;
@@ -104,33 +107,18 @@ body {
 
 .result-list {
   padding: 0 1rem;
-  margin: 0 auto 5rem;
-  text-align: center;
-  width: 90%;
-}
-
-.result-header {
-  justify-content: flex-end;
-}
-
-.column-one-fourth {
-  justify-content: flex-end;
+  padding-bottom: 4rem;
 }
 
 .result-div {
   align-items: center;
   border-top: 1px solid lightgray;
-  margin: 0;
-}
-
-.result-name {
-  font-size: 1.1em;
 }
 
 .result-text {
-  width: 90%;
+  flex-grow: 1;
   text-align: left;
-  margin-left: 10%;
+  padding-left: 2rem;
 }
 
 .result-description {
@@ -141,13 +129,9 @@ body {
 .result-header-div {
   width: 4rem;
   height: 3rem;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
 }
 
 .result-header-text {
-  font-size: 1em;
   color: rgb(175, 182, 190);
   margin: 0;
 }
@@ -178,7 +162,7 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
-  justify-content: space-around;
+  justify-content: space-evenly;
   border-top: 1px solid lightgray;
   background-color: white;
 }
@@ -202,7 +186,6 @@ body {
   .form,
   .results-page {
     max-width: 900px;
-    text-align: center;
     margin: 0 auto;
   }
 }

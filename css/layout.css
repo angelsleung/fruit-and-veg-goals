@@ -12,4 +12,5 @@
 .column-one-fourth {
   flex-basis: 25%;
   display: flex;
+  justify-content: flex-end;
 }
