@@ -36,36 +36,36 @@ function setGoal(event) {
 function searchInput(event) {
   var input = $searchBar.value;
   if (input.length < 2) {
-    // data.results = [];
+    input = '';
     for (var i = 0; i < 4; i++) {
       $results[i].className = 'result hidden';
     }
     return;
   }
-  // var xhr = new XMLHttpRequest();
-  // xhr.open('GET', 'https://trackapi.nutritionix.com/v2/search/instant?branded=false&query=' + input);
-  // xhr.responseType = 'json';
-  // xhr.setRequestHeader('x-app-id', 'c1479c3a');
-  // xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
-  // xhr.setRequestHeader('x-remote-user-id', 0);
-  // xhr.addEventListener('load', function () {
-  // data.results = xhr.response.common;
-  if (data.view === 'search-input') {
-    for (i = 0; i < 4; i++) {
-      $results[i].className = 'result';
-      $textResults[i].textContent = data.results[i].food_name;
-      $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
-      $imgResults[i].setAttribute('alt', data.results[i].food_name + ' image');
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://trackapi.nutritionix.com/v2/search/instant?branded=false&query=' + input);
+  xhr.responseType = 'json';
+  xhr.setRequestHeader('x-app-id', 'c1479c3a');
+  xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
+  xhr.setRequestHeader('x-remote-user-id', 0);
+  xhr.addEventListener('load', function () {
+    data.results = xhr.response.common;
+    if (data.view === 'search-input') {
+      for (i = 0; i < 4; i++) {
+        $results[i].className = 'result';
+        $textResults[i].textContent = data.results[i].food_name;
+        $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
+        $imgResults[i].setAttribute('alt', data.results[i].food_name + ' image');
+      }
+    } else {
+      $resultsPageTitle.textContent = 'Search results for "' + input + '"';
+      for (i = 0; i < data.results.length; i++) {
+        var resultDiv = renderResult(data.results[i]);
+        $resultList.append(resultDiv);
+      }
     }
-  } else {
-    $resultsPageTitle.textContent = 'Search results for "' + input + '"';
-    for (i = 0; i < data.results.length; i++) {
-      var resultDiv = renderResult(data.results[i]);
-      $resultList.append(resultDiv);
-    }
-  }
-  // });
-  // xhr.send();
+  });
+  xhr.send();
 }
 
 function delaySuggestions() {
@@ -84,7 +84,14 @@ function submitSearch(event) {
   event.preventDefault();
   data.view = 'search-results';
   clearTimeout(delaySuggestionsID);
+  while ($resultList.firstChild) {
+    $resultList.removeChild($resultList.firstChild);
+  }
   searchInput();
+  $searchForm.reset();
+  for (var i = 0; i < 4; i++) {
+    $results[i].className = 'result hidden';
+  }
   $resultsPage.className = 'results-page';
   $searchForm.className = 'search form hidden';
 }
@@ -162,6 +169,7 @@ function clickResultList(event) {
     return;
   }
   var foodName = event.target.dataset.foodName;
+  event.target.style.color = 'lightgreen';
   if (event.target.matches('.fa-apple-alt')) {
     data.fruits.push(foodName);
   } else {
