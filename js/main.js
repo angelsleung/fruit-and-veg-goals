@@ -68,6 +68,24 @@ function searchInput(event) {
   xhr.send();
 }
 
+// function getNutritionFacts() {
+//   var body = {
+//     query: 'kale'
+//   };
+//   var xhr = new XMLHttpRequest();
+//   xhr.open('POST', 'https://trackapi.nutritionix.com/v2/natural/nutrients');
+//   xhr.responseType = 'json';
+//   xhr.setRequestHeader('Content-Type', 'application/json');
+//   xhr.setRequestHeader('x-app-id', 'c1479c3a');
+//   xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
+//   xhr.setRequestHeader('x-remote-user-id', 0);
+//   xhr.addEventListener('load', function () {
+//     data.results = xhr.response.foods;
+//     console.log(data.results)
+//   });
+//   xhr.send(JSON.stringify(body));
+// }
+
 function delaySuggestions() {
   clearTimeout(delaySuggestionsID);
   delaySuggestionsID = setTimeout(searchInput, 500);
