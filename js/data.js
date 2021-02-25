@@ -2,5 +2,7 @@
 var data = {
   view: 'home',
   results: [],
-  selected: null
+  selected: null,
+  fruits: [],
+  veggies: []
 };

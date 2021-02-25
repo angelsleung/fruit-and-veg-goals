@@ -23,6 +23,7 @@ $searchBarSuggestions.addEventListener('click', clickSuggestion);
 var $resultsPage = document.querySelector('.results-page');
 
 var $resultList = document.querySelector('.result-list');
+$resultList.addEventListener('click', clickResultList);
 
 var delaySuggestionsID = null;
 
@@ -129,6 +130,7 @@ function renderResult(foodItem) {
 
   var fruitItemIcon = document.createElement('i');
   fruitItemIcon.className = 'item-icon fas fa-apple-alt';
+  fruitItemIcon.setAttribute('data-food-name', foodItem.food_name);
   fruitIconDiv.append(fruitItemIcon);
 
   var vegIconDiv = document.createElement('div');
@@ -137,7 +139,20 @@ function renderResult(foodItem) {
 
   var vegItemIcon = document.createElement('i');
   vegItemIcon.className = 'item-icon fas fa-carrot';
+  vegItemIcon.setAttribute('data-food-name', foodItem.food_name);
   vegIconDiv.append(vegItemIcon);
 
   return result;
+}
+
+function clickResultList(event) {
+  if (!event.target.matches('.item-icon')) {
+    return;
+  }
+  var foodName = event.target.dataset.foodName;
+  if (event.target.matches('.fa-apple-alt')) {
+    data.fruits.push(foodName);
+  } else {
+    data.veggies.push(foodName);
+  }
 }
