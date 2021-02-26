@@ -7,8 +7,8 @@ $navHome.addEventListener('click', navHome);
 var $navSearch = document.querySelector('.fa-search');
 $navSearch.addEventListener('click', navSearch);
 
-var $navLog = document.querySelectorAll('.fa-list');
-$navLog.addEventListener('click', renderLogEntry);
+var $navLog = document.querySelector('.fa-list');
+$navLog.addEventListener('click', loadDailyLog);
 
 var $searchBar = document.querySelector('.search-bar');
 $searchBar.addEventListener('input', delaySuggestions);
@@ -36,6 +36,8 @@ var $addVegButton = document.querySelector('.add-veg');
 $addVegButton.addEventListener('click', clickAddVeg);
 
 var $dailyLogPage = document.querySelector('.daily-log-page');
+var $fruitLog = document.querySelector('.fruit-log');
+var $vegLog = document.querySelector('.veg-log');
 
 var $itemDetailsPage = document.querySelector('.item-details-page');
 var $itemDetailsImg = document.querySelector('.item-details-img');
@@ -343,6 +345,19 @@ function renderLogEntry(entry) {
   resultText.append(resultDescription);
 
   return result;
+}
+
+function loadDailyLog(event) {
+  hideAllViews();
+  for (var i = 0; i < data.fruits.length; i++) {
+    var renderedEntry = renderLogEntry(data.fruits[i]);
+    $fruitLog.append(renderedEntry);
+  }
+  for (i = 0; i < data.fruits.length; i++) {
+    renderedEntry = renderLogEntry(data.veggies[i]);
+    $vegLog.append(renderedEntry);
+  }
+  $dailyLogPage.className = 'daily-log-page';
 }
 
 function hideAllViews() {
