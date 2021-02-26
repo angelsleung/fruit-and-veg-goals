@@ -162,18 +162,23 @@ body {
   color: rgb(175, 182, 190);
 }
 
-.item-details-title {
-  align-items: center;
-  padding: 0.5rem 1rem;
+.item-details-page {
+  width: 22rem;
+  margin: 0 auto;
+}
+
+.item-details-header {
+  padding: 0 1rem;
 }
 
 .item-details-img {
-  max-width: 5rem;
+  padding: 1rem;
 }
 
 .item-details-name {
   font-size: 1.5em;
-  margin-left: 2rem;
+
+  /* margin: 0; */
   text-transform: capitalize;
 }
 
@@ -187,8 +192,7 @@ body {
   border: 1px solid black;
   padding: 0.5rem;
   border-spacing: 0;
-  width: 90%;
-  font-size: 0.85em;
+  font-size: 0.8em;
 
   /* border-collapse: collapse; */
 }
@@ -224,7 +228,6 @@ body {
 
 .daily-values {
   text-align: right;
-  font-weight: bold;
 }
 
 .daily-values-message {
@@ -249,20 +252,25 @@ body {
 .add-button {
   justify-content: center;
   align-items: center;
-  border: 1px solid;
+  border: 1px solid lightgray;
   border-radius: 10px;
-  margin: 0 0.5rem;
+  margin-bottom: 0.4rem;
+  padding: 0.2rem 0;
   width: 10rem;
 }
 
+.add-log-div {
+  padding: 1rem 0 0;
+}
+
 .add-log-title {
-  padding: 0.8rem 0 0.5rem;
-  font-size: 1.2rem;
-  text-decoration: underline;
+  line-height: 1em;
+  font-style: italic;
+  color: gray;
 }
 
 .add-log-icon {
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
   color: rgb(175, 182, 190);
 }
 

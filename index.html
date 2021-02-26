@@ -19,7 +19,7 @@
       <h1 class="app-name">Fruit &amp; Veg Goals</h1>
     </header>
     <main class="main">
-      <form class="goal form hidden" data-view="goal-form">
+      <form class="goal form" data-view="goal-form">
         <h2 class="page-title">What is my goal today?</h2>
         <p>I want to eat...</p>
         <div class="form-inputs">
@@ -108,10 +108,23 @@
           </div>
         </div>
       </div>
-      <div class="item-details-page" data-view="item-details">
-        <div class="item-details-title row">
-            <img class="item-details-img">
-          <div class="item-details-name"></div>
+      <div class="item-details-page hidden" data-view="item-details">
+        <div class="item-details-header row">
+          <div class="add-log-div">
+            <h1 class="item-details-name"></h1>
+            <div class="add-log-title">Add to log</div>
+            <div class="add-button" data-type="fruit">
+              <i class="add-log-icon fas fa-plus"></i>
+              <span> to fruits </span>
+              <i class="add-log-icon fruit-icon fas fa-apple-alt"></i>
+            </div>
+            <div class="add-button" data-type="veg">
+              <i class="add-log-icon fas fa-plus"></i>
+              <span> to veggies </span>
+              <i class="add-log-icon fas fa-carrot"></i>
+            </div>
+          </div>
+          <img class="item-details-img">
         </div>
         <table class="nutrition-table">
           <thead>
@@ -131,7 +144,7 @@
             </tr>
             <tr>
               <td class="nutrition-calories-last-row"><span class="nutrition-category">Calories </span><span class="calories"></span></td>
-              <td class="nutrition-calories-last-row">Calories from Fat <span class="daily-values calories-fat"></span></td>
+              <td class="nutrition-calories-last-row daily-values">Calories from Fat <span class="calories-fat"></span></td>
             </tr>
             <tr>
               <td></td>
@@ -168,21 +181,6 @@
             </tr>
           </tbody>
         </table>
-        <div class="add-log-div">
-          <div class="add-log-title">Add to log:</div>
-          <div class="add-buttons row">
-            <div class="add-button">
-              <i class="add-log-icon fas fa-plus"></i>
-              <span>to fruits</span>
-              <i class="add-log-icon fruit-icon fas fa-apple-alt"></i>
-            </div>
-            <div class="add-button">
-              <i class="add-log-icon fas fa-plus"></i>
-              <span>to veggies</span>
-              <i class="add-log-icon fas fa-carrot"></i>
-            </div>
-          </div>
-        </div>
         </div>
     </main>
     <footer class="footer row">

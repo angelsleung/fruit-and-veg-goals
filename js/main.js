@@ -26,6 +26,9 @@ var $resultsPageTitle = document.querySelector('.search-results');
 var $resultList = document.querySelector('.result-list');
 $resultList.addEventListener('click', clickResultList);
 
+var $addLogDiv = document.querySelector('.add-log-div');
+$addLogDiv.addEventListener('click', clickAddItemDetail);
+
 var $itemDetailsPage = document.querySelector('.item-details-page');
 var $itemDetailsImg = document.querySelector('.item-details-img');
 var $itemDetailsName = document.querySelector('.item-details-name');
@@ -73,6 +76,7 @@ function searchInput(event) {
     if (data.view === 'search-input') {
       for (i = 0; i < 4; i++) {
         $results[i].className = 'result';
+        $results[i].setAttribute('data-food-name', data.results[i].food_name);
         $textResults[i].textContent = data.results[i].food_name;
         $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
         $imgResults[i].setAttribute('alt', data.results[i].food_name);
@@ -89,11 +93,9 @@ function searchInput(event) {
 }
 
 function getNutritionFacts(foodName) {
-  // console.log('foodName: ', foodName);
   var body = {
     query: foodName
   };
-  // console.log('body:', body);
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'https://trackapi.nutritionix.com/v2/natural/nutrients');
   xhr.responseType = 'json';
@@ -103,7 +105,7 @@ function getNutritionFacts(foodName) {
   xhr.setRequestHeader('x-remote-user-id', 0);
   xhr.addEventListener('load', function () {
     data.nutrition = xhr.response.foods[0];
-    $itemDetailsImg.setAttribute('src', data.nutrition.photo.highres);
+    $itemDetailsImg.setAttribute('src', data.nutrition.photo.thumb);
     $itemDetailsImg.setAttribute('alt', data.nutrition.food_name);
     $itemDetailsName.textContent = data.nutrition.food_name;
     $nutritionFoodName.textContent = data.nutrition.food_name;
@@ -122,12 +124,12 @@ function getNutritionFacts(foodName) {
     $potassiumPercent.textContent = Math.floor(data.nutrition.nf_potassium * 100 / 4700) + '%';
     $totalCarbsPercent.textContent = Math.floor(data.nutrition.nf_total_carbohydrate * 100 / 275) + '%';
     $fiberPercent.textContent = Math.floor(data.nutrition.nf_dietary_fiber * 100 / 28) + '%';
-    $resultsPage.className = 'results-page hidden';
+    hideAllViews();
     $itemDetailsPage.className = 'item-details-page';
+    data.selected = data.nutrition.food_name;
+    data.view = 'item details';
   });
   xhr.send(JSON.stringify(body));
-
-  // return data.nutrition;
 }
 
 function delaySuggestions() {
@@ -139,7 +141,9 @@ function clickSuggestion(event) {
   if (event.target.className === 'search-bar') {
     return;
   }
-  getNutritionFacts();
+  var foodResult = event.target.closest('.result');
+  var foodName = foodResult.dataset.foodName;
+  getNutritionFacts(foodName);
 }
 
 function submitSearch(event) {
@@ -150,10 +154,6 @@ function submitSearch(event) {
     $resultList.removeChild($resultList.firstChild);
   }
   searchInput();
-  $searchForm.reset();
-  for (var i = 0; i < 4; i++) {
-    $results[i].className = 'result hidden';
-  }
   $resultsPage.className = 'results-page';
   $searchForm.className = 'search form hidden';
 }
@@ -166,8 +166,12 @@ function navHome(event) {
 
 function navSearch(event) {
   data.view = 'search-input';
+  for (var i = 0; i < 4; i++) {
+    $results[i].className = 'result hidden';
+  }
   hideAllViews();
   $searchForm.className = 'search form';
+  $searchForm.reset();
   $searchBar.focus();
 }
 
@@ -235,6 +239,19 @@ function clickResultList(event) {
     }
   } else {
     getNutritionFacts(foodName);
+  }
+}
+
+function clickAddItemDetail(event) {
+  var clickedButton = event.target.closest('.add-button');
+  if (clickedButton === null) {
+    return;
+  }
+  clickedButton.style.backgroundColor = 'lightgreen';
+  if (clickedButton.dataset.type === 'fruit') {
+    data.fruits.push(data.selected);
+  } else {
+    data.veggies.push(data.selected);
   }
 }
 
