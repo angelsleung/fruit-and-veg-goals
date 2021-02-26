@@ -10,7 +10,6 @@ body {
 
 .main {
   padding-bottom: 5rem;
-  margin: 0 auto;
 }
 
 .header {
@@ -32,7 +31,8 @@ body {
 }
 
 .form,
-.results-page {
+.results-page,
+.daily-log-page {
   display: flex;
   flex-direction: column;
 }
@@ -308,7 +308,8 @@ body {
 
   .form,
   .results-page,
-  .item-details-page {
+  .item-details-page,
+  .daily-log-page {
     max-width: 900px;
     margin: 0 auto;
   }
