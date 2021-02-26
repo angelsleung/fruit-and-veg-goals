@@ -19,7 +19,8 @@
       <h1 class="app-name">Fruit &amp; Veg Goals</h1>
     </header>
     <main class="main">
-      <form class="goal form" data-view="goal-form">
+
+      <form class="goal form hidden" data-view="goal-form">
         <h2 class="page-title">What is my goal today?</h2>
         <p>I want to eat...</p>
         <div class="form-inputs">
@@ -56,6 +57,8 @@
         </div>
         <input type="submit" value="Next" class="next">
       </form>
+
+
       <form class="search form hidden" data-view="search-form">
         <h2 class="page-title">Look up a fruit or veggie</h2>
         <div class="search-div row">
@@ -86,13 +89,11 @@
               <div class="text-result"></div>
             </div>
           </div>
-
           <input type="submit" value="Search" class="search-button">
         </div>
-
-
-
       </form>
+
+
       <div class="results-page hidden" data-view="search-results">
         <h2 class="search-results page-title"></h2>
         <div class="result-list">
@@ -108,6 +109,8 @@
           </div>
         </div>
       </div>
+
+
       <div class="item-details-page hidden">
         <div class="item-details-header row">
           <div class="add-log-div">
@@ -181,7 +184,23 @@
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <div class="daily-log">
+        <h2 class="search-results page-title">Daily Log</h2>
+        <div class="result-list">
+          <div class="result-div row">
+            <div class="img-div">
+              <img class="img-result" src="https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png">
+            </div>
+            <div class="result-text">
+              <div class="result-name">Durian</div>
+              <div class="result-description">1 cup, chopped or diced</div>
+            </div>
+          </div>
         </div>
+      </div>
+
     </main>
     <footer class="footer row">
       <i class="nav fas fa-home"></i>
