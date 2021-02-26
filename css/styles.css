@@ -164,7 +164,6 @@ body {
 
 .item-details-page {
   width: 22rem;
-  margin: 0 auto;
 }
 
 .item-details-header {
@@ -177,8 +176,6 @@ body {
 
 .item-details-name {
   font-size: 1.5em;
-
-  /* margin: 0; */
   text-transform: capitalize;
 }
 
@@ -188,13 +185,10 @@ body {
 
 .nutrition-table {
   text-align: left;
-  margin: 0 auto;
   border: 1px solid black;
   padding: 0.5rem;
   border-spacing: 0;
   font-size: 0.8em;
-
-  /* border-collapse: collapse; */
 }
 
 .nutrition-food-name {
@@ -245,10 +239,6 @@ body {
   font-weight: normal;
 }
 
-.add-buttons {
-  justify-content: center;
-}
-
 .add-button {
   justify-content: center;
   align-items: center;
@@ -257,10 +247,12 @@ body {
   margin-bottom: 0.4rem;
   padding: 0.2rem 0;
   width: 10rem;
+  background-color: rgb(246, 246, 246);
+  cursor: pointer;
 }
 
 .add-log-div {
-  padding: 1rem 0 0;
+  padding-top: 0.5rem;
 }
 
 .add-log-title {
@@ -270,7 +262,6 @@ body {
 }
 
 .add-log-icon {
-  /* padding: 0.5rem; */
   color: rgb(175, 182, 190);
 }
 
