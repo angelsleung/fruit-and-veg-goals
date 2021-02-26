@@ -10,6 +10,9 @@ $navSearch.addEventListener('click', navSearch);
 var $navLog = document.querySelector('.fa-list');
 $navLog.addEventListener('click', loadDailyLog);
 
+var $navProgress = document.querySelector('.fa-chart-bar');
+$navProgress.addEventListener('click', navProgress);
+
 var $searchBar = document.querySelector('.search-bar');
 $searchBar.addEventListener('input', delaySuggestions);
 
@@ -42,6 +45,8 @@ var $vegLog = document.querySelector('.veg-log');
 var $noFruit = document.querySelector('.no-fruit');
 var $noVeg = document.querySelector('.no-veg');
 
+var $progressPage = document.querySelector('.progress-page');
+
 var $itemDetailsPage = document.querySelector('.item-details-page');
 var $itemDetailsImg = document.querySelector('.item-details-img');
 var $itemDetailsName = document.querySelector('.item-details-name');
@@ -66,6 +71,8 @@ var delaySuggestionsID = null;
 
 function setGoal(event) {
   event.preventDefault();
+  data.fruitGoal = $goalForm.elements.fruit.value;
+  data.vegGoal = $goalForm.elements.veg.value;
   navSearch();
 }
 
@@ -196,6 +203,11 @@ function navSearch(event) {
   $searchForm.className = 'search form';
   $searchForm.reset();
   $searchBar.focus();
+}
+
+function navProgress(event) {
+  hideAllViews();
+  $progressPage.className = 'progress-page';
 }
 
 function renderResult(foodItem) {
@@ -383,4 +395,5 @@ function hideAllViews() {
   $resultsPage.className = 'results-page hidden';
   $itemDetailsPage.className = 'item-details-page hidden';
   $dailyLogPage.className = 'daily-log-page hidden';
+  $progressPage.className = 'progress-page hidden';
 }
