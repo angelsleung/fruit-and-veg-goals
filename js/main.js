@@ -100,6 +100,8 @@ function searchInput(event) {
         var resultDiv = renderResult(data.results[i]);
         $resultList.append(resultDiv);
       }
+      $resultsPage.className = 'results-page';
+      $searchForm.className = 'search form hidden';
     }
   });
   xhr.send();
@@ -177,8 +179,6 @@ function submitSearch(event) {
     $resultList.removeChild($resultList.firstChild);
   }
   searchInput();
-  $resultsPage.className = 'results-page';
-  $searchForm.className = 'search form hidden';
 }
 
 function navHome(event) {
