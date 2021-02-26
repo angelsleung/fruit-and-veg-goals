@@ -27,24 +27,24 @@ var $resultList = document.querySelector('.result-list');
 $resultList.addEventListener('click', clickResultList);
 
 var $itemDetailsPage = document.querySelector('.item-details-page');
-
+var $itemDetailsImg = document.querySelector('.item-details-img');
+var $itemDetailsName = document.querySelector('.item-details-name');
+var $nutritionFoodName = document.querySelector('.nutrition-food-name');
 var $servingSize = document.querySelector('.serving-size');
 var $calories = document.querySelector('.calories');
-// var $caloriesFat = document.querySelector('.');
-// var $totalFat = document.querySelector('.');
-// var $sodium = document.querySelector('.');
-// var $potassium = document.querySelector('.');
-// var totalCarbs = document.querySelector('.');
-// var $fiber = document.querySelector('.');
-// var $sugar = document.querySelector('.');
-// var $protein = document.querySelector('.');
-// var $totalFatPercent = document.querySelector('.');
-// var $sodiumPercent = document.querySelector('.');
-// var $potassiumPercent = document.querySelector('.');
-// var $totalCarbsPercent = document.querySelector('.');
-// var $fiberPercent = document.querySelector('.');
-// var $sugarPercent = document.querySelector('.');
-// var $proteinPercent = document.querySelector('.');
+var $caloriesFat = document.querySelector('.calories-fat');
+var $totalFat = document.querySelector('.total-fat');
+var $sodium = document.querySelector('.sodium');
+var $potassium = document.querySelector('.potassium');
+var totalCarbs = document.querySelector('.total-carbs');
+var $fiber = document.querySelector('.fiber');
+var $sugar = document.querySelector('.sugar');
+var $protein = document.querySelector('.protein');
+var $totalFatPercent = document.querySelector('.total-fat-percent');
+var $sodiumPercent = document.querySelector('.sodium-percent');
+var $potassiumPercent = document.querySelector('.potassium-percent');
+var $totalCarbsPercent = document.querySelector('.total-carbs-percent');
+var $fiberPercent = document.querySelector('.fiber-percent');
 
 var delaySuggestionsID = null;
 
@@ -75,7 +75,7 @@ function searchInput(event) {
         $results[i].className = 'result';
         $textResults[i].textContent = data.results[i].food_name;
         $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
-        $imgResults[i].setAttribute('alt', data.results[i].food_name + ' image');
+        $imgResults[i].setAttribute('alt', data.results[i].food_name);
       }
     } else {
       $resultsPageTitle.textContent = 'Search results for "' + input + '"';
@@ -88,10 +88,12 @@ function searchInput(event) {
   xhr.send();
 }
 
-function getNutritionFacts() {
+function getNutritionFacts(foodName) {
+  // console.log('foodName: ', foodName);
   var body = {
-    query: 'kale'
+    query: foodName
   };
+  // console.log('body:', body);
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'https://trackapi.nutritionix.com/v2/natural/nutrients');
   xhr.responseType = 'json';
@@ -100,13 +102,32 @@ function getNutritionFacts() {
   xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
   xhr.setRequestHeader('x-remote-user-id', 0);
   xhr.addEventListener('load', function () {
-    data.nutrition = xhr.response.foods;
-    // console.log(data.results);
+    data.nutrition = xhr.response.foods[0];
+    $itemDetailsImg.setAttribute('src', data.nutrition.photo.highres);
+    $itemDetailsImg.setAttribute('alt', data.nutrition.food_name);
+    $itemDetailsName.textContent = data.nutrition.food_name;
+    $nutritionFoodName.textContent = data.nutrition.food_name;
+    $servingSize.textContent = data.nutrition.serving_qty + ' ' + data.nutrition.serving_unit + ' (' + data.nutrition.serving_weight_grams + 'g)';
+    $calories.textContent = Math.floor(data.nutrition.nf_calories);
+    $caloriesFat.textContent = Math.floor(data.nutrition.nf_total_fat * 90) / 10;
+    $totalFat.textContent = Math.floor(data.nutrition.nf_total_fat * 10) / 10 + 'g';
+    $sodium.textContent = Math.floor(data.nutrition.nf_sodium) + 'mg';
+    $potassium.textContent = Math.floor(data.nutrition.nf_potassium) + 'mg';
+    totalCarbs.textContent = Math.floor(data.nutrition.nf_total_carbohydrate * 10) / 10 + 'g';
+    $fiber.textContent = Math.floor(data.nutrition.nf_dietary_fiber * 10) / 10 + 'g';
+    $sugar.textContent = Math.floor(data.nutrition.nf_sugars * 10) / 10 + 'g';
+    $protein.textContent = Math.floor(data.nutrition.nf_protein * 10) / 10 + 'g';
+    $totalFatPercent.textContent = Math.floor(data.nutrition.nf_total_fat * 100 / 78) + '%';
+    $sodiumPercent.textContent = Math.floor(data.nutrition.nf_sodium * 100 / 2300) + '%';
+    $potassiumPercent.textContent = Math.floor(data.nutrition.nf_potassium * 100 / 4700) + '%';
+    $totalCarbsPercent.textContent = Math.floor(data.nutrition.nf_total_carbohydrate * 100 / 275) + '%';
+    $fiberPercent.textContent = Math.floor(data.nutrition.nf_dietary_fiber * 100 / 28) + '%';
+    $resultsPage.className = 'results-page hidden';
+    $itemDetailsPage.className = 'item-details-page';
   });
   xhr.send(JSON.stringify(body));
-  $servingSize.textContent = data.nutrition.serving_qty + ' ' + data.nutrition.serving_unit + ' (' + data.nutrition.serving_weight_grams + 'g)';
-  $calories.textContent = data.nutrition.nf_calories;
-  return data.nutrition;
+
+  // return data.nutrition;
 }
 
 function delaySuggestions() {
@@ -139,25 +160,21 @@ function submitSearch(event) {
 
 function navHome(event) {
   data.view = 'home';
+  hideAllViews();
   $goalForm.className = 'goal form';
-  $searchForm.className = 'search form hidden';
-  $resultsPage.className = 'results-page hidden';
-  $itemDetailsPage.className = 'item-details-page hidden';
-
 }
 
 function navSearch(event) {
   data.view = 'search-input';
+  hideAllViews();
   $searchForm.className = 'search form';
-  $goalForm.className = 'goal form hidden';
-  $resultsPage.className = 'results-page hidden';
-  $itemDetailsPage.className = 'item-details-page hidden';
   $searchBar.focus();
 }
 
 function renderResult(foodItem) {
   var result = document.createElement('div');
   result.className = 'result-div row';
+  result.setAttribute('data-food-name', foodItem.food_name);
 
   var imgDiv = document.createElement('div');
   imgDiv.className = 'img-div';
@@ -166,7 +183,7 @@ function renderResult(foodItem) {
   var imgResult = document.createElement('img');
   imgResult.className = 'img-result';
   imgResult.setAttribute('src', foodItem.photo.thumb);
-  imgResult.setAttribute('alt', foodItem.food_name + ' image');
+  imgResult.setAttribute('alt', foodItem.food_name);
   imgDiv.append(imgResult);
 
   var resultText = document.createElement('div');
@@ -193,7 +210,6 @@ function renderResult(foodItem) {
 
   var fruitItemIcon = document.createElement('i');
   fruitItemIcon.className = 'item-icon fas fa-apple-alt';
-  fruitItemIcon.setAttribute('data-food-name', foodItem.food_name);
   fruitIconDiv.append(fruitItemIcon);
 
   var vegIconDiv = document.createElement('div');
@@ -202,21 +218,29 @@ function renderResult(foodItem) {
 
   var vegItemIcon = document.createElement('i');
   vegItemIcon.className = 'item-icon fas fa-carrot';
-  vegItemIcon.setAttribute('data-food-name', foodItem.food_name);
   vegIconDiv.append(vegItemIcon);
 
   return result;
 }
 
 function clickResultList(event) {
-  if (!event.target.matches('.item-icon')) {
-    return;
-  }
-  var foodName = event.target.dataset.foodName;
-  event.target.style.color = 'lightgreen';
-  if (event.target.matches('.fa-apple-alt')) {
-    data.fruits.push(foodName);
+  var resultElement = event.target.closest('.result-div');
+  var foodName = resultElement.dataset.foodName;
+  if (event.target.matches('.item-icon')) {
+    event.target.style.color = 'lightgreen';
+    if (event.target.matches('.fa-apple-alt')) {
+      data.fruits.push(foodName);
+    } else {
+      data.veggies.push(foodName);
+    }
   } else {
-    data.veggies.push(foodName);
+    getNutritionFacts(foodName);
   }
+}
+
+function hideAllViews() {
+  $goalForm.className = 'goal form hidden';
+  $searchForm.className = 'search form hidden';
+  $resultsPage.className = 'results-page hidden';
+  $itemDetailsPage.className = 'item-details-page hidden';
 }
