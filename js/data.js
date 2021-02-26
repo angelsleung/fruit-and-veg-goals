@@ -3,7 +3,6 @@ var data = {
   view: 'home',
   results: null,
   nutrition: null,
-  selected: null,
   fruits: [],
   veggies: []
 };

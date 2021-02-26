@@ -7,6 +7,9 @@ $navHome.addEventListener('click', navHome);
 var $navSearch = document.querySelector('.fa-search');
 $navSearch.addEventListener('click', navSearch);
 
+var $navLog = document.querySelector('.fa-list');
+$navLog.addEventListener('click', loadDailyLog);
+
 var $searchBar = document.querySelector('.search-bar');
 $searchBar.addEventListener('input', delaySuggestions);
 
@@ -31,6 +34,13 @@ $addFruitButton.addEventListener('click', clickAddFruit);
 
 var $addVegButton = document.querySelector('.add-veg');
 $addVegButton.addEventListener('click', clickAddVeg);
+
+var $dailyLogPage = document.querySelector('.daily-log-page');
+var $fruitLog = document.querySelector('.fruit-log');
+var $vegLog = document.querySelector('.veg-log');
+
+var $noFruit = document.querySelector('.no-fruit');
+var $noVeg = document.querySelector('.no-veg');
 
 var $itemDetailsPage = document.querySelector('.item-details-page');
 var $itemDetailsImg = document.querySelector('.item-details-img');
@@ -97,7 +107,6 @@ function searchInput(event) {
 
 function getNutritionFacts(foodName) {
   hideAllViews();
-  data.selected = foodName;
   data.view = 'item details';
   $itemDetailsImg.setAttribute('alt', foodName);
   $itemDetailsName.textContent = foodName;
@@ -125,7 +134,8 @@ function getNutritionFacts(foodName) {
   xhr.addEventListener('load', function () {
     data.nutrition = xhr.response.foods[0];
     $itemDetailsImg.setAttribute('src', data.nutrition.photo.thumb);
-    $servingSize.textContent = data.nutrition.serving_qty + ' ' + data.nutrition.serving_unit + ' (' + data.nutrition.serving_weight_grams + 'g)';
+    data.nutrition.servingSize = data.nutrition.serving_qty + ' ' + data.nutrition.serving_unit + ' (' + data.nutrition.serving_weight_grams + 'g)';
+    $servingSize.textContent = data.nutrition.servingSize;
     $calories.textContent = Math.floor(data.nutrition.nf_calories);
     $caloriesFat.textContent = Math.floor(data.nutrition.nf_total_fat * 90) / 10;
     $totalFat.textContent = Math.floor(data.nutrition.nf_total_fat * 10) / 10 + 'g';
@@ -161,7 +171,7 @@ function clickSuggestion(event) {
 
 function submitSearch(event) {
   event.preventDefault();
-  data.view = 'search-results';
+  data.view = 'search results';
   clearTimeout(delaySuggestionsID);
   while ($resultList.firstChild) {
     $resultList.removeChild($resultList.firstChild);
@@ -178,7 +188,7 @@ function navHome(event) {
 }
 
 function navSearch(event) {
-  data.view = 'search-input';
+  data.view = 'search input';
   for (var i = 0; i < 4; i++) {
     $results[i].className = 'result hidden';
   }
@@ -191,7 +201,10 @@ function navSearch(event) {
 function renderResult(foodItem) {
   var result = document.createElement('div');
   result.className = 'result-div row';
-  result.setAttribute('data-food-name', foodItem.food_name);
+  result.setAttribute('data-name', foodItem.food_name);
+  var servingSize = foodItem.serving_qty + ' ' + foodItem.serving_unit;
+  result.setAttribute('data-serving-size', servingSize);
+  result.setAttribute('data-image', foodItem.photo.thumb);
 
   var imgDiv = document.createElement('div');
   imgDiv.className = 'img-div';
@@ -214,7 +227,7 @@ function renderResult(foodItem) {
 
   var resultDescription = document.createElement('div');
   resultDescription.className = 'result-description';
-  resultDescription.textContent = foodItem.serving_qty + ' ' + foodItem.serving_unit;
+  resultDescription.textContent = servingSize;
   resultText.append(resultDescription);
 
   var columnFourth = document.createElement('div');
@@ -240,54 +253,128 @@ function renderResult(foodItem) {
   return result;
 }
 
+function addItem(foodType, name, servingSize, image) {
+  var foodObject = {
+    name: name,
+    servingSize: servingSize,
+    image: image
+  };
+  data[foodType].push(foodObject);
+}
+
+function removeItem(foodType, name) {
+  for (var i = 0; i < data[foodType].length; i++) {
+    if (data[foodType][i].name === name) {
+      data[foodType].splice(i, 1);
+      return;
+    }
+  }
+}
+
 function clickResultList(event) {
   var resultElement = event.target.closest('.result-div');
-  var foodName = resultElement.dataset.foodName;
   if (event.target.matches('.item-icon')) {
-    if (event.target.matches('.fa-apple-alt')) {
-      if (event.target.matches('.not-added-icon')) {
+    if (event.target.matches('.not-added-icon')) {
+      if (event.target.matches('.fa-apple-alt')) {
         event.target.className = 'item-icon added-icon fas fa-apple-alt';
-        data.fruits.push(foodName);
+        addItem('fruits', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
       } else {
-        event.target.className = 'item-icon not-added-icon fas fa-apple-alt';
-        var index = data.fruits.indexOf(foodName);
-        data.fruits.splice(index, 1);
+        event.target.className = 'item-icon added-icon fas fa-carrot';
+        addItem('veggies', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
       }
     } else {
-      if (event.target.matches('.not-added-icon')) {
-        event.target.className = 'item-icon added-icon fas fa-carrot';
-        data.veggies.push(foodName);
+      if (event.target.matches('.fa-apple-alt')) {
+        event.target.className = 'item-icon not-added-icon fas fa-apple-alt';
+        removeItem('fruits', resultElement.dataset.name);
       } else {
         event.target.className = 'item-icon not-added-icon fas fa-carrot';
-        index = data.veggies.indexOf(foodName);
-        data.veggies.splice(index, 1);
+        removeItem('veggies', resultElement.dataset.name);
       }
     }
   } else {
-    getNutritionFacts(foodName);
+    getNutritionFacts(resultElement.dataset.name);
   }
 }
 
 function clickAddFruit(event) {
   if ($addFruitButton.matches('.not-added')) {
     $addFruitButton.className = 'add-fruit add-button added';
-    data.fruits.push(data.selected);
+    addItem('fruits', data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
   } else {
     $addFruitButton.className = 'add-fruit add-button not-added';
-    var index = data.fruits.indexOf(data.selected);
-    data.fruits.splice(index, 1);
+    removeItem('fruits', data.nutrition.food_name);
   }
 }
 
 function clickAddVeg(event) {
   if ($addVegButton.matches('.not-added')) {
     $addVegButton.className = 'add-veg add-button added';
-    data.veggies.push(data.selected);
+    addItem('veggies', data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
   } else {
     $addVegButton.className = 'add-veg add-button not-added';
-    var index = data.veggies.indexOf(data.selected);
-    data.veggies.splice(index, 1);
+    removeItem('veggies', data.nutrition.food_name);
   }
+}
+
+function renderLogEntry(entry) {
+  var result = document.createElement('div');
+  result.className = 'result-div row';
+
+  var imgDiv = document.createElement('div');
+  imgDiv.className = 'img-div';
+  result.append(imgDiv);
+
+  var imgResult = document.createElement('img');
+  imgResult.className = 'img-result';
+  imgResult.setAttribute('src', entry.image);
+  imgResult.setAttribute('alt', entry.name);
+  imgDiv.append(imgResult);
+
+  var resultText = document.createElement('div');
+  resultText.className = 'result-text';
+  result.append(resultText);
+
+  var resultName = document.createElement('div');
+  resultName.className = 'result-name';
+  resultName.textContent = entry.name;
+  resultText.append(resultName);
+
+  var resultDescription = document.createElement('div');
+  resultDescription.className = 'result-description';
+  resultDescription.textContent = entry.servingSize;
+  resultText.append(resultDescription);
+
+  return result;
+}
+
+function loadDailyLog(event) {
+  hideAllViews();
+  if (data.fruits.length === 0) {
+    $noFruit.className = 'no-fruit';
+  } else {
+    $noFruit.className = 'no-fruit hidden';
+  }
+  if (data.veggies.length === 0) {
+    $noVeg.className = 'no-veg';
+  } else {
+    $noVeg.className = 'no-veg hidden';
+  }
+  for (var i = 4; i < $fruitLog.childNodes.length; i++) {
+    $fruitLog.removeChild($fruitLog.childNodes[i]);
+  }
+  for (i = 4; i < $vegLog.childNodes.length; i++) {
+    $vegLog.removeChild($vegLog.childNodes[i]);
+  }
+  for (i = 0; i < data.fruits.length; i++) {
+    var renderedEntry = renderLogEntry(data.fruits[i]);
+    $fruitLog.append(renderedEntry);
+  }
+  for (i = 0; i < data.veggies.length; i++) {
+    renderedEntry = renderLogEntry(data.veggies[i]);
+    $vegLog.append(renderedEntry);
+  }
+  $dailyLogPage.className = 'daily-log-page';
+  data.view = 'daily log';
 }
 
 function hideAllViews() {
@@ -295,4 +382,5 @@ function hideAllViews() {
   $searchForm.className = 'search form hidden';
   $resultsPage.className = 'results-page hidden';
   $itemDetailsPage.className = 'item-details-page hidden';
+  $dailyLogPage.className = 'daily-log-page hidden';
 }
