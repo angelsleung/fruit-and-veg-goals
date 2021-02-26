@@ -7,6 +7,9 @@ $navHome.addEventListener('click', navHome);
 var $navSearch = document.querySelector('.fa-search');
 $navSearch.addEventListener('click', navSearch);
 
+var $navLog = document.querySelectorAll('.fa-list');
+$navLog.addEventListener('click', renderLogEntry);
+
 var $searchBar = document.querySelector('.search-bar');
 $searchBar.addEventListener('input', delaySuggestions);
 
@@ -31,6 +34,8 @@ $addFruitButton.addEventListener('click', clickAddFruit);
 
 var $addVegButton = document.querySelector('.add-veg');
 $addVegButton.addEventListener('click', clickAddVeg);
+
+var $dailyLogPage = document.querySelector('.daily-log-page');
 
 var $itemDetailsPage = document.querySelector('.item-details-page');
 var $itemDetailsImg = document.querySelector('.item-details-img');
@@ -191,7 +196,10 @@ function navSearch(event) {
 function renderResult(foodItem) {
   var result = document.createElement('div');
   result.className = 'result-div row';
-  result.setAttribute('data-food-name', foodItem.food_name);
+  result.setAttribute('data-name', foodItem.food_name);
+  var servingSize = foodItem.serving_qty + ' ' + foodItem.serving_unit;
+  result.setAttribute('data-serving-size', servingSize);
+  result.setAttribute('data-image', foodItem.photo.thumb);
 
   var imgDiv = document.createElement('div');
   imgDiv.className = 'img-div';
@@ -214,7 +222,7 @@ function renderResult(foodItem) {
 
   var resultDescription = document.createElement('div');
   resultDescription.className = 'result-description';
-  resultDescription.textContent = foodItem.serving_qty + ' ' + foodItem.serving_unit;
+  resultDescription.textContent = servingSize;
   resultText.append(resultDescription);
 
   var columnFourth = document.createElement('div');
@@ -242,29 +250,41 @@ function renderResult(foodItem) {
 
 function clickResultList(event) {
   var resultElement = event.target.closest('.result-div');
-  var foodName = resultElement.dataset.foodName;
   if (event.target.matches('.item-icon')) {
-    if (event.target.matches('.fa-apple-alt')) {
-      if (event.target.matches('.not-added-icon')) {
+    if (event.target.matches('.not-added-icon')) {
+      var foodObject = {
+        name: resultElement.dataset.name,
+        servingSize: resultElement.dataset.servingSize,
+        image: resultElement.dataset.image
+      };
+      if (event.target.matches('.fa-apple-alt')) {
         event.target.className = 'item-icon added-icon fas fa-apple-alt';
-        data.fruits.push(foodName);
+        data.fruits.push(foodObject);
       } else {
-        event.target.className = 'item-icon not-added-icon fas fa-apple-alt';
-        var index = data.fruits.indexOf(foodName);
-        data.fruits.splice(index, 1);
+        event.target.className = 'item-icon added-icon fas fa-carrot';
+        data.veggies.push(foodObject);
       }
     } else {
-      if (event.target.matches('.not-added-icon')) {
-        event.target.className = 'item-icon added-icon fas fa-carrot';
-        data.veggies.push(foodName);
+      if (event.target.matches('.fa-apple-alt')) {
+        event.target.className = 'item-icon not-added-icon fas fa-apple-alt';
+        for (var i = 0; i < data.fruits.length; i++) {
+          if (data.fruits[i].name === resultElement.dataset.name) {
+            data.fruits.splice(i, 1);
+            return;
+          }
+        }
       } else {
         event.target.className = 'item-icon not-added-icon fas fa-carrot';
-        index = data.veggies.indexOf(foodName);
-        data.veggies.splice(index, 1);
+        for (i = 0; i < data.veggies.length; i++) {
+          if (data.veggies[i].name === resultElement.dataset.name) {
+            data.veggies.splice(i, 1);
+            return;
+          }
+        }
       }
     }
   } else {
-    getNutritionFacts(foodName);
+    getNutritionFacts(resultElement.dataset.name);
   }
 }
 
@@ -290,9 +310,45 @@ function clickAddVeg(event) {
   }
 }
 
+function renderLogEntry(entry) {
+  var result = document.createElement('div');
+  result.className = 'result-div row';
+  // result.setAttribute('data-name', entry.food_name);
+  // var servingSize = foodItem.serving_qty + ' ' + foodItem.serving_unit;
+  // result.setAttribute('data-serving-size', servingSize);
+  // result.setAttribute('data-image', foodItem.photo.thumb);
+
+  var imgDiv = document.createElement('div');
+  imgDiv.className = 'img-div';
+  result.append(imgDiv);
+
+  var imgResult = document.createElement('img');
+  imgResult.className = 'img-result';
+  imgResult.setAttribute('src', entry.image);
+  imgResult.setAttribute('alt', entry.name);
+  imgDiv.append(imgResult);
+
+  var resultText = document.createElement('div');
+  resultText.className = 'result-text';
+  result.append(resultText);
+
+  var resultName = document.createElement('div');
+  resultName.className = 'result-name';
+  resultName.textContent = entry.name;
+  resultText.append(resultName);
+
+  var resultDescription = document.createElement('div');
+  resultDescription.className = 'result-description';
+  resultDescription.textContent = entry.servingSize;
+  resultText.append(resultDescription);
+
+  return result;
+}
+
 function hideAllViews() {
   $goalForm.className = 'goal form hidden';
   $searchForm.className = 'search form hidden';
   $resultsPage.className = 'results-page hidden';
   $itemDetailsPage.className = 'item-details-page hidden';
+  $dailyLogPage.className = 'daily-log-page hidden';
 }
