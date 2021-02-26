@@ -7,13 +7,13 @@ var data = {
   veggies: []
 };
 
-// var previousData = localStorage.getItem('local-data');
-// if (previousData !== null) {
-//   data = JSON.parse(previousData);
-// }
-// window.addEventListener('beforeunload', beforeUnload);
+var previousData = localStorage.getItem('local-data');
+if (previousData !== null) {
+  data = JSON.parse(previousData);
+}
+window.addEventListener('beforeunload', beforeUnload);
 
-// function beforeUnload(event) {
-//   var localData = JSON.stringify(data);
-//   localStorage.setItem('local-data', localData);
-// }
+function beforeUnload(event) {
+  var localData = JSON.stringify(data);
+  localStorage.setItem('local-data', localData);
+}

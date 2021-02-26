@@ -359,11 +359,17 @@ function loadDailyLog(event) {
   } else {
     $noVeg.className = 'no-veg hidden';
   }
-  for (var i = 0; i < data.fruits.length; i++) {
+  for (var i = 4; i < $fruitLog.childNodes.length; i++) {
+    $fruitLog.removeChild($fruitLog.childNodes[i]);
+  }
+  for (i = 4; i < $vegLog.childNodes.length; i++) {
+    $vegLog.removeChild($vegLog.childNodes[i]);
+  }
+  for (i = 0; i < data.fruits.length; i++) {
     var renderedEntry = renderLogEntry(data.fruits[i]);
     $fruitLog.append(renderedEntry);
   }
-  for (i = 0; i < data.fruits.length; i++) {
+  for (i = 0; i < data.veggies.length; i++) {
     renderedEntry = renderLogEntry(data.veggies[i]);
     $vegLog.append(renderedEntry);
   }
