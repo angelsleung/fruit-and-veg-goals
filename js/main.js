@@ -26,8 +26,11 @@ var $resultsPageTitle = document.querySelector('.search-results');
 var $resultList = document.querySelector('.result-list');
 $resultList.addEventListener('click', clickResultList);
 
-var $addLogDiv = document.querySelector('.add-log-div');
-$addLogDiv.addEventListener('click', clickAddItemDetail);
+var $addFruitButton = document.querySelector('.add-fruit');
+$addFruitButton.addEventListener('click', clickAddFruit);
+
+var $addVegButton = document.querySelector('.add-veg');
+$addVegButton.addEventListener('click', clickAddVeg);
 
 var $itemDetailsPage = document.querySelector('.item-details-page');
 var $itemDetailsImg = document.querySelector('.item-details-img');
@@ -93,6 +96,22 @@ function searchInput(event) {
 }
 
 function getNutritionFacts(foodName) {
+  hideAllViews();
+  data.selected = foodName;
+  data.view = 'item details';
+  $itemDetailsImg.setAttribute('alt', foodName);
+  $itemDetailsName.textContent = foodName;
+  $nutritionFoodName.textContent = foodName;
+  if (data.fruits.includes(foodName)) {
+    $addFruitButton.className = 'added add-fruit add-button';
+  } else {
+    $addFruitButton.className = 'not-added add-fruit add-button';
+  }
+  if (data.veggies.includes(foodName)) {
+    $addVegButton.className = 'added add-veg add-button';
+  } else {
+    $addVegButton.className = 'not-added add-veg add-button';
+  }
   var body = {
     query: foodName
   };
@@ -106,9 +125,6 @@ function getNutritionFacts(foodName) {
   xhr.addEventListener('load', function () {
     data.nutrition = xhr.response.foods[0];
     $itemDetailsImg.setAttribute('src', data.nutrition.photo.thumb);
-    $itemDetailsImg.setAttribute('alt', data.nutrition.food_name);
-    $itemDetailsName.textContent = data.nutrition.food_name;
-    $nutritionFoodName.textContent = data.nutrition.food_name;
     $servingSize.textContent = data.nutrition.serving_qty + ' ' + data.nutrition.serving_unit + ' (' + data.nutrition.serving_weight_grams + 'g)';
     $calories.textContent = Math.floor(data.nutrition.nf_calories);
     $caloriesFat.textContent = Math.floor(data.nutrition.nf_total_fat * 90) / 10;
@@ -124,10 +140,7 @@ function getNutritionFacts(foodName) {
     $potassiumPercent.textContent = Math.floor(data.nutrition.nf_potassium * 100 / 4700) + '%';
     $totalCarbsPercent.textContent = Math.floor(data.nutrition.nf_total_carbohydrate * 100 / 275) + '%';
     $fiberPercent.textContent = Math.floor(data.nutrition.nf_dietary_fiber * 100 / 28) + '%';
-    hideAllViews();
     $itemDetailsPage.className = 'item-details-page';
-    data.selected = data.nutrition.food_name;
-    data.view = 'item details';
   });
   xhr.send(JSON.stringify(body));
 }
@@ -213,7 +226,7 @@ function renderResult(foodItem) {
   columnFourth.append(fruitIconDiv);
 
   var fruitItemIcon = document.createElement('i');
-  fruitItemIcon.className = 'item-icon fas fa-apple-alt';
+  fruitItemIcon.className = 'item-icon not-added-icon fas fa-apple-alt';
   fruitIconDiv.append(fruitItemIcon);
 
   var vegIconDiv = document.createElement('div');
@@ -221,7 +234,7 @@ function renderResult(foodItem) {
   columnFourth.append(vegIconDiv);
 
   var vegItemIcon = document.createElement('i');
-  vegItemIcon.className = 'item-icon fas fa-carrot';
+  vegItemIcon.className = 'item-icon not-added-icon fas fa-carrot';
   vegIconDiv.append(vegItemIcon);
 
   return result;
@@ -231,27 +244,49 @@ function clickResultList(event) {
   var resultElement = event.target.closest('.result-div');
   var foodName = resultElement.dataset.foodName;
   if (event.target.matches('.item-icon')) {
-    event.target.style.color = 'lightgreen';
     if (event.target.matches('.fa-apple-alt')) {
-      data.fruits.push(foodName);
+      if (event.target.matches('.not-added-icon')) {
+        event.target.className = 'item-icon added-icon fas fa-apple-alt';
+        data.fruits.push(foodName);
+      } else {
+        event.target.className = 'item-icon not-added-icon fas fa-apple-alt';
+        var index = data.fruits.indexOf(foodName);
+        data.fruits.splice(index, 1);
+      }
     } else {
-      data.veggies.push(foodName);
+      if (event.target.matches('.not-added-icon')) {
+        event.target.className = 'item-icon added-icon fas fa-carrot';
+        data.veggies.push(foodName);
+      } else {
+        event.target.className = 'item-icon not-added-icon fas fa-carrot';
+        index = data.veggies.indexOf(foodName);
+        data.veggies.splice(index, 1);
+      }
     }
   } else {
     getNutritionFacts(foodName);
   }
 }
 
-function clickAddItemDetail(event) {
-  var clickedButton = event.target.closest('.add-button');
-  if (clickedButton === null) {
-    return;
-  }
-  clickedButton.style.backgroundColor = 'lightgreen';
-  if (clickedButton.dataset.type === 'fruit') {
+function clickAddFruit(event) {
+  if ($addFruitButton.matches('.not-added')) {
+    $addFruitButton.className = 'add-fruit add-button added';
     data.fruits.push(data.selected);
   } else {
+    $addFruitButton.className = 'add-fruit add-button not-added';
+    var index = data.fruits.indexOf(data.selected);
+    data.fruits.splice(index, 1);
+  }
+}
+
+function clickAddVeg(event) {
+  if ($addVegButton.matches('.not-added')) {
+    $addVegButton.className = 'add-veg add-button added';
     data.veggies.push(data.selected);
+  } else {
+    $addVegButton.className = 'add-veg add-button not-added';
+    var index = data.veggies.indexOf(data.selected);
+    data.veggies.splice(index, 1);
   }
 }
 
