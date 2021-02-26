@@ -287,6 +287,23 @@ body {
   font-style: italic;
 }
 
+.total {
+  width: 80%;
+  height: 4rem;
+  border: 1px solid;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.completed {
+  width: 20%;
+  height: 100%;
+  border-right: 1px solid lightgray;
+  background-color: lightgreen;
+
+  /* border */
+}
+
 .footer {
   position: fixed;
   bottom: 0;
