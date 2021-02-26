@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,12 +12,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
+
 <body>
   <div class="container">
     <header class="header row">
       <h1 class="app-name">Fruit &amp; Veg Goals</h1>
     </header>
-    <main>
+    <main class="main">
       <form class="goal form" data-view="goal-form">
         <h2 class="page-title">What is my goal today?</h2>
         <p>I want to eat...</p>
@@ -34,22 +36,22 @@
               <option value="9">9</option>
               <option value="10">10</option>
             </select>
-              <span>servings of fruits</span>
+            <span>servings of fruits</span>
           </div>
           <div class="input">
-              <select name="veg">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option selected value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
-              <span>servings of veggies</span>
+            <select name="veg">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option selected value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+            <span>servings of veggies</span>
           </div>
         </div>
         <input type="submit" value="Next" class="next">
@@ -106,6 +108,80 @@
           </div>
         </div>
       </div>
+      <div class="item-details-page hidden">
+        <div class="item-details-header row">
+          <div class="add-log-div">
+            <h1 class="item-details-name"></h1>
+            <div class="add-log-title">Add to log</div>
+            <div class="add-fruit add-button not-added">
+              <i class="add-log-icon fas fa-plus"></i>
+              <span> to fruits </span>
+              <i class="add-log-icon fruit-icon fas fa-apple-alt"></i>
+            </div>
+            <div class="add-veg add-button not-added">
+              <i class="add-log-icon fas fa-plus"></i>
+              <span> to veggies </span>
+              <i class="add-log-icon fas fa-carrot"></i>
+            </div>
+          </div>
+          <img class="item-details-img">
+        </div>
+        <table class="nutrition-table">
+          <thead>
+            <tr>
+              <th class="nutrition-title" colspan="2">Nutrition Facts</th>
+            </tr>
+            <tr>
+              <td colspan="2" class="nutrition-food-name"></td>
+            </tr>
+            <tr>
+              <td class="nutrition-header-last-row" colspan="2">Serving Size: <span class="serving-size"></span></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="serving-amount" colspan="2">Amount Per Serving</td>
+            </tr>
+            <tr>
+              <td class="nutrition-calories-last-row"><span class="nutrition-category">Calories </span><span class="calories"></span></td>
+              <td class="nutrition-calories-last-row daily-values">Calories from Fat <span class="calories-fat"></span></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="daily-values"><span class="nutrition-category">% Daily Value</span>*</td>
+            </tr>
+            <tr>
+              <td><span class="nutrition-category">Total Fat </span><span class="total-fat"></span></td>
+              <td class="daily-values total-fat-percent"></td>
+            </tr>
+            <tr>
+              <td><span class="nutrition-category">Sodium </span><span class="sodium"></span></td>
+              <td class="daily-values sodium-percent"></td>
+            </tr>
+            <tr>
+              <td><span class="nutrition-category">Potassium </span><span class="potassium"></span></td>
+              <td class="daily-values potassium-percent"></td>
+            </tr>
+            <tr>
+              <td><span class="nutrition-category">Total Carbohydrates </span><span class="total-carbs"></span></td>
+              <td class="daily-values total-carbs-percent"></td>
+            </tr>
+            <tr>
+              <td class="nutrition-subcategory">Dietary Fiber <span class="fiber"></span></td>
+              <td class="daily-values fiber-percent"></td>
+            </tr>
+            <tr>
+              <td colspan="2" class="nutrition-subcategory">Sugars <span class="sugar"></span></td>
+            </tr>
+            <tr>
+              <td colspan="2" class="nutrition-header-last-row"><span class="nutrition-category">Protein </span><span class="protein"></span></td>
+            </tr>
+            <tr>
+              <td colspan="2"><ul class="daily-values-message"><li>Percent Daily Values are based on a 2000 calorie diet</li></ul></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
     </main>
     <footer class="footer row">
       <i class="nav fas fa-home"></i>
@@ -117,4 +193,5 @@
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
 </body>
+
 </html>
