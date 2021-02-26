@@ -281,6 +281,12 @@ body {
   color: rgb(175, 182, 190);
 }
 
+.no-fruit,
+.no-veg {
+  color: lightgray;
+  font-style: italic;
+}
+
 .footer {
   position: fixed;
   bottom: 0;
