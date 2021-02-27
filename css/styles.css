@@ -111,7 +111,8 @@ body {
   object-fit: contain;
 }
 
-.result-list {
+.result-list,
+.daily-log-page {
   padding: 0 1rem;
 }
 
