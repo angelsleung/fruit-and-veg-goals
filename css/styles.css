@@ -290,7 +290,7 @@ body {
 .total {
   width: 80%;
   height: 4rem;
-  border: 1px solid;
+  border: 1px solid lightgray;
   margin: 0 auto;
   border-radius: 5px;
 }
@@ -300,8 +300,6 @@ body {
   height: 100%;
   border-right: 1px solid lightgray;
   background-color: lightgreen;
-
-  /* border */
 }
 
 .footer {

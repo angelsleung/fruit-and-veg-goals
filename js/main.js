@@ -67,12 +67,17 @@ var $potassiumPercent = document.querySelector('.potassium-percent');
 var $totalCarbsPercent = document.querySelector('.total-carbs-percent');
 var $fiberPercent = document.querySelector('.fiber-percent');
 
+var $fruitProgress = document.querySelector('.fruit-progress');
+var $fruitBar = document.querySelector('.fruit-bar');
+var $vegProgress = document.querySelector('.veg-progress');
+var $vegBar = document.querySelector('.veg-bar');
+
 var delaySuggestionsID = null;
 
 function setGoal(event) {
   event.preventDefault();
   data.fruitGoal = $goalForm.elements.fruit.value;
-  data.vegGoal = $goalForm.elements.veg.value;
+  data.veggieGoal = $goalForm.elements.veg.value;
   navSearch();
 }
 
@@ -206,6 +211,12 @@ function navSearch(event) {
 }
 
 function navProgress(event) {
+  var fruitPercent = 100 * data.fruits.length / data.fruitGoal;
+  var vegPercent = 100 * data.veggies.length / data.veggieGoal;
+  $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
+  $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
+  $fruitBar.style.width = fruitPercent + '%';
+  $vegBar.style.width = vegPercent + '%';
   hideAllViews();
   $progressPage.className = 'progress-page';
 }
@@ -371,13 +382,13 @@ function loadDailyLog(event) {
   } else {
     $noVeg.className = 'no-veg hidden';
   }
-  for (var i = 4; i < $fruitLog.childNodes.length; i++) {
-    $fruitLog.removeChild($fruitLog.childNodes[i]);
+  while ($fruitLog.firstChild) {
+    $fruitLog.removeChild($fruitLog.firstChild);
   }
-  for (i = 4; i < $vegLog.childNodes.length; i++) {
-    $vegLog.removeChild($vegLog.childNodes[i]);
+  while ($vegLog.firstChild) {
+    $vegLog.removeChild($vegLog.firstChild);
   }
-  for (i = 0; i < data.fruits.length; i++) {
+  for (var i = 0; i < data.fruits.length; i++) {
     var renderedEntry = renderLogEntry(data.fruits[i]);
     $fruitLog.append(renderedEntry);
   }
