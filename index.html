@@ -20,7 +20,7 @@
     </header>
     <main class="main">
 
-      <form class="goal form hidden" data-view="goal-form">
+      <form class="goal form" data-view="goal-form">
         <h2 class="page-title">What is my goal today?</h2>
         <p>I want to eat...</p>
         <div class="form-inputs">
@@ -129,7 +129,7 @@
           </div>
           <img class="item-details-img">
         </div>
-        <table class="nutrition-table">
+          <table class="nutrition-table">
           <thead>
             <tr>
               <th class="nutrition-title" colspan="2">Nutrition Facts</th>
@@ -184,34 +184,39 @@
             </tr>
           </tbody>
         </table>
-      </div>
+        </div>
 
       <div class="daily-log-page hidden">
         <h2 class="search-results page-title">Daily Log</h2>
-        <div class="fruit-list result-list">
+        <div class="category-div">
           <h3 class="category-title">Fruits</h3>
           <p class="no-fruit">Nothing added yet</p>
           <div class="fruit-log"></div>
         </div>
-        <div class="veg-list result-list">
+        <div class="category-div">
           <h3 class="category-title">Veggies</h3>
           <p class="no-veg">Nothing added yet</p>
           <div class="veg-log"></div>
         </div>
       </div>
 
-      <div class="progress-page">
+      <div class="progress-page hidden">
         <h2 class="page-title">Today's Progress</h2>
-        <h3 class="category-title">Fruits</h3>
-        <div class="total">
-          <div class="fruit-bar completed"></div>
+        <div class="category-div">
+          <h3 class="category-title">Fruits</h3>
+          <div class="total">
+            <div class="fruit-bar completed"></div>
+          </div>
+          <div class="fruit-progress"></div>
         </div>
-        <div class="fruit-progress">3/5 completed</div>
-        <h3 class="category-title">Veggies</h3>
-        <div class="total">
-          <div class="veg-bar completed"></div>
+        <div class="category-div">
+          <h3 class="category-title">Veggies</h3>
+          <div class="total">
+            <div class="veg-bar completed"></div>
+          </div>
+          <div class="veg-progress"></div>
         </div>
-        <div class="veg-progress">2/5 completed</div>
+
       </div>
 
     </main>

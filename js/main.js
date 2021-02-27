@@ -98,7 +98,7 @@ function searchInput(event) {
   xhr.setRequestHeader('x-remote-user-id', 0);
   xhr.addEventListener('load', function () {
     data.results = xhr.response.common;
-    if (data.view === 'search-input') {
+    if (data.view === 'search input') {
       for (i = 0; i < 4; i++) {
         $results[i].className = 'result';
         $results[i].setAttribute('data-food-name', data.results[i].food_name);
@@ -219,6 +219,7 @@ function navProgress(event) {
   $vegBar.style.width = vegPercent + '%';
   hideAllViews();
   $progressPage.className = 'progress-page';
+  data.view = 'progress page';
 }
 
 function renderResult(foodItem) {
