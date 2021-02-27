@@ -112,6 +112,7 @@ body {
 }
 
 .result-list,
+.result-header,
 .daily-log-page {
   padding: 0 1rem;
 }
