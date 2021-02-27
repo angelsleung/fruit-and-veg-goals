@@ -63,7 +63,7 @@ body {
 }
 
 .search-div {
-  padding-top: 1rem;
+  padding-top: 2rem;
   justify-content: center;
 }
 
@@ -111,7 +111,9 @@ body {
   object-fit: contain;
 }
 
-.result-list {
+.result-list,
+.result-header,
+.daily-log-page {
   padding: 0 1rem;
 }
 
@@ -164,6 +166,8 @@ body {
 
 .item-details-page {
   width: 22rem;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .item-details-header {
@@ -287,6 +291,25 @@ body {
   font-style: italic;
 }
 
+.category-div {
+  padding: 0.5rem 0 1rem;
+}
+
+.total {
+  width: 80%;
+  height: 3rem;
+  border: 1px solid lightgray;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.completed {
+  width: 20%;
+  height: 100%;
+  border-right: 1px solid lightgray;
+  background-color: lightgreen;
+}
+
 .footer {
   position: fixed;
   bottom: 0;
@@ -315,7 +338,8 @@ body {
   .form,
   .results-page,
   .item-details-page,
-  .daily-log-page {
+  .daily-log-page,
+  .progress-page {
     max-width: 900px;
     margin: 0 auto;
   }

@@ -20,7 +20,7 @@
     </header>
     <main class="main">
 
-      <form class="goal form hidden" data-view="goal-form">
+      <form class="goal form" data-view="goal-form">
         <h2 class="page-title">What is my goal today?</h2>
         <p>I want to eat...</p>
         <div class="form-inputs">
@@ -96,7 +96,7 @@
 
       <div class="results-page hidden" data-view="search-results">
         <h2 class="search-results page-title"></h2>
-        <div class="result-list">
+        <div class="result-list-div">
           <div class="result-header column-one-fourth row">
             <div class="result-header-div fruit">
               <i class="add fas fa-plus"></i>
@@ -107,6 +107,7 @@
               <p class="result-header-text">veggie</p>
             </div>
           </div>
+          <div class="result-list"></div>
         </div>
       </div>
 
@@ -129,7 +130,7 @@
           </div>
           <img class="item-details-img">
         </div>
-        <table class="nutrition-table">
+          <table class="nutrition-table">
           <thead>
             <tr>
               <th class="nutrition-title" colspan="2">Nutrition Facts</th>
@@ -184,18 +185,37 @@
             </tr>
           </tbody>
         </table>
-      </div>
-
-      <div class="daily-log-page">
-        <h2 class="search-results page-title">Daily Log</h2>
-        <div class="fruit-log result-list">
-          <h3 class="category-title">Fruits</h3>
-          <p class="no-fruit">Nothing added yet</p>
         </div>
 
-        <div class="veg-log result-list">
+      <div class="daily-log-page hidden">
+        <h2 class="search-results page-title">Daily Log</h2>
+        <div class="category-div">
+          <h3 class="category-title">Fruits</h3>
+          <p class="no-fruit">Nothing added yet</p>
+          <div class="fruit-log"></div>
+        </div>
+        <div class="category-div">
           <h3 class="category-title">Veggies</h3>
           <p class="no-veg">Nothing added yet</p>
+          <div class="veg-log"></div>
+        </div>
+      </div>
+
+      <div class="progress-page hidden">
+        <h2 class="page-title">Today's Progress</h2>
+        <div class="category-div">
+          <h3 class="category-title">Fruits</h3>
+          <div class="total">
+            <div class="fruit-bar completed"></div>
+          </div>
+          <div class="fruit-progress"></div>
+        </div>
+        <div class="category-div">
+          <h3 class="category-title">Veggies</h3>
+          <div class="total">
+            <div class="veg-bar completed"></div>
+          </div>
+          <div class="veg-progress"></div>
         </div>
 
       </div>

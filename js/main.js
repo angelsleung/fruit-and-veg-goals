@@ -10,6 +10,9 @@ $navSearch.addEventListener('click', navSearch);
 var $navLog = document.querySelector('.fa-list');
 $navLog.addEventListener('click', loadDailyLog);
 
+var $navProgress = document.querySelector('.fa-chart-bar');
+$navProgress.addEventListener('click', navProgress);
+
 var $searchBar = document.querySelector('.search-bar');
 $searchBar.addEventListener('input', delaySuggestions);
 
@@ -42,6 +45,8 @@ var $vegLog = document.querySelector('.veg-log');
 var $noFruit = document.querySelector('.no-fruit');
 var $noVeg = document.querySelector('.no-veg');
 
+var $progressPage = document.querySelector('.progress-page');
+
 var $itemDetailsPage = document.querySelector('.item-details-page');
 var $itemDetailsImg = document.querySelector('.item-details-img');
 var $itemDetailsName = document.querySelector('.item-details-name');
@@ -62,10 +67,17 @@ var $potassiumPercent = document.querySelector('.potassium-percent');
 var $totalCarbsPercent = document.querySelector('.total-carbs-percent');
 var $fiberPercent = document.querySelector('.fiber-percent');
 
+var $fruitProgress = document.querySelector('.fruit-progress');
+var $fruitBar = document.querySelector('.fruit-bar');
+var $vegProgress = document.querySelector('.veg-progress');
+var $vegBar = document.querySelector('.veg-bar');
+
 var delaySuggestionsID = null;
 
 function setGoal(event) {
   event.preventDefault();
+  data.fruitGoal = $goalForm.elements.fruit.value;
+  data.veggieGoal = $goalForm.elements.veg.value;
   navSearch();
 }
 
@@ -86,7 +98,7 @@ function searchInput(event) {
   xhr.setRequestHeader('x-remote-user-id', 0);
   xhr.addEventListener('load', function () {
     data.results = xhr.response.common;
-    if (data.view === 'search-input') {
+    if (data.view === 'search input') {
       for (i = 0; i < 4; i++) {
         $results[i].className = 'result';
         $results[i].setAttribute('data-food-name', data.results[i].food_name);
@@ -100,6 +112,8 @@ function searchInput(event) {
         var resultDiv = renderResult(data.results[i]);
         $resultList.append(resultDiv);
       }
+      $resultsPage.className = 'results-page';
+      $searchForm.className = 'search form hidden';
     }
   });
   xhr.send();
@@ -177,8 +191,6 @@ function submitSearch(event) {
     $resultList.removeChild($resultList.firstChild);
   }
   searchInput();
-  $resultsPage.className = 'results-page';
-  $searchForm.className = 'search form hidden';
 }
 
 function navHome(event) {
@@ -196,6 +208,18 @@ function navSearch(event) {
   $searchForm.className = 'search form';
   $searchForm.reset();
   $searchBar.focus();
+}
+
+function navProgress(event) {
+  var fruitPercent = 100 * data.fruits.length / data.fruitGoal;
+  var vegPercent = 100 * data.veggies.length / data.veggieGoal;
+  $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
+  $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
+  $fruitBar.style.width = fruitPercent + '%';
+  $vegBar.style.width = vegPercent + '%';
+  hideAllViews();
+  $progressPage.className = 'progress-page';
+  data.view = 'progress page';
 }
 
 function renderResult(foodItem) {
@@ -359,13 +383,13 @@ function loadDailyLog(event) {
   } else {
     $noVeg.className = 'no-veg hidden';
   }
-  for (var i = 4; i < $fruitLog.childNodes.length; i++) {
-    $fruitLog.removeChild($fruitLog.childNodes[i]);
+  while ($fruitLog.firstChild) {
+    $fruitLog.removeChild($fruitLog.firstChild);
   }
-  for (i = 4; i < $vegLog.childNodes.length; i++) {
-    $vegLog.removeChild($vegLog.childNodes[i]);
+  while ($vegLog.firstChild) {
+    $vegLog.removeChild($vegLog.firstChild);
   }
-  for (i = 0; i < data.fruits.length; i++) {
+  for (var i = 0; i < data.fruits.length; i++) {
     var renderedEntry = renderLogEntry(data.fruits[i]);
     $fruitLog.append(renderedEntry);
   }
@@ -383,4 +407,5 @@ function hideAllViews() {
   $resultsPage.className = 'results-page hidden';
   $itemDetailsPage.className = 'item-details-page hidden';
   $dailyLogPage.className = 'daily-log-page hidden';
+  $progressPage.className = 'progress-page hidden';
 }
