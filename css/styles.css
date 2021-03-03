@@ -23,18 +23,11 @@ body {
   padding: 1rem;
   font-size: 2.2em;
   font-family: 'Caveat', cursive;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
 }
 
 .page-title {
   padding-top: 2rem;
-}
-
-.form,
-.results-page,
-.daily-log-page {
-  display: flex;
-  flex-direction: column;
 }
 
 .form-inputs {
@@ -165,17 +158,23 @@ body {
 }
 
 .item-details-page {
-  width: 22rem;
   text-align: center;
   margin: 0 auto;
 }
 
 .item-details-header {
   padding: 0 1rem;
+  justify-content: center;
+}
+
+.details-img-div {
+  display: flex;
 }
 
 .item-details-img {
-  padding: 1rem;
+  width: 100%;
+  margin: 0.5rem;
+  object-fit: contain;
 }
 
 .item-details-name {
@@ -185,6 +184,7 @@ body {
 
 .nutrition-title {
   font-size: 1.8em;
+  white-space: nowrap;
 }
 
 .nutrition-table {
@@ -196,11 +196,11 @@ body {
   font-size: 1em;
   margin: 0 auto;
   width: 95%;
-  white-space: nowrap;
 }
 
 .nutrition-food-name {
   text-transform: capitalize;
+  font-weight: normal;
 }
 
 .nutrition-header-last-row {
@@ -209,10 +209,16 @@ body {
 
 .nutrition-calories-last-row {
   border-bottom: 4px solid;
+  white-space: normal;
 }
 
 .nutrition-table > tbody td {
   border-top: 1px solid black;
+  white-space: nowrap;
+}
+
+.nutrition-table > thead th:nth-child(1) {
+  width: 100px;
 }
 
 .nutrition-category {
@@ -223,13 +229,18 @@ body {
   padding-left: 1rem;
 }
 
+.serving-label {
+  vertical-align: top;
+}
+
 .serving-amount {
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-weight: bold;
 }
 
 .serving-size {
-  white-space: normal;
+  text-align: right;
+  font-weight: normal;
 }
 
 .daily-values {
@@ -353,5 +364,9 @@ body {
   .progress-page {
     max-width: 900px;
     margin: 0 auto;
+  }
+
+  .nutrition-table {
+    max-width: 500px;
   }
 }

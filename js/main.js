@@ -102,12 +102,14 @@ function searchInput(event) {
   xhr.addEventListener('load', function () {
     data.results = xhr.response.common;
     if (data.view === 'search input') {
-      for (i = 0; i < 4; i++) {
-        $results[i].className = 'result';
-        $results[i].setAttribute('data-food-name', data.results[i].food_name);
-        $textResults[i].textContent = data.results[i].food_name;
-        $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
-        $imgResults[i].setAttribute('alt', data.results[i].food_name);
+      if (data.results.length >= 4) {
+        for (i = 0; i < 4; i++) {
+          $results[i].setAttribute('data-food-name', data.results[i].food_name);
+          $textResults[i].textContent = data.results[i].food_name;
+          $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
+          $imgResults[i].setAttribute('alt', data.results[i].food_name);
+          $results[i].className = 'result';
+        }
       }
     } else {
       $resultsPageTitle.textContent = 'Search results for "' + input + '"';

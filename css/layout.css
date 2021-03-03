@@ -1,4 +1,10 @@
-.container {
+.main,
+.container,
+.form,
+.results-page,
+.daily-log-page,
+.item-details-page,
+.progress-page {
   display: flex;
   flex-direction: column;
   width: 100%;
