@@ -188,12 +188,15 @@ body {
 }
 
 .nutrition-table {
+  table-layout: fixed;
   text-align: left;
   border: 1px solid black;
   padding: 0.5rem;
   border-spacing: 0;
-  font-size: 0.8em;
+  font-size: 1em;
   margin: 0 auto;
+  width: 95%;
+  white-space: nowrap;
 }
 
 .nutrition-food-name {
@@ -225,8 +228,13 @@ body {
   font-weight: bold;
 }
 
+.serving-size {
+  white-space: normal;
+}
+
 .daily-values {
   text-align: right;
+  width: 90%;
 }
 
 .daily-values-message {
@@ -234,6 +242,7 @@ body {
   color: gray;
   list-style-type: '*';
   padding-left: 0.5em;
+  white-space: normal;
 }
 
 .daily-values-message > li {

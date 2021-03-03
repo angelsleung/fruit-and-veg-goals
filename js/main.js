@@ -125,16 +125,16 @@ function getNutritionFacts(foodName) {
   $itemDetailsImg.setAttribute('alt', foodName);
   $itemDetailsName.textContent = foodName;
   $nutritionFoodName.textContent = foodName;
-  if (data.fruits.includes(foodName)) {
-    $addFruitButton.className = 'added add-fruit add-button';
-  } else {
-    $addFruitButton.className = 'not-added add-fruit add-button';
-  }
-  if (data.veggies.includes(foodName)) {
-    $addVegButton.className = 'added add-veg add-button';
-  } else {
-    $addVegButton.className = 'not-added add-veg add-button';
-  }
+  // if (data.fruits.includes(foodName)) {
+  //   $addFruitButton.className = 'added add-fruit add-button';
+  // } else {
+  //   $addFruitButton.className = 'not-added add-fruit add-button';
+  // }
+  // if (data.veggies.includes(foodName)) {
+  //   $addVegButton.className = 'added add-veg add-button';
+  // } else {
+  //   $addVegButton.className = 'not-added add-veg add-button';
+  // }
   var body = {
     query: foodName
   };
@@ -213,10 +213,24 @@ function navSearch(event) {
 function navProgress(event) {
   var fruitPercent = 100 * data.fruits.length / data.fruitGoal;
   var vegPercent = 100 * data.veggies.length / data.veggieGoal;
+  var reachedFruitGoal = fruitPercent >= 100;
+  var reachedVegGoal = vegPercent >= 100;
   $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
   $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
-  $fruitBar.style.width = fruitPercent + '%';
-  $vegBar.style.width = vegPercent + '%';
+  if (reachedFruitGoal) {
+    $fruitBar.style.width = '100%';
+    $fruitBar.backgroundColor = 'lightsalmon';
+    $fruitBar.textContent = 'You did it!';
+  } else {
+    $fruitBar.style.width = fruitPercent + '%';
+  }
+  if (reachedVegGoal) {
+    $vegBar.style.width = '100%';
+    $vegBar.backgroundColor = 'lightsalmon';
+    $vegBar.textContent = 'You did it!';
+  } else {
+    $vegBar.style.width = vegPercent + '%';
+  }
   hideAllViews();
   $progressPage.className = 'progress-page';
   data.view = 'progress page';
