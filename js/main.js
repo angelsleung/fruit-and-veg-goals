@@ -32,6 +32,9 @@ var $resultsPageTitle = document.querySelector('.search-results');
 var $resultList = document.querySelector('.result-list');
 $resultList.addEventListener('click', clickResultList);
 
+var $searchHeader = document.querySelector('.result-header');
+var $noResults = document.querySelector('.no-results');
+
 var $addFruitButton = document.querySelector('.add-fruit');
 $addFruitButton.addEventListener('click', clickAddFruit);
 
@@ -108,9 +111,14 @@ function searchInput(event) {
       }
     } else {
       $resultsPageTitle.textContent = 'Search results for "' + input + '"';
-      for (i = 0; i < data.results.length; i++) {
-        var resultDiv = renderResult(data.results[i]);
-        $resultList.append(resultDiv);
+      if (data.results.length > 0) {
+        for (i = 0; i < data.results.length; i++) {
+          var resultDiv = renderResult(data.results[i]);
+          $resultList.append(resultDiv);
+        }
+      } else {
+        $noResults.className = 'no-results';
+        $searchHeader.className = 'result-header hidden';
       }
       $resultsPage.className = 'results-page';
       $searchForm.className = 'search form hidden';

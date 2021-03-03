@@ -295,9 +295,11 @@ body {
 }
 
 .no-fruit,
-.no-veg {
+.no-veg,
+.no-results {
   color: lightgray;
   font-style: italic;
+  font-size: 1.2em;
 }
 
 .category-div {
