@@ -45,6 +45,10 @@ body {
   padding: 1rem 0;
 }
 
+.input > select {
+  cursor: pointer;
+}
+
 .next {
   font-size: 1.3em;
   margin: 3rem auto;
@@ -70,10 +74,10 @@ body {
   height: 2rem;
 }
 
-.next,
-.search-button,
-.item-icon {
+.next:hover,
+.search-button:hover {
   cursor: pointer;
+  background-color: lightgray;
 }
 
 .result {
@@ -155,6 +159,10 @@ body {
 
 .item-icon {
   font-size: 1.5em;
+}
+
+.item-icon:hover {
+  color: lime;
 }
 
 .item-details-page {
@@ -275,6 +283,10 @@ body {
   cursor: pointer;
 }
 
+.add-button:hover {
+  background-color: lime;
+}
+
 .add-log-div {
   padding-top: 0.5rem;
 }
@@ -317,6 +329,10 @@ body {
   padding: 0.5rem 0 1rem;
 }
 
+.category-title {
+  color: gray;
+}
+
 .total {
   width: 80%;
   height: 3rem;
@@ -329,7 +345,18 @@ body {
   width: 20%;
   height: 100%;
   border-right: 1px solid lightgray;
-  background-color: lightgreen;
+  background-color: greenyellow;
+  vertical-align: center;
+  padding-top: 0.6rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+  font-style: italic;
+  letter-spacing: 0.05em;
+}
+
+.fruit-progress,
+.veg-progress {
+  font-size: 1.2em;
 }
 
 .footer {
@@ -345,6 +372,14 @@ body {
   font-size: 2em;
   color: lightgreen;
   padding: 0.5em 0;
+}
+
+.nav:hover {
+  cursor: pointer;
+  color: limegreen;
+}
+
+.pointer {
   cursor: pointer;
 }
 

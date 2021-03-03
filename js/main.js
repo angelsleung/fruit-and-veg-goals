@@ -229,15 +229,15 @@ function navProgress(event) {
   $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
   if (reachedFruitGoal) {
     $fruitBar.style.width = '100%';
-    $fruitBar.backgroundColor = 'lightsalmon';
-    $fruitBar.textContent = 'You did it!';
+    $fruitBar.style.backgroundColor = 'yellow';
+    $fruitBar.textContent = 'You made it!';
   } else {
     $fruitBar.style.width = fruitPercent + '%';
   }
   if (reachedVegGoal) {
     $vegBar.style.width = '100%';
-    $vegBar.backgroundColor = 'lightsalmon';
-    $vegBar.textContent = 'You did it!';
+    $vegBar.style.backgroundColor = 'yellow';
+    $vegBar.textContent = 'You made it!';
   } else {
     $vegBar.style.width = vegPercent + '%';
   }
@@ -248,7 +248,7 @@ function navProgress(event) {
 
 function renderResult(foodItem) {
   var result = document.createElement('div');
-  result.className = 'result-div row';
+  result.className = 'result-div row pointer';
   result.setAttribute('data-name', foodItem.food_name);
   var servingSize = foodItem.serving_qty + ' ' + foodItem.serving_unit;
   result.setAttribute('data-serving-size', servingSize);
