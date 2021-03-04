@@ -4,7 +4,13 @@ body {
   text-align: center;
   font-family: Poppins, cursive;
   color: rgb(66, 65, 65);
+
+  /* text-align: left; */
 }
+
+/* .main {
+  margin: 0 auto;
+} */
 
 .header {
   color: white;
@@ -27,12 +33,12 @@ body {
 
 .form-inputs {
   margin: 0 auto;
-  text-align: left;
+
+  /* text-align: left; */
 }
 
 .goal-input {
-  text-align: left;
-  margin: 0 auto;
+  margin-left: 1rem;
   font-size: 1.2rem;
 }
 
@@ -125,7 +131,7 @@ body {
 .result-list-div,
 .daily-log-page,
 .progress-page {
-  padding: 0 2rem;
+  /* padding: 0 2rem; */
 }
 
 .result-div {
@@ -137,7 +143,8 @@ body {
 
 .result-text {
   flex-grow: 1;
-  text-align: left;
+
+  /* text-align: left; */
   padding-left: 2rem;
 }
 
@@ -149,6 +156,7 @@ body {
 .result-header-div {
   width: 4rem;
   height: 3rem;
+  text-align: center;
 }
 
 .result-header-text {
@@ -204,6 +212,7 @@ body {
 .item-details-name {
   font-size: 1.5em;
   text-transform: capitalize;
+  text-align: center;
 }
 
 .nutrition-title {
@@ -213,7 +222,8 @@ body {
 
 .nutrition-table {
   table-layout: fixed;
-  text-align: left;
+
+  /* text-align: left; */
   border: 1px solid rgb(66, 65, 65);
   padding: 0.5rem;
   border-spacing: 0;
@@ -290,13 +300,13 @@ body {
 }
 
 .add-button {
-  justify-content: center;
+  text-align: center;
   align-items: center;
   border: 1px solid lightgray;
   border-radius: 10px;
   margin-bottom: 0.4rem;
   padding: 0.2rem 0;
-  width: 10rem;
+  width: 8rem;
   cursor: pointer;
 }
 
@@ -312,6 +322,7 @@ body {
   line-height: 1em;
   font-style: italic;
   color: gray;
+  text-align: center;
 }
 
 .add-log-icon {
@@ -348,9 +359,11 @@ body {
 
 .category-title {
   color: gray;
-  text-align: left;
+
+  /* text-align: left; */
   margin: 1rem 0 0.5rem;
   padding-left: 1rem;
+  font-style: italic;
 }
 
 .progress-div {
@@ -419,6 +432,9 @@ body {
 .daily-log-page,
 .progress-page {
   padding-bottom: 5rem;
+  margin: 0 auto;
+  text-align: left;
+  width: 90%;
 }
 
 @media screen and (min-width: 768px) {
