@@ -3,7 +3,7 @@ var data = {
   view: 'home',
   results: null,
   nutrition: null,
-  fruitGoal: 5,
+  fruitGoal: 4,
   veggieGoal: 5,
   fruits: [],
   veggies: []

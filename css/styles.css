@@ -1,11 +1,9 @@
-* {
-  font-family: Poppins, cursive;
-}
-
 body {
   min-height: 100vh;
   display: flex;
   text-align: center;
+  font-family: Poppins, cursive;
+  color: rgb(66, 65, 65);
 }
 
 .main {
@@ -14,7 +12,7 @@ body {
 
 .header {
   color: white;
-  background-color: lightgreen;
+  background-color: limegreen;
   border-bottom: 1px solid lightgray;
 }
 
@@ -47,12 +45,18 @@ body {
 
 .input > select {
   cursor: pointer;
+  color: rgb(66, 65, 65);
+  border-radius: 5px;
+  border: 1px solid darkgray;
 }
 
 .next {
   font-size: 1.3em;
-  margin: 3rem auto;
-  padding: 0.2rem 1rem;
+  margin: 2rem auto;
+  padding: 0.3rem 1rem;
+  border-radius: 10%;
+  border: 1px solid darkgray;
+  color: rgb(66, 65, 65);
 }
 
 .search-bar-suggestions {
@@ -66,12 +70,22 @@ body {
 
 .search-bar {
   width: 100%;
+  border: 1px solid darkgray;
+  border-radius: 5px;
 }
 
 .search-bar,
 .search-button {
   font-size: 1.2em;
   height: 2rem;
+}
+
+.search-bar:focus {
+  border: 1px solid lightgreen;
+}
+
+.search-button {
+  color: rgb(66, 65, 65);
 }
 
 .next:hover,
@@ -104,19 +118,22 @@ body {
 
 .img-result {
   width: 100%;
-  margin: 0.1rem;
+  margin: 0.5rem;
   object-fit: contain;
 }
 
-.result-list,
-.result-header,
+.result-list-div,
 .daily-log-page {
-  padding: 0 1rem;
+  padding: 0 2rem;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .result-div {
   align-items: center;
   border-top: 1px solid lightgray;
+
+  /* padding-left: 2rem; */
 }
 
 .result-text {
@@ -198,12 +215,13 @@ body {
 .nutrition-table {
   table-layout: fixed;
   text-align: left;
-  border: 1px solid black;
+  border: 1px solid rgb(66, 65, 65);
   padding: 0.5rem;
   border-spacing: 0;
   font-size: 1em;
   margin: 0 auto;
-  width: 95%;
+  width: 90%;
+  max-width: 500px;
 }
 
 .nutrition-food-name {
@@ -221,7 +239,7 @@ body {
 }
 
 .nutrition-table > tbody td {
-  border-top: 1px solid black;
+  border-top: 1px solid rgb(66, 65, 65);
   white-space: nowrap;
 }
 
@@ -302,7 +320,7 @@ body {
 }
 
 .added {
-  background-color: lightgreen;
+  background-color: limegreen;
 }
 
 .not-added {
@@ -310,7 +328,7 @@ body {
 }
 
 .added-icon {
-  color: lightgreen;
+  color: limegreen;
 }
 
 .not-added-icon {
@@ -331,6 +349,8 @@ body {
 
 .category-title {
   color: gray;
+  text-align: left;
+  padding-left: 1rem;
 }
 
 .total {
@@ -345,13 +365,15 @@ body {
   width: 20%;
   height: 100%;
   border-right: 1px solid lightgray;
-  background-color: greenyellow;
+  background-color: green;
   vertical-align: center;
   padding-top: 0.6rem;
   font-weight: bold;
   font-size: 1.2rem;
   font-style: italic;
   letter-spacing: 0.05em;
+
+  /* color: red; */
 }
 
 .fruit-progress,
@@ -365,18 +387,18 @@ body {
   width: 100%;
   justify-content: space-evenly;
   border-top: 1px solid lightgray;
-  background-color: white;
+  background-color: limegreen;
 }
 
 .nav {
   font-size: 2em;
-  color: lightgreen;
+  color: white;
   padding: 0.5em 0;
 }
 
 .nav:hover {
   cursor: pointer;
-  color: limegreen;
+  color: green;
 }
 
 .pointer {
@@ -401,7 +423,8 @@ body {
     margin: 0 auto;
   }
 
+  /* .result-div,
   .nutrition-table {
     max-width: 500px;
-  }
+  } */
 }

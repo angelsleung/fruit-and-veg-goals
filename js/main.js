@@ -229,14 +229,14 @@ function navProgress(event) {
   $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
   if (reachedFruitGoal) {
     $fruitBar.style.width = '100%';
-    $fruitBar.style.backgroundColor = 'yellow';
+    $fruitBar.style.backgroundColor = 'lightgreen';
     $fruitBar.textContent = 'You made it!';
   } else {
     $fruitBar.style.width = fruitPercent + '%';
   }
   if (reachedVegGoal) {
     $vegBar.style.width = '100%';
-    $vegBar.style.backgroundColor = 'yellow';
+    $vegBar.style.backgroundColor = 'lightgreen';
     $vegBar.textContent = 'You made it!';
   } else {
     $vegBar.style.width = vegPercent + '%';
