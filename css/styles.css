@@ -6,10 +6,6 @@ body {
   color: rgb(66, 65, 65);
 }
 
-.main {
-  padding-bottom: 5rem;
-}
-
 .header {
   color: white;
   background-color: limegreen;
@@ -25,7 +21,8 @@ body {
 }
 
 .page-title {
-  padding-top: 2rem;
+  padding-top: 1rem;
+  margin: 1rem auto;
 }
 
 .form-inputs {
@@ -33,10 +30,10 @@ body {
   text-align: left;
 }
 
-.form > p,
-.input > span,
-.input > select {
-  font-size: 1.3rem;
+.goal-input {
+  text-align: left;
+  margin: 0 auto;
+  font-size: 1.2rem;
 }
 
 .input {
@@ -48,6 +45,8 @@ body {
   color: rgb(66, 65, 65);
   border-radius: 5px;
   border: 1px solid darkgray;
+  height: 3rem;
+  font-size: 1.3rem;
 }
 
 .next {
@@ -77,7 +76,7 @@ body {
 .search-bar,
 .search-button {
   font-size: 1.2em;
-  height: 2rem;
+  height: 3rem;
 }
 
 .search-bar:focus {
@@ -100,6 +99,7 @@ body {
   display: flex;
   align-items: center;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .result:hover {
@@ -125,7 +125,6 @@ body {
 .result-list-div,
 .daily-log-page {
   padding: 0 2rem;
-  max-width: 500px;
   margin: 0 auto;
 }
 
@@ -221,7 +220,7 @@ body {
   font-size: 1em;
   margin: 0 auto;
   width: 90%;
-  max-width: 500px;
+  border-radius: 5px;
 }
 
 .nutrition-food-name {
@@ -350,7 +349,15 @@ body {
 .category-title {
   color: gray;
   text-align: left;
-  padding-left: 1rem;
+  padding-left: 1.5rem;
+  margin: 0 0 0.5rem;
+}
+
+.search,
+.results-page,
+.item-details-page,
+.daily-log-page {
+  padding-bottom: 5rem;
 }
 
 .total {
@@ -419,7 +426,7 @@ body {
   .item-details-page,
   .daily-log-page,
   .progress-page {
-    max-width: 900px;
+    max-width: 500px;
     margin: 0 auto;
   }
 
