@@ -38,7 +38,7 @@ body {
 }
 
 .goal-input {
-  margin-left: 1rem;
+  margin: 0 auto;
   font-size: 1.2rem;
 }
 
@@ -196,7 +196,11 @@ body {
 
 .item-details-header {
   padding: 0 1rem;
-  justify-content: center;
+  justify-content: space-evenly;
+}
+
+.details-name-div {
+  padding-left: 1.5rem;
 }
 
 .details-img-div {
@@ -305,8 +309,8 @@ body {
   border: 1px solid lightgray;
   border-radius: 10px;
   margin-bottom: 0.4rem;
-  padding: 0.2rem 0;
-  width: 8rem;
+  padding: 0.2rem 0.2rem;
+  width: 8.6rem;
   cursor: pointer;
 }
 
@@ -327,6 +331,7 @@ body {
 
 .add-log-icon {
   color: rgb(175, 182, 190);
+  padding: 0.1rem;
 }
 
 .added {
@@ -387,7 +392,6 @@ body {
   padding-top: 0.6rem;
   font-weight: bold;
   font-size: 1.2rem;
-  font-style: italic;
   letter-spacing: 0.05em;
 
   /* color: red; */
@@ -396,6 +400,7 @@ body {
 .fruit-progress,
 .veg-progress {
   font-size: 1.2em;
+  padding-left: 1rem;
 }
 
 .footer {
@@ -447,9 +452,7 @@ body {
   .item-details-page,
   .daily-log-page,
   .progress-page {
-    justify-content: left;
-    margin: 0;
-    max-width: 800px;
+    max-width: 600px;
   }
 
   .nutrition-table {
