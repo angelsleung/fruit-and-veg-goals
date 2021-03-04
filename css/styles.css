@@ -123,9 +123,9 @@ body {
 }
 
 .result-list-div,
-.daily-log-page {
+.daily-log-page,
+.progress-page {
   padding: 0 2rem;
-  margin: 0 auto;
 }
 
 .result-div {
@@ -349,19 +349,16 @@ body {
 .category-title {
   color: gray;
   text-align: left;
-  padding-left: 1.5rem;
-  margin: 0 0 0.5rem;
+  margin: 1rem 0 0.5rem;
+  padding-left: 1rem;
 }
 
-.search,
-.results-page,
-.item-details-page,
-.daily-log-page {
-  padding-bottom: 5rem;
+.progress-div {
+  margin: 0 auto;
+  width: 100%;
 }
 
 .total {
-  width: 80%;
   height: 3rem;
   border: 1px solid lightgray;
   margin: 0 auto;
@@ -369,11 +366,11 @@ body {
 }
 
 .completed {
-  width: 20%;
   height: 100%;
   border-right: 1px solid lightgray;
   background-color: green;
   vertical-align: center;
+  text-align: center;
   padding-top: 0.6rem;
   font-weight: bold;
   font-size: 1.2rem;
@@ -416,6 +413,14 @@ body {
   display: none;
 }
 
+.form,
+.results-page,
+.item-details-page,
+.daily-log-page,
+.progress-page {
+  padding-bottom: 5rem;
+}
+
 @media screen and (min-width: 768px) {
   .result-description {
     display: block;
@@ -426,12 +431,12 @@ body {
   .item-details-page,
   .daily-log-page,
   .progress-page {
-    max-width: 500px;
-    margin: 0 auto;
+    justify-content: left;
+    margin: 0;
+    max-width: 800px;
   }
 
-  /* .result-div,
   .nutrition-table {
     max-width: 500px;
-  } */
+  }
 }
