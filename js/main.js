@@ -79,7 +79,8 @@ var $overlay = document.querySelector('.overlay');
 var $welcomeModal = document.querySelector('.welcome-modal');
 var $goalModal = document.querySelector('.goal-modal');
 
-// var $searchOverlay = document.querySelector('.search.overlay');
+var $getStarted = document.querySelector('.get-started');
+$getStarted.addEventListener('click', clickGetStarted);
 
 var $exit = document.querySelectorAll('.exit');
 for (var i = 0; i < $exit.length; i++) {
@@ -97,7 +98,23 @@ var $vegInput = document.querySelector('.veg-input');
 
 var $searchModal = document.querySelector('.search-modal');
 var $searchDiv = document.querySelector('.search-div');
+
+var $searchContinue = document.querySelector('.search.continue');
+$searchContinue.addEventListener('click', clickSearchContinue);
+
+var $logModal = document.querySelector('.log-modal');
+
+var $logContinue = document.querySelector('.log.continue');
+$logContinue.addEventListener('click', clickLogContinue);
+
+var $progressModal = document.querySelector('.progress-modal');
+
 var delaySuggestionsID = null;
+
+// if (data.newUser) {
+//   $welcomeModal.className = 'welcome-modal';
+//   $overlay.className = 'overlay';
+// }
 
 function setGoal(event) {
   event.preventDefault();
@@ -462,6 +479,8 @@ function clickExit(event) {
   $goalModal.className = 'goal-modal hidden';
   $overlay.className = 'overlay hidden';
   $searchModal.className = 'search-modal hidden';
+  $logModal.className = 'log-modal hidden';
+  $progressModal.className = 'progress-modal hidden';
 }
 
 function clickWelcomeContinue(event) {
@@ -473,18 +492,45 @@ function clickWelcomeContinue(event) {
 }
 
 function clickGoalContinue(event) {
-  modalReset();
   $goalModal.className = 'goal-modal hidden';
   $searchModal.className = 'search-modal';
   $goalForm.className = 'goal form hidden';
   $searchForm.className = 'search form';
+  $navHome.style.color = 'white';
   $navSearch.style.color = 'green';
   $searchDiv.className = 'search-div row highlight';
 }
 
+function clickSearchContinue(event) {
+  $searchModal.className = 'search-modal hidden';
+  $logModal.className = 'log-modal';
+  $searchForm.className = 'search form hidden';
+  $dailyLogPage.className = 'daily-log-page';
+  $navSearch.style.color = 'white';
+  $navLog.style.color = 'green';
+}
+
+function clickLogContinue(event) {
+  $logModal.className = 'log-modal hidden';
+  $progressModal.className = 'progress-modal';
+  $dailyLogPage.className = 'daily-log-page hidden';
+  $progressPage.className = 'progress-page';
+  $navLog.style.color = 'white';
+  $navProgress.style.color = 'green';
+}
+
+function clickGetStarted(event) {
+  clickExit();
+  $goalForm.className = 'goal form';
+  $progressPage.className = 'progres-page hidden';
+  $navProgress.style.color = 'white';
+}
+
 function modalReset() {
   $navHome.style.color = 'white';
-  $navSearch.style.color = 'white';
+  $navLog.style.color = 'white';
+  $navLog.style.color = 'white';
+  $navProgress.style.color = 'white';
   $fruitInput.className = 'fruit-input';
   $vegInput.className = 'veg-input';
   $searchDiv.className = 'search-div row';
