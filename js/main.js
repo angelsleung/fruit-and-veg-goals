@@ -1,6 +1,3 @@
-var $goalForm = document.querySelector('.goal.form');
-$goalForm.addEventListener('submit', setGoal);
-
 var $navHome = document.querySelector('.fa-home');
 $navHome.addEventListener('click', navHome);
 
@@ -8,34 +5,38 @@ var $navSearch = document.querySelector('.fa-search');
 $navSearch.addEventListener('click', navSearch);
 
 var $navLog = document.querySelector('.fa-list');
-$navLog.addEventListener('click', loadDailyLog);
+$navLog.addEventListener('click', navLog);
 
 var $navProgress = document.querySelector('.fa-chart-bar');
 $navProgress.addEventListener('click', navProgress);
 
-var $searchBar = document.querySelector('.search-bar');
-$searchBar.addEventListener('input', delaySuggestions);
+var $goalForm = document.querySelector('.goal.form');
+$goalForm.addEventListener('submit', setGoal);
 
-var $results = document.querySelectorAll('.result');
-var $imgResults = document.querySelectorAll('.img-result');
-var $textResults = document.querySelectorAll('.text-result');
+var $fruitInput = document.querySelector('.fruit-input');
+var $vegInput = document.querySelector('.veg-input');
 
 var $searchForm = document.querySelector('.search.form');
 $searchForm.addEventListener('submit', submitSearch);
+
+var $searchBar = document.querySelector('.search-bar');
+$searchBar.addEventListener('input', delaySuggestions);
 
 var $searchBarSuggestions = document.querySelector('.search-bar-suggestions');
 $searchBarSuggestions.addEventListener('click', clickSuggestion);
 
 var delaySuggestionsID = null;
 
+var $results = document.querySelectorAll('.result');
+var $imgResults = document.querySelectorAll('.img-result');
+var $textResults = document.querySelectorAll('.text-result');
 var $resultsPage = document.querySelector('.results-page');
 var $resultsPageTitle = document.querySelector('.search-results');
+var $searchHeader = document.querySelector('.result-header');
+var $noResults = document.querySelector('.no-results');
 
 var $resultList = document.querySelector('.result-list');
 $resultList.addEventListener('click', clickResultList);
-
-var $searchHeader = document.querySelector('.result-header');
-var $noResults = document.querySelector('.no-results');
 
 var $addFruitButton = document.querySelector('.add-fruit');
 $addFruitButton.addEventListener('click', clickAddFruit);
@@ -46,11 +47,8 @@ $addVegButton.addEventListener('click', clickAddVeg);
 var $dailyLogPage = document.querySelector('.daily-log-page');
 var $fruitLog = document.querySelector('.fruit-log');
 var $vegLog = document.querySelector('.veg-log');
-
 var $noFruit = document.querySelector('.no-fruit');
 var $noVeg = document.querySelector('.no-veg');
-
-var $progressPage = document.querySelector('.progress-page');
 
 var $itemDetailsPage = document.querySelector('.item-details-page');
 var $itemDetailsImg = document.querySelector('.item-details-img');
@@ -72,6 +70,7 @@ var $potassiumPercent = document.querySelector('.potassium-percent');
 var $totalCarbsPercent = document.querySelector('.total-carbs-percent');
 var $fiberPercent = document.querySelector('.fiber-percent');
 
+var $progressPage = document.querySelector('.progress-page');
 var $fruitProgress = document.querySelector('.fruit-progress');
 var $fruitBar = document.querySelector('.fruit-bar');
 var $vegProgress = document.querySelector('.veg-progress');
@@ -80,6 +79,22 @@ var $vegBar = document.querySelector('.veg-bar');
 var $overlay = document.querySelector('.overlay');
 var $welcomeModal = document.querySelector('.welcome-modal');
 var $goalModal = document.querySelector('.goal-modal');
+var $searchModal = document.querySelector('.search-modal');
+var $searchDiv = document.querySelector('.search-div');
+var $logModal = document.querySelector('.log-modal');
+var $progressModal = document.querySelector('.progress-modal');
+
+var $welcomeContinue = document.querySelector('.welcome.continue');
+$welcomeContinue.addEventListener('click', clickWelcomeContinue);
+
+var $goalContinue = document.querySelector('.goal.continue');
+$goalContinue.addEventListener('click', clickGoalContinue);
+
+var $searchContinue = document.querySelector('.search.continue');
+$searchContinue.addEventListener('click', clickSearchContinue);
+
+var $logContinue = document.querySelector('.log.continue');
+$logContinue.addEventListener('click', clickLogContinue);
 
 var $getStarted = document.querySelector('.get-started');
 $getStarted.addEventListener('click', clickGetStarted);
@@ -89,40 +104,17 @@ for (var i = 0; i < $exit.length; i++) {
   $exit[i].addEventListener('click', clickExit);
 }
 
-var $welcomeContinue = document.querySelector('.welcome.continue');
-$welcomeContinue.addEventListener('click', clickWelcomeContinue);
-
-var $goalContinue = document.querySelector('.goal.continue');
-$goalContinue.addEventListener('click', clickGoalContinue);
-
-var $fruitInput = document.querySelector('.fruit-input');
-var $vegInput = document.querySelector('.veg-input');
-
-var $searchModal = document.querySelector('.search-modal');
-var $searchDiv = document.querySelector('.search-div');
-
-var $searchContinue = document.querySelector('.search.continue');
-$searchContinue.addEventListener('click', clickSearchContinue);
-
-var $logModal = document.querySelector('.log-modal');
-
-var $logContinue = document.querySelector('.log.continue');
-$logContinue.addEventListener('click', clickLogContinue);
-
-var $progressModal = document.querySelector('.progress-modal');
-
 var $info = document.querySelector('.info');
 $info.addEventListener('click', clickInfo);
 
 var $infoModalKnow = document.querySelector('.info-modal.know');
-
-var $infoExitKnow = document.querySelector('.exit.know');
-$infoExitKnow.addEventListener('click', clickInfoExitKnow);
+var $infoModalGoal = document.querySelector('.info-modal.goal');
 
 var $infoNext = document.querySelector('.info-next');
 $infoNext.addEventListener('click', clickInfoNext);
 
-var $infoModalGoal = document.querySelector('.info-modal.goal');
+var $infoExitKnow = document.querySelector('.exit.know');
+$infoExitKnow.addEventListener('click', clickInfoExitKnow);
 
 var $infoExitGoal = document.querySelector('.exit.goal');
 $infoExitGoal.addEventListener('click', clickInfoExitGoal);
@@ -133,6 +125,79 @@ if (data.newUser) {
 } else {
   $welcomeModal.className = 'welcome-modal hidden';
   $overlay.className = 'overlay hidden';
+}
+
+function navHome(event) {
+  data.view = 'home';
+  hideAllViews();
+  $goalForm.className = 'goal form';
+}
+
+function navSearch(event) {
+  data.view = 'search input';
+  for (var i = 0; i < 4; i++) {
+    $results[i].className = 'result hidden';
+  }
+  hideAllViews();
+  $searchForm.className = 'search form';
+  $searchForm.reset();
+  $searchBar.focus();
+}
+
+function navLog(event) {
+  hideAllViews();
+  if (data.fruits.length === 0) {
+    $noFruit.className = 'no-fruit';
+  } else {
+    $noFruit.className = 'no-fruit hidden';
+  }
+  if (data.veggies.length === 0) {
+    $noVeg.className = 'no-veg';
+  } else {
+    $noVeg.className = 'no-veg hidden';
+  }
+  while ($fruitLog.firstChild) {
+    $fruitLog.removeChild($fruitLog.firstChild);
+  }
+  while ($vegLog.firstChild) {
+    $vegLog.removeChild($vegLog.firstChild);
+  }
+  for (var i = 0; i < data.fruits.length; i++) {
+    var renderedEntry = renderLogEntry(data.fruits[i]);
+    $fruitLog.append(renderedEntry);
+  }
+  for (i = 0; i < data.veggies.length; i++) {
+    renderedEntry = renderLogEntry(data.veggies[i]);
+    $vegLog.append(renderedEntry);
+  }
+  $dailyLogPage.className = 'daily-log-page';
+  data.view = 'daily log';
+}
+
+function navProgress(event) {
+  var fruitPercent = 100 * data.fruits.length / data.fruitGoal;
+  var vegPercent = 100 * data.veggies.length / data.veggieGoal;
+  var reachedFruitGoal = fruitPercent >= 100;
+  var reachedVegGoal = vegPercent >= 100;
+  $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
+  $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
+  if (reachedFruitGoal) {
+    $fruitBar.style.width = '100%';
+    $fruitBar.style.backgroundColor = 'lightgreen';
+    $fruitBar.textContent = 'You made it!';
+  } else {
+    $fruitBar.style.width = fruitPercent + '%';
+  }
+  if (reachedVegGoal) {
+    $vegBar.style.width = '100%';
+    $vegBar.style.backgroundColor = 'lightgreen';
+    $vegBar.textContent = 'You made it!';
+  } else {
+    $vegBar.style.width = vegPercent + '%';
+  }
+  hideAllViews();
+  $progressPage.className = 'progress-page';
+  data.view = 'progress page';
 }
 
 function setGoal(event) {
@@ -251,49 +316,6 @@ function submitSearch(event) {
     $resultList.removeChild($resultList.firstChild);
   }
   searchInput();
-}
-
-function navHome(event) {
-  data.view = 'home';
-  hideAllViews();
-  $goalForm.className = 'goal form';
-}
-
-function navSearch(event) {
-  data.view = 'search input';
-  for (var i = 0; i < 4; i++) {
-    $results[i].className = 'result hidden';
-  }
-  hideAllViews();
-  $searchForm.className = 'search form';
-  $searchForm.reset();
-  $searchBar.focus();
-}
-
-function navProgress(event) {
-  var fruitPercent = 100 * data.fruits.length / data.fruitGoal;
-  var vegPercent = 100 * data.veggies.length / data.veggieGoal;
-  var reachedFruitGoal = fruitPercent >= 100;
-  var reachedVegGoal = vegPercent >= 100;
-  $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
-  $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
-  if (reachedFruitGoal) {
-    $fruitBar.style.width = '100%';
-    $fruitBar.style.backgroundColor = 'lightgreen';
-    $fruitBar.textContent = 'You made it!';
-  } else {
-    $fruitBar.style.width = fruitPercent + '%';
-  }
-  if (reachedVegGoal) {
-    $vegBar.style.width = '100%';
-    $vegBar.style.backgroundColor = 'lightgreen';
-    $vegBar.textContent = 'You made it!';
-  } else {
-    $vegBar.style.width = vegPercent + '%';
-  }
-  hideAllViews();
-  $progressPage.className = 'progress-page';
-  data.view = 'progress page';
 }
 
 function renderResult(foodItem) {
@@ -451,36 +473,6 @@ function renderLogEntry(entry) {
   resultText.append(resultDescription);
 
   return result;
-}
-
-function loadDailyLog(event) {
-  hideAllViews();
-  if (data.fruits.length === 0) {
-    $noFruit.className = 'no-fruit';
-  } else {
-    $noFruit.className = 'no-fruit hidden';
-  }
-  if (data.veggies.length === 0) {
-    $noVeg.className = 'no-veg';
-  } else {
-    $noVeg.className = 'no-veg hidden';
-  }
-  while ($fruitLog.firstChild) {
-    $fruitLog.removeChild($fruitLog.firstChild);
-  }
-  while ($vegLog.firstChild) {
-    $vegLog.removeChild($vegLog.firstChild);
-  }
-  for (var i = 0; i < data.fruits.length; i++) {
-    var renderedEntry = renderLogEntry(data.fruits[i]);
-    $fruitLog.append(renderedEntry);
-  }
-  for (i = 0; i < data.veggies.length; i++) {
-    renderedEntry = renderLogEntry(data.veggies[i]);
-    $vegLog.append(renderedEntry);
-  }
-  $dailyLogPage.className = 'daily-log-page';
-  data.view = 'daily log';
 }
 
 function hideAllViews() {
