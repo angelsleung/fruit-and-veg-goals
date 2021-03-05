@@ -8,7 +8,8 @@ var data = {
   fruits: [],
   veggies: [],
   newUser: true,
-  isUpdated: true
+  logUpdated: true,
+  progressUpdated: true
 };
 
 var previousData = localStorage.getItem('local-data');

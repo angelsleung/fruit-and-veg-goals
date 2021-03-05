@@ -293,6 +293,10 @@ body {
   margin: 0;
 }
 
+.result-list {
+  cursor: pointer;
+}
+
 .add {
   font-size: 1.4em;
   color: rgb(175, 182, 190);
@@ -546,6 +550,10 @@ body {
 
 .hidden {
   display: none;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .form,

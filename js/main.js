@@ -143,7 +143,7 @@ function navSearch(event) {
 }
 
 function navLog(event) {
-  if (!data.isUpdated) {
+  if (!data.logUpdated) {
     loadDailyLog();
   }
   hideAllViews();
@@ -152,7 +152,7 @@ function navLog(event) {
 }
 
 function navProgress(event) {
-  if (!data.isUpdated) {
+  if (!data.progressUpdated) {
     loadProgress();
   }
   hideAllViews();
@@ -363,6 +363,8 @@ function addItem(foodType, name, servingSize, image) {
     image: image
   };
   data[foodType].push(foodObject);
+  data.logUpdated = false;
+  data.progressUpdated = false;
 }
 
 function removeItem(foodType, name) {
@@ -372,6 +374,8 @@ function removeItem(foodType, name) {
       return;
     }
   }
+  data.logUpdated = false;
+  data.progressUpdated = false;
 }
 
 function getNutritionFacts(foodName) {
@@ -441,6 +445,7 @@ function loadDailyLog() {
     renderedEntry = renderLogEntry(data.veggies[i]);
     $vegLog.append(renderedEntry);
   }
+  data.isUpdated = true;
 }
 
 function renderLogEntry(entry) {
