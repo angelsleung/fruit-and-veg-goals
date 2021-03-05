@@ -1,6 +1,3 @@
-var $goalForm = document.querySelector('.goal.form');
-$goalForm.addEventListener('submit', setGoal);
-
 var $navHome = document.querySelector('.fa-home');
 $navHome.addEventListener('click', navHome);
 
@@ -8,34 +5,38 @@ var $navSearch = document.querySelector('.fa-search');
 $navSearch.addEventListener('click', navSearch);
 
 var $navLog = document.querySelector('.fa-list');
-$navLog.addEventListener('click', loadDailyLog);
+$navLog.addEventListener('click', navLog);
 
 var $navProgress = document.querySelector('.fa-chart-bar');
 $navProgress.addEventListener('click', navProgress);
 
-var $searchBar = document.querySelector('.search-bar');
-$searchBar.addEventListener('input', delaySuggestions);
+var $goalForm = document.querySelector('.goal.form');
+$goalForm.addEventListener('submit', setGoal);
 
-var $results = document.querySelectorAll('.result');
-var $imgResults = document.querySelectorAll('.img-result');
-var $textResults = document.querySelectorAll('.text-result');
+var $fruitInput = document.querySelector('.fruit-input');
+var $vegInput = document.querySelector('.veg-input');
 
 var $searchForm = document.querySelector('.search.form');
 $searchForm.addEventListener('submit', submitSearch);
 
+var $searchBar = document.querySelector('.search-bar');
+$searchBar.addEventListener('input', delaySearchSuggestions);
+
+var delaySearchSuggestionsID = null;
+
 var $searchBarSuggestions = document.querySelector('.search-bar-suggestions');
-$searchBarSuggestions.addEventListener('click', clickSuggestion);
+$searchBarSuggestions.addEventListener('click', clickSearchSuggestion);
 
-var delaySuggestionsID = null;
-
+var $results = document.querySelectorAll('.result');
+var $imgResults = document.querySelectorAll('.img-result');
+var $textResults = document.querySelectorAll('.text-result');
 var $resultsPage = document.querySelector('.results-page');
 var $resultsPageTitle = document.querySelector('.search-results');
+var $searchHeader = document.querySelector('.result-header');
+var $noResults = document.querySelector('.no-results');
 
 var $resultList = document.querySelector('.result-list');
 $resultList.addEventListener('click', clickResultList);
-
-var $searchHeader = document.querySelector('.result-header');
-var $noResults = document.querySelector('.no-results');
 
 var $addFruitButton = document.querySelector('.add-fruit');
 $addFruitButton.addEventListener('click', clickAddFruit);
@@ -46,11 +47,8 @@ $addVegButton.addEventListener('click', clickAddVeg);
 var $dailyLogPage = document.querySelector('.daily-log-page');
 var $fruitLog = document.querySelector('.fruit-log');
 var $vegLog = document.querySelector('.veg-log');
-
 var $noFruit = document.querySelector('.no-fruit');
 var $noVeg = document.querySelector('.no-veg');
-
-var $progressPage = document.querySelector('.progress-page');
 
 var $itemDetailsPage = document.querySelector('.item-details-page');
 var $itemDetailsImg = document.querySelector('.item-details-img');
@@ -72,6 +70,7 @@ var $potassiumPercent = document.querySelector('.potassium-percent');
 var $totalCarbsPercent = document.querySelector('.total-carbs-percent');
 var $fiberPercent = document.querySelector('.fiber-percent');
 
+var $progressPage = document.querySelector('.progress-page');
 var $fruitProgress = document.querySelector('.fruit-progress');
 var $fruitBar = document.querySelector('.fruit-bar');
 var $vegProgress = document.querySelector('.veg-progress');
@@ -80,14 +79,10 @@ var $vegBar = document.querySelector('.veg-bar');
 var $overlay = document.querySelector('.overlay');
 var $welcomeModal = document.querySelector('.welcome-modal');
 var $goalModal = document.querySelector('.goal-modal');
-
-var $getStarted = document.querySelector('.get-started');
-$getStarted.addEventListener('click', clickGetStarted);
-
-var $exit = document.querySelectorAll('.exit');
-for (var i = 0; i < $exit.length; i++) {
-  $exit[i].addEventListener('click', clickExit);
-}
+var $searchModal = document.querySelector('.search-modal');
+var $searchDiv = document.querySelector('.search-div');
+var $logModal = document.querySelector('.log-modal');
+var $progressModal = document.querySelector('.progress-modal');
 
 var $welcomeContinue = document.querySelector('.welcome.continue');
 $welcomeContinue.addEventListener('click', clickWelcomeContinue);
@@ -95,34 +90,31 @@ $welcomeContinue.addEventListener('click', clickWelcomeContinue);
 var $goalContinue = document.querySelector('.goal.continue');
 $goalContinue.addEventListener('click', clickGoalContinue);
 
-var $fruitInput = document.querySelector('.fruit-input');
-var $vegInput = document.querySelector('.veg-input');
-
-var $searchModal = document.querySelector('.search-modal');
-var $searchDiv = document.querySelector('.search-div');
-
 var $searchContinue = document.querySelector('.search.continue');
 $searchContinue.addEventListener('click', clickSearchContinue);
-
-var $logModal = document.querySelector('.log-modal');
 
 var $logContinue = document.querySelector('.log.continue');
 $logContinue.addEventListener('click', clickLogContinue);
 
-var $progressModal = document.querySelector('.progress-modal');
+var $getStarted = document.querySelector('.get-started');
+$getStarted.addEventListener('click', clickGetStarted);
+
+var $exit = document.querySelectorAll('.exit');
+for (var i = 0; i < $exit.length; i++) {
+  $exit[i].addEventListener('click', clickExitModal);
+}
 
 var $info = document.querySelector('.info');
 $info.addEventListener('click', clickInfo);
 
 var $infoModalKnow = document.querySelector('.info-modal.know');
-
-var $infoExitKnow = document.querySelector('.exit.know');
-$infoExitKnow.addEventListener('click', clickInfoExitKnow);
+var $infoModalGoal = document.querySelector('.info-modal.goal');
 
 var $infoNext = document.querySelector('.info-next');
 $infoNext.addEventListener('click', clickInfoNext);
 
-var $infoModalGoal = document.querySelector('.info-modal.goal');
+var $infoExitKnow = document.querySelector('.exit.know');
+$infoExitKnow.addEventListener('click', clickInfoExitKnow);
 
 var $infoExitGoal = document.querySelector('.exit.goal');
 $infoExitGoal.addEventListener('click', clickInfoExitGoal);
@@ -135,6 +127,39 @@ if (data.newUser) {
   $overlay.className = 'overlay hidden';
 }
 
+function navHome(event) {
+  hideAllViews();
+  data.view = 'home';
+  $goalForm.className = 'goal form';
+}
+
+function navSearch(event) {
+  hideSearchSuggestions();
+  hideAllViews();
+  data.view = 'search input';
+  $searchForm.className = 'search form';
+  $searchForm.reset();
+  $searchBar.focus();
+}
+
+function navLog(event) {
+  if (!data.logUpdated) {
+    loadDailyLog();
+  }
+  hideAllViews();
+  data.view = 'daily log';
+  $dailyLogPage.className = 'daily-log-page';
+}
+
+function navProgress(event) {
+  if (!data.progressUpdated) {
+    loadProgress();
+  }
+  hideAllViews();
+  data.view = 'progress page';
+  $progressPage.className = 'progress-page';
+}
+
 function setGoal(event) {
   event.preventDefault();
   data.fruitGoal = $goalForm.elements.fruit.value;
@@ -145,10 +170,7 @@ function setGoal(event) {
 function searchInput(event) {
   var input = $searchBar.value;
   if (input.length < 2) {
-    input = '';
-    for (var i = 0; i < 4; i++) {
-      $results[i].className = 'result hidden';
-    }
+    hideSearchSuggestions();
     return;
   }
   var xhr = new XMLHttpRequest();
@@ -160,81 +182,39 @@ function searchInput(event) {
   xhr.addEventListener('load', function () {
     data.results = xhr.response.common;
     if (data.view === 'search input') {
-      if (data.results.length >= 4) {
-        for (i = 0; i < 4; i++) {
-          $results[i].setAttribute('data-food-name', data.results[i].food_name);
-          $textResults[i].textContent = data.results[i].food_name;
-          $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
-          $imgResults[i].setAttribute('alt', data.results[i].food_name);
-          $results[i].className = 'result';
-        }
-      }
+      loadSearchSuggestions();
     } else {
-      $resultsPageTitle.textContent = 'Search results for "' + input + '"';
-      if (data.results.length > 0) {
-        for (i = 0; i < data.results.length; i++) {
-          var resultDiv = renderResult(data.results[i]);
-          $resultList.append(resultDiv);
-        }
-      } else {
-        $noResults.className = 'no-results';
-        $searchHeader.className = 'result-header hidden';
-      }
-      $resultsPage.className = 'results-page';
-      $searchForm.className = 'search form hidden';
+      loadSearchResults(input);
     }
   });
   xhr.send();
 }
 
-function getNutritionFacts(foodName) {
-  hideAllViews();
-  data.view = 'item details';
-  $addFruitButton.className = 'add-fruit add-button not-added';
-  $addVegButton.className = 'add-veg add-button not-added';
-  $itemDetailsImg.setAttribute('alt', foodName);
-  $itemDetailsName.textContent = foodName;
-  $nutritionFoodName.textContent = foodName;
-  var body = {
-    query: foodName
-  };
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'https://trackapi.nutritionix.com/v2/natural/nutrients');
-  xhr.responseType = 'json';
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.setRequestHeader('x-app-id', 'c1479c3a');
-  xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
-  xhr.setRequestHeader('x-remote-user-id', 0);
-  xhr.addEventListener('load', function () {
-    data.nutrition = xhr.response.foods[0];
-    $itemDetailsImg.setAttribute('src', data.nutrition.photo.thumb);
-    data.nutrition.servingSize = data.nutrition.serving_qty + ' ' + data.nutrition.serving_unit + ' (' + data.nutrition.serving_weight_grams + 'g)';
-    $servingSize.textContent = data.nutrition.servingSize;
-    $calories.textContent = Math.floor(data.nutrition.nf_calories);
-    $caloriesFat.textContent = Math.floor(data.nutrition.nf_total_fat * 90) / 10;
-    $totalFat.textContent = Math.floor(data.nutrition.nf_total_fat * 10) / 10 + 'g';
-    $sodium.textContent = Math.floor(data.nutrition.nf_sodium) + 'mg';
-    $potassium.textContent = Math.floor(data.nutrition.nf_potassium) + 'mg';
-    totalCarbs.textContent = Math.floor(data.nutrition.nf_total_carbohydrate * 10) / 10 + 'g';
-    $fiber.textContent = Math.floor(data.nutrition.nf_dietary_fiber * 10) / 10 + 'g';
-    $sugar.textContent = Math.floor(data.nutrition.nf_sugars * 10) / 10 + 'g';
-    $protein.textContent = Math.floor(data.nutrition.nf_protein * 10) / 10 + 'g';
-    $totalFatPercent.textContent = Math.floor(data.nutrition.nf_total_fat * 100 / 78) + '%';
-    $sodiumPercent.textContent = Math.floor(data.nutrition.nf_sodium * 100 / 2300) + '%';
-    $potassiumPercent.textContent = Math.floor(data.nutrition.nf_potassium * 100 / 4700) + '%';
-    $totalCarbsPercent.textContent = Math.floor(data.nutrition.nf_total_carbohydrate * 100 / 275) + '%';
-    $fiberPercent.textContent = Math.floor(data.nutrition.nf_dietary_fiber * 100 / 28) + '%';
-    $itemDetailsPage.className = 'item-details-page';
-  });
-  xhr.send(JSON.stringify(body));
+function loadSearchSuggestions() {
+  if (data.results.length < 4) {
+    return;
+  }
+  for (i = 0; i < 4; i++) {
+    $results[i].setAttribute('data-food-name', data.results[i].food_name);
+    $textResults[i].textContent = data.results[i].food_name;
+    $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
+    $imgResults[i].setAttribute('alt', data.results[i].food_name);
+    $results[i].className = 'result';
+  }
 }
 
-function delaySuggestions() {
-  clearTimeout(delaySuggestionsID);
-  delaySuggestionsID = setTimeout(searchInput, 500);
+function delaySearchSuggestions() {
+  clearTimeout(delaySearchSuggestionsID);
+  delaySearchSuggestionsID = setTimeout(searchInput, 500);
 }
 
-function clickSuggestion(event) {
+function hideSearchSuggestions() {
+  for (var i = 0; i < 4; i++) {
+    $results[i].className = 'result hidden';
+  }
+}
+
+function clickSearchSuggestion(event) {
   if (event.target.className === 'search-bar') {
     return;
   }
@@ -246,54 +226,26 @@ function clickSuggestion(event) {
 function submitSearch(event) {
   event.preventDefault();
   data.view = 'search results';
-  clearTimeout(delaySuggestionsID);
+  clearTimeout(delaySearchSuggestionsID);
   while ($resultList.firstChild) {
     $resultList.removeChild($resultList.firstChild);
   }
   searchInput();
 }
 
-function navHome(event) {
-  data.view = 'home';
-  hideAllViews();
-  $goalForm.className = 'goal form';
-}
-
-function navSearch(event) {
-  data.view = 'search input';
-  for (var i = 0; i < 4; i++) {
-    $results[i].className = 'result hidden';
-  }
-  hideAllViews();
-  $searchForm.className = 'search form';
-  $searchForm.reset();
-  $searchBar.focus();
-}
-
-function navProgress(event) {
-  var fruitPercent = 100 * data.fruits.length / data.fruitGoal;
-  var vegPercent = 100 * data.veggies.length / data.veggieGoal;
-  var reachedFruitGoal = fruitPercent >= 100;
-  var reachedVegGoal = vegPercent >= 100;
-  $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
-  $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
-  if (reachedFruitGoal) {
-    $fruitBar.style.width = '100%';
-    $fruitBar.style.backgroundColor = 'lightgreen';
-    $fruitBar.textContent = 'You made it!';
+function loadSearchResults(input) {
+  $resultsPageTitle.textContent = 'Search results for "' + input + '"';
+  if (data.results.length > 0) {
+    for (i = 0; i < data.results.length; i++) {
+      var resultDiv = renderResult(data.results[i]);
+      $resultList.append(resultDiv);
+    }
   } else {
-    $fruitBar.style.width = fruitPercent + '%';
+    $noResults.className = 'no-results';
+    $searchHeader.className = 'result-header hidden';
   }
-  if (reachedVegGoal) {
-    $vegBar.style.width = '100%';
-    $vegBar.style.backgroundColor = 'lightgreen';
-    $vegBar.textContent = 'You made it!';
-  } else {
-    $vegBar.style.width = vegPercent + '%';
-  }
-  hideAllViews();
-  $progressPage.className = 'progress-page';
-  data.view = 'progress page';
+  $resultsPage.className = 'results-page';
+  $searchForm.className = 'search form hidden';
 }
 
 function renderResult(foodItem) {
@@ -351,24 +303,6 @@ function renderResult(foodItem) {
   return result;
 }
 
-function addItem(foodType, name, servingSize, image) {
-  var foodObject = {
-    name: name,
-    servingSize: servingSize,
-    image: image
-  };
-  data[foodType].push(foodObject);
-}
-
-function removeItem(foodType, name) {
-  for (var i = 0; i < data[foodType].length; i++) {
-    if (data[foodType][i].name === name) {
-      data[foodType].splice(i, 1);
-      return;
-    }
-  }
-}
-
 function clickResultList(event) {
   var resultElement = event.target.closest('.result-div');
   if (event.target.matches('.item-icon')) {
@@ -422,6 +356,98 @@ function clickAddVeg(event) {
   }
 }
 
+function addItem(foodType, name, servingSize, image) {
+  var foodObject = {
+    name: name,
+    servingSize: servingSize,
+    image: image
+  };
+  data[foodType].push(foodObject);
+  data.logUpdated = false;
+  data.progressUpdated = false;
+}
+
+function removeItem(foodType, name) {
+  for (var i = 0; i < data[foodType].length; i++) {
+    if (data[foodType][i].name === name) {
+      data[foodType].splice(i, 1);
+      return;
+    }
+  }
+  data.logUpdated = false;
+  data.progressUpdated = false;
+}
+
+function getNutritionFacts(foodName) {
+  hideAllViews();
+  data.view = 'item details';
+  $addFruitButton.className = 'add-fruit add-button not-added';
+  $addVegButton.className = 'add-veg add-button not-added';
+  $itemDetailsImg.setAttribute('alt', foodName);
+  $itemDetailsName.textContent = foodName;
+  $nutritionFoodName.textContent = foodName;
+  var body = {
+    query: foodName
+  };
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://trackapi.nutritionix.com/v2/natural/nutrients');
+  xhr.responseType = 'json';
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('x-app-id', 'c1479c3a');
+  xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
+  xhr.setRequestHeader('x-remote-user-id', 0);
+  xhr.addEventListener('load', function () {
+    data.nutrition = xhr.response.foods[0];
+    $itemDetailsImg.setAttribute('src', data.nutrition.photo.thumb);
+    data.nutrition.servingSize = data.nutrition.serving_qty + ' ' + data.nutrition.serving_unit + ' (' + data.nutrition.serving_weight_grams + 'g)';
+    $servingSize.textContent = data.nutrition.servingSize;
+    $calories.textContent = Math.floor(data.nutrition.nf_calories);
+    $caloriesFat.textContent = Math.floor(data.nutrition.nf_total_fat * 90) / 10;
+    $totalFat.textContent = Math.floor(data.nutrition.nf_total_fat * 10) / 10 + 'g';
+    $sodium.textContent = Math.floor(data.nutrition.nf_sodium) + 'mg';
+    $potassium.textContent = Math.floor(data.nutrition.nf_potassium) + 'mg';
+    totalCarbs.textContent = Math.floor(data.nutrition.nf_total_carbohydrate * 10) / 10 + 'g';
+    $fiber.textContent = Math.floor(data.nutrition.nf_dietary_fiber * 10) / 10 + 'g';
+    $sugar.textContent = Math.floor(data.nutrition.nf_sugars * 10) / 10 + 'g';
+    $protein.textContent = Math.floor(data.nutrition.nf_protein * 10) / 10 + 'g';
+    $totalFatPercent.textContent = Math.floor(data.nutrition.nf_total_fat * 100 / 78) + '%';
+    $sodiumPercent.textContent = Math.floor(data.nutrition.nf_sodium * 100 / 2300) + '%';
+    $potassiumPercent.textContent = Math.floor(data.nutrition.nf_potassium * 100 / 4700) + '%';
+    $totalCarbsPercent.textContent = Math.floor(data.nutrition.nf_total_carbohydrate * 100 / 275) + '%';
+    $fiberPercent.textContent = Math.floor(data.nutrition.nf_dietary_fiber * 100 / 28) + '%';
+    $itemDetailsPage.className = 'item-details-page';
+  });
+  xhr.send(JSON.stringify(body));
+}
+
+function loadDailyLog() {
+  if (data.fruits.length === 0) {
+    $noFruit.className = 'no-fruit';
+  } else {
+    $noFruit.className = 'no-fruit hidden';
+  }
+  if (data.veggies.length === 0) {
+    $noVeg.className = 'no-veg';
+  } else {
+    $noVeg.className = 'no-veg hidden';
+  }
+  while ($fruitLog.firstChild) {
+    $fruitLog.removeChild($fruitLog.firstChild);
+  }
+  while ($vegLog.firstChild) {
+    $vegLog.removeChild($vegLog.firstChild);
+  }
+  for (var i = 0; i < data.fruits.length; i++) {
+    var renderedEntry = renderLogEntry(data.fruits[i]);
+    $fruitLog.append(renderedEntry);
+  }
+  for (i = 0; i < data.veggies.length; i++) {
+    renderedEntry = renderLogEntry(data.veggies[i]);
+    $vegLog.append(renderedEntry);
+  }
+  data.isUpdated = true;
+}
+
 function renderLogEntry(entry) {
   var result = document.createElement('div');
   result.className = 'result-div row';
@@ -453,34 +479,27 @@ function renderLogEntry(entry) {
   return result;
 }
 
-function loadDailyLog(event) {
-  hideAllViews();
-  if (data.fruits.length === 0) {
-    $noFruit.className = 'no-fruit';
+function loadProgress() {
+  var fruitPercent = 100 * data.fruits.length / data.fruitGoal;
+  var vegPercent = 100 * data.veggies.length / data.veggieGoal;
+  var reachedFruitGoal = fruitPercent >= 100;
+  var reachedVegGoal = vegPercent >= 100;
+  $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
+  $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
+  if (reachedFruitGoal) {
+    $fruitBar.style.width = '100%';
+    $fruitBar.style.backgroundColor = 'lightgreen';
+    $fruitBar.textContent = 'You made it!';
   } else {
-    $noFruit.className = 'no-fruit hidden';
+    $fruitBar.style.width = fruitPercent + '%';
   }
-  if (data.veggies.length === 0) {
-    $noVeg.className = 'no-veg';
+  if (reachedVegGoal) {
+    $vegBar.style.width = '100%';
+    $vegBar.style.backgroundColor = 'lightgreen';
+    $vegBar.textContent = 'You made it!';
   } else {
-    $noVeg.className = 'no-veg hidden';
+    $vegBar.style.width = vegPercent + '%';
   }
-  while ($fruitLog.firstChild) {
-    $fruitLog.removeChild($fruitLog.firstChild);
-  }
-  while ($vegLog.firstChild) {
-    $vegLog.removeChild($vegLog.firstChild);
-  }
-  for (var i = 0; i < data.fruits.length; i++) {
-    var renderedEntry = renderLogEntry(data.fruits[i]);
-    $fruitLog.append(renderedEntry);
-  }
-  for (i = 0; i < data.veggies.length; i++) {
-    renderedEntry = renderLogEntry(data.veggies[i]);
-    $vegLog.append(renderedEntry);
-  }
-  $dailyLogPage.className = 'daily-log-page';
-  data.view = 'daily log';
 }
 
 function hideAllViews() {
@@ -492,7 +511,7 @@ function hideAllViews() {
   $progressPage.className = 'progress-page hidden';
 }
 
-function clickExit(event) {
+function clickExitModal(event) {
   modalReset();
   $welcomeModal.className = 'welcome-modal hidden';
   $goalModal.className = 'goal-modal hidden';
@@ -533,13 +552,14 @@ function clickLogContinue(event) {
   $logModal.className = 'log-modal hidden';
   $progressModal.className = 'progress-modal';
   $dailyLogPage.className = 'daily-log-page hidden';
+  loadProgress();
   navProgress();
   $navLog.style.color = 'white';
   $navProgress.style.color = 'green';
 }
 
 function clickGetStarted(event) {
-  clickExit();
+  clickExitModal();
   $goalForm.className = 'goal form';
   $progressPage.className = 'progres-page hidden';
   $navProgress.style.color = 'white';
@@ -560,14 +580,14 @@ function clickInfo(event) {
   $overlay.className = 'overlay';
 }
 
-function clickInfoExitKnow(event) {
-  $infoModalKnow.className = 'info-modal know hidden';
-  $overlay.className = 'overlay hidden';
-}
-
 function clickInfoNext(event) {
   $infoModalKnow.className = 'info-modal know hidden';
   $infoModalGoal.className = 'info-modal goal';
+}
+
+function clickInfoExitKnow(event) {
+  $infoModalKnow.className = 'info-modal know hidden';
+  $overlay.className = 'overlay hidden';
 }
 
 function clickInfoExitGoal(event) {

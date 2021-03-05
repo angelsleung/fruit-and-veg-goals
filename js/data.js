@@ -7,7 +7,9 @@ var data = {
   veggieGoal: 5,
   fruits: [],
   veggies: [],
-  newUser: true
+  newUser: true,
+  logUpdated: true,
+  progressUpdated: true
 };
 
 var previousData = localStorage.getItem('local-data');
