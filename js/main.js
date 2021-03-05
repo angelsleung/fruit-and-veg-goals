@@ -109,6 +109,22 @@ $logContinue.addEventListener('click', clickLogContinue);
 
 var $progressModal = document.querySelector('.progress-modal');
 
+var $info = document.querySelector('.info');
+$info.addEventListener('click', clickInfo);
+
+var $infoModalKnow = document.querySelector('.info-modal.know');
+
+var $infoExitKnow = document.querySelector('.exit.know');
+$infoExitKnow.addEventListener('click', clickInfoExitKnow);
+
+var $infoNext = document.querySelector('.info-next');
+$infoNext.addEventListener('click', clickInfoNext);
+
+var $infoModalGoal = document.querySelector('.info-modal.goal');
+
+var $infoExitGoal = document.querySelector('.exit.goal');
+$infoExitGoal.addEventListener('click', clickInfoExitGoal);
+
 var delaySuggestionsID = null;
 
 // if (data.newUser) {
@@ -534,4 +550,24 @@ function modalReset() {
   $fruitInput.className = 'fruit-input';
   $vegInput.className = 'veg-input';
   $searchDiv.className = 'search-div row';
+}
+
+function clickInfo(event) {
+  $infoModalKnow.className = 'info-modal know';
+  $overlay.className = 'overlay';
+}
+
+function clickInfoExitKnow(event) {
+  $infoModalKnow.className = 'info-modal know hidden';
+  $overlay.className = 'overlay hidden';
+}
+
+function clickInfoNext(event) {
+  $infoModalKnow.className = 'info-modal know hidden';
+  $infoModalGoal.className = 'info-modal goal';
+}
+
+function clickInfoExitGoal(event) {
+  $infoModalGoal.className = 'info-modal goal hidden';
+  $overlay.className = 'overlay hidden';
 }

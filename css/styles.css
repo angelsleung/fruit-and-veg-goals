@@ -15,7 +15,8 @@ body {
 .header {
   color: white;
   background-color: limegreen;
-  border-bottom: 1px solid lightgray;
+
+  /* border-bottom: 1px solid lightgray; */
   position: relative;
 }
 
@@ -31,15 +32,15 @@ body {
 .goal-modal,
 .search-modal,
 .log-modal,
-.progress-modal {
+.progress-modal,
+.info-modal {
   border: 1px solid gray;
   border-radius: 10px;
   position: absolute;
   background-color: lightgoldenrodyellow;
-  padding: 1rem;
+  padding: 1rem 2rem;
   max-width: 500px;
-
-  /* box-shadow: 10px 10px 10px gray; */
+  color: rgb(66, 65, 65);
 }
 
 .welcome-modal {
@@ -55,25 +56,37 @@ body {
 }
 
 .search-modal {
-  bottom: 28%;
+  top: 12rem;
   width: 90%;
 }
 
-.log-modal {
-  bottom: 5%;
-  width: 90%;
-}
-
+.log-modal,
 .progress-modal {
   bottom: 28%;
   width: 90%;
+}
+
+.info-modal.know {
+  width: 90%;
+  top: 2%;
+  margin-bottom: 5rem;
+}
+
+.info-modal.know > ul {
+  padding-left: 1.8rem;
+}
+
+.info-modal.goal {
+  width: 90%;
+  top: 10%;
 }
 
 .welcome-modal > h3,
 .goal-modal > h3,
 .search-modal > h3,
 .log-modal > h3,
-.progress-modal > h3 {
+.progress-modal > h3,
+.info-modal > h3 {
   margin: 0;
 }
 
@@ -203,6 +216,29 @@ body {
 
 .search-button {
   color: rgb(66, 65, 65);
+}
+
+.continue,
+.get-started,
+.info-next {
+  background-color: lightgray;
+}
+
+.continue:hover,
+.get-started:hover,
+.info-next:hover {
+  cursor: pointer;
+  background-color: darkgray;
+}
+
+.exit:hover {
+  cursor: pointer;
+  color: rgb(66, 65, 65);
+}
+
+.info:hover {
+  cursor: pointer;
+  color: lime;
 }
 
 .next:hover,
@@ -525,7 +561,8 @@ body {
   bottom: 0;
   width: 100%;
   justify-content: space-evenly;
-  border-top: 1px solid lightgray;
+
+  /* border-top: 1px solid lightgray; */
   background-color: limegreen;
 }
 
@@ -577,7 +614,42 @@ body {
   }
 
   .welcome-modal {
+    width: 25%;
+    left: 38%;
+  }
+
+  .goal-modal {
+    width: 27%;
+    right: 26%;
+    top: 15%;
+  }
+
+  .search-modal {
+    width: 35%;
+    left: 35%;
+  }
+
+  .log-modal {
+    bottom: 18%;
+    right: 25%;
+    width: 25%;
+  }
+
+  .progress-modal {
+    bottom: 18%;
+    right: 5%;
+    width: 25%;
+  }
+
+  .info-modal.know {
     width: 50%;
-    left: 30%;
+    top: 5%;
+    left: 35%;
+  }
+
+  .info-modal.goal {
+    width: 40%;
+    top: 10%;
+    left: 35%;
   }
 }
