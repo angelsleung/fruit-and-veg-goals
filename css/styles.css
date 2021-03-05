@@ -520,10 +520,6 @@ body {
   font-style: italic;
 }
 
-/* .fruit-log-div {
-  background-color: white;
-} */
-
 .progress-div {
   margin: 0 auto;
   width: 100%;
@@ -546,8 +542,6 @@ body {
   font-weight: bold;
   font-size: 1.2rem;
   letter-spacing: 0.05em;
-
-  /* color: red; */
 }
 
 .fruit-progress,
