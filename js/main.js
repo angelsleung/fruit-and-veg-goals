@@ -20,12 +20,12 @@ var $searchForm = document.querySelector('.search.form');
 $searchForm.addEventListener('submit', submitSearch);
 
 var $searchBar = document.querySelector('.search-bar');
-$searchBar.addEventListener('input', delaySuggestions);
+$searchBar.addEventListener('input', delaySearchSuggestions);
+
+var delaySearchSuggestionsID = null;
 
 var $searchBarSuggestions = document.querySelector('.search-bar-suggestions');
-$searchBarSuggestions.addEventListener('click', clickSuggestion);
-
-var delaySuggestionsID = null;
+$searchBarSuggestions.addEventListener('click', clickSearchSuggestion);
 
 var $results = document.querySelectorAll('.result');
 var $imgResults = document.querySelectorAll('.img-result');
@@ -101,7 +101,7 @@ $getStarted.addEventListener('click', clickGetStarted);
 
 var $exit = document.querySelectorAll('.exit');
 for (var i = 0; i < $exit.length; i++) {
-  $exit[i].addEventListener('click', clickExit);
+  $exit[i].addEventListener('click', clickExitModal);
 }
 
 var $info = document.querySelector('.info');
@@ -128,76 +128,36 @@ if (data.newUser) {
 }
 
 function navHome(event) {
-  data.view = 'home';
   hideAllViews();
+  data.view = 'home';
   $goalForm.className = 'goal form';
 }
 
 function navSearch(event) {
-  data.view = 'search input';
-  for (var i = 0; i < 4; i++) {
-    $results[i].className = 'result hidden';
-  }
+  hideSearchSuggestions();
   hideAllViews();
+  data.view = 'search input';
   $searchForm.className = 'search form';
   $searchForm.reset();
   $searchBar.focus();
 }
 
 function navLog(event) {
+  if (!data.isUpdated) {
+    loadDailyLog();
+  }
   hideAllViews();
-  if (data.fruits.length === 0) {
-    $noFruit.className = 'no-fruit';
-  } else {
-    $noFruit.className = 'no-fruit hidden';
-  }
-  if (data.veggies.length === 0) {
-    $noVeg.className = 'no-veg';
-  } else {
-    $noVeg.className = 'no-veg hidden';
-  }
-  while ($fruitLog.firstChild) {
-    $fruitLog.removeChild($fruitLog.firstChild);
-  }
-  while ($vegLog.firstChild) {
-    $vegLog.removeChild($vegLog.firstChild);
-  }
-  for (var i = 0; i < data.fruits.length; i++) {
-    var renderedEntry = renderLogEntry(data.fruits[i]);
-    $fruitLog.append(renderedEntry);
-  }
-  for (i = 0; i < data.veggies.length; i++) {
-    renderedEntry = renderLogEntry(data.veggies[i]);
-    $vegLog.append(renderedEntry);
-  }
-  $dailyLogPage.className = 'daily-log-page';
   data.view = 'daily log';
+  $dailyLogPage.className = 'daily-log-page';
 }
 
 function navProgress(event) {
-  var fruitPercent = 100 * data.fruits.length / data.fruitGoal;
-  var vegPercent = 100 * data.veggies.length / data.veggieGoal;
-  var reachedFruitGoal = fruitPercent >= 100;
-  var reachedVegGoal = vegPercent >= 100;
-  $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
-  $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
-  if (reachedFruitGoal) {
-    $fruitBar.style.width = '100%';
-    $fruitBar.style.backgroundColor = 'lightgreen';
-    $fruitBar.textContent = 'You made it!';
-  } else {
-    $fruitBar.style.width = fruitPercent + '%';
-  }
-  if (reachedVegGoal) {
-    $vegBar.style.width = '100%';
-    $vegBar.style.backgroundColor = 'lightgreen';
-    $vegBar.textContent = 'You made it!';
-  } else {
-    $vegBar.style.width = vegPercent + '%';
+  if (!data.isUpdated) {
+    loadProgress();
   }
   hideAllViews();
-  $progressPage.className = 'progress-page';
   data.view = 'progress page';
+  $progressPage.className = 'progress-page';
 }
 
 function setGoal(event) {
@@ -210,10 +170,7 @@ function setGoal(event) {
 function searchInput(event) {
   var input = $searchBar.value;
   if (input.length < 2) {
-    input = '';
-    for (var i = 0; i < 4; i++) {
-      $results[i].className = 'result hidden';
-    }
+    hideSearchSuggestions();
     return;
   }
   var xhr = new XMLHttpRequest();
@@ -225,81 +182,39 @@ function searchInput(event) {
   xhr.addEventListener('load', function () {
     data.results = xhr.response.common;
     if (data.view === 'search input') {
-      if (data.results.length >= 4) {
-        for (i = 0; i < 4; i++) {
-          $results[i].setAttribute('data-food-name', data.results[i].food_name);
-          $textResults[i].textContent = data.results[i].food_name;
-          $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
-          $imgResults[i].setAttribute('alt', data.results[i].food_name);
-          $results[i].className = 'result';
-        }
-      }
+      loadSearchSuggestions();
     } else {
-      $resultsPageTitle.textContent = 'Search results for "' + input + '"';
-      if (data.results.length > 0) {
-        for (i = 0; i < data.results.length; i++) {
-          var resultDiv = renderResult(data.results[i]);
-          $resultList.append(resultDiv);
-        }
-      } else {
-        $noResults.className = 'no-results';
-        $searchHeader.className = 'result-header hidden';
-      }
-      $resultsPage.className = 'results-page';
-      $searchForm.className = 'search form hidden';
+      loadSearchResults(input);
     }
   });
   xhr.send();
 }
 
-function getNutritionFacts(foodName) {
-  hideAllViews();
-  data.view = 'item details';
-  $addFruitButton.className = 'add-fruit add-button not-added';
-  $addVegButton.className = 'add-veg add-button not-added';
-  $itemDetailsImg.setAttribute('alt', foodName);
-  $itemDetailsName.textContent = foodName;
-  $nutritionFoodName.textContent = foodName;
-  var body = {
-    query: foodName
-  };
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'https://trackapi.nutritionix.com/v2/natural/nutrients');
-  xhr.responseType = 'json';
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.setRequestHeader('x-app-id', 'c1479c3a');
-  xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
-  xhr.setRequestHeader('x-remote-user-id', 0);
-  xhr.addEventListener('load', function () {
-    data.nutrition = xhr.response.foods[0];
-    $itemDetailsImg.setAttribute('src', data.nutrition.photo.thumb);
-    data.nutrition.servingSize = data.nutrition.serving_qty + ' ' + data.nutrition.serving_unit + ' (' + data.nutrition.serving_weight_grams + 'g)';
-    $servingSize.textContent = data.nutrition.servingSize;
-    $calories.textContent = Math.floor(data.nutrition.nf_calories);
-    $caloriesFat.textContent = Math.floor(data.nutrition.nf_total_fat * 90) / 10;
-    $totalFat.textContent = Math.floor(data.nutrition.nf_total_fat * 10) / 10 + 'g';
-    $sodium.textContent = Math.floor(data.nutrition.nf_sodium) + 'mg';
-    $potassium.textContent = Math.floor(data.nutrition.nf_potassium) + 'mg';
-    totalCarbs.textContent = Math.floor(data.nutrition.nf_total_carbohydrate * 10) / 10 + 'g';
-    $fiber.textContent = Math.floor(data.nutrition.nf_dietary_fiber * 10) / 10 + 'g';
-    $sugar.textContent = Math.floor(data.nutrition.nf_sugars * 10) / 10 + 'g';
-    $protein.textContent = Math.floor(data.nutrition.nf_protein * 10) / 10 + 'g';
-    $totalFatPercent.textContent = Math.floor(data.nutrition.nf_total_fat * 100 / 78) + '%';
-    $sodiumPercent.textContent = Math.floor(data.nutrition.nf_sodium * 100 / 2300) + '%';
-    $potassiumPercent.textContent = Math.floor(data.nutrition.nf_potassium * 100 / 4700) + '%';
-    $totalCarbsPercent.textContent = Math.floor(data.nutrition.nf_total_carbohydrate * 100 / 275) + '%';
-    $fiberPercent.textContent = Math.floor(data.nutrition.nf_dietary_fiber * 100 / 28) + '%';
-    $itemDetailsPage.className = 'item-details-page';
-  });
-  xhr.send(JSON.stringify(body));
+function loadSearchSuggestions() {
+  if (data.results.length < 4) {
+    return;
+  }
+  for (i = 0; i < 4; i++) {
+    $results[i].setAttribute('data-food-name', data.results[i].food_name);
+    $textResults[i].textContent = data.results[i].food_name;
+    $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
+    $imgResults[i].setAttribute('alt', data.results[i].food_name);
+    $results[i].className = 'result';
+  }
 }
 
-function delaySuggestions() {
-  clearTimeout(delaySuggestionsID);
-  delaySuggestionsID = setTimeout(searchInput, 500);
+function delaySearchSuggestions() {
+  clearTimeout(delaySearchSuggestionsID);
+  delaySearchSuggestionsID = setTimeout(searchInput, 500);
 }
 
-function clickSuggestion(event) {
+function hideSearchSuggestions() {
+  for (var i = 0; i < 4; i++) {
+    $results[i].className = 'result hidden';
+  }
+}
+
+function clickSearchSuggestion(event) {
   if (event.target.className === 'search-bar') {
     return;
   }
@@ -311,11 +226,26 @@ function clickSuggestion(event) {
 function submitSearch(event) {
   event.preventDefault();
   data.view = 'search results';
-  clearTimeout(delaySuggestionsID);
+  clearTimeout(delaySearchSuggestionsID);
   while ($resultList.firstChild) {
     $resultList.removeChild($resultList.firstChild);
   }
   searchInput();
+}
+
+function loadSearchResults(input) {
+  $resultsPageTitle.textContent = 'Search results for "' + input + '"';
+  if (data.results.length > 0) {
+    for (i = 0; i < data.results.length; i++) {
+      var resultDiv = renderResult(data.results[i]);
+      $resultList.append(resultDiv);
+    }
+  } else {
+    $noResults.className = 'no-results';
+    $searchHeader.className = 'result-header hidden';
+  }
+  $resultsPage.className = 'results-page';
+  $searchForm.className = 'search form hidden';
 }
 
 function renderResult(foodItem) {
@@ -373,24 +303,6 @@ function renderResult(foodItem) {
   return result;
 }
 
-function addItem(foodType, name, servingSize, image) {
-  var foodObject = {
-    name: name,
-    servingSize: servingSize,
-    image: image
-  };
-  data[foodType].push(foodObject);
-}
-
-function removeItem(foodType, name) {
-  for (var i = 0; i < data[foodType].length; i++) {
-    if (data[foodType][i].name === name) {
-      data[foodType].splice(i, 1);
-      return;
-    }
-  }
-}
-
 function clickResultList(event) {
   var resultElement = event.target.closest('.result-div');
   if (event.target.matches('.item-icon')) {
@@ -444,6 +356,93 @@ function clickAddVeg(event) {
   }
 }
 
+function addItem(foodType, name, servingSize, image) {
+  var foodObject = {
+    name: name,
+    servingSize: servingSize,
+    image: image
+  };
+  data[foodType].push(foodObject);
+}
+
+function removeItem(foodType, name) {
+  for (var i = 0; i < data[foodType].length; i++) {
+    if (data[foodType][i].name === name) {
+      data[foodType].splice(i, 1);
+      return;
+    }
+  }
+}
+
+function getNutritionFacts(foodName) {
+  hideAllViews();
+  data.view = 'item details';
+  $addFruitButton.className = 'add-fruit add-button not-added';
+  $addVegButton.className = 'add-veg add-button not-added';
+  $itemDetailsImg.setAttribute('alt', foodName);
+  $itemDetailsName.textContent = foodName;
+  $nutritionFoodName.textContent = foodName;
+  var body = {
+    query: foodName
+  };
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://trackapi.nutritionix.com/v2/natural/nutrients');
+  xhr.responseType = 'json';
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('x-app-id', 'c1479c3a');
+  xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
+  xhr.setRequestHeader('x-remote-user-id', 0);
+  xhr.addEventListener('load', function () {
+    data.nutrition = xhr.response.foods[0];
+    $itemDetailsImg.setAttribute('src', data.nutrition.photo.thumb);
+    data.nutrition.servingSize = data.nutrition.serving_qty + ' ' + data.nutrition.serving_unit + ' (' + data.nutrition.serving_weight_grams + 'g)';
+    $servingSize.textContent = data.nutrition.servingSize;
+    $calories.textContent = Math.floor(data.nutrition.nf_calories);
+    $caloriesFat.textContent = Math.floor(data.nutrition.nf_total_fat * 90) / 10;
+    $totalFat.textContent = Math.floor(data.nutrition.nf_total_fat * 10) / 10 + 'g';
+    $sodium.textContent = Math.floor(data.nutrition.nf_sodium) + 'mg';
+    $potassium.textContent = Math.floor(data.nutrition.nf_potassium) + 'mg';
+    totalCarbs.textContent = Math.floor(data.nutrition.nf_total_carbohydrate * 10) / 10 + 'g';
+    $fiber.textContent = Math.floor(data.nutrition.nf_dietary_fiber * 10) / 10 + 'g';
+    $sugar.textContent = Math.floor(data.nutrition.nf_sugars * 10) / 10 + 'g';
+    $protein.textContent = Math.floor(data.nutrition.nf_protein * 10) / 10 + 'g';
+    $totalFatPercent.textContent = Math.floor(data.nutrition.nf_total_fat * 100 / 78) + '%';
+    $sodiumPercent.textContent = Math.floor(data.nutrition.nf_sodium * 100 / 2300) + '%';
+    $potassiumPercent.textContent = Math.floor(data.nutrition.nf_potassium * 100 / 4700) + '%';
+    $totalCarbsPercent.textContent = Math.floor(data.nutrition.nf_total_carbohydrate * 100 / 275) + '%';
+    $fiberPercent.textContent = Math.floor(data.nutrition.nf_dietary_fiber * 100 / 28) + '%';
+    $itemDetailsPage.className = 'item-details-page';
+  });
+  xhr.send(JSON.stringify(body));
+}
+
+function loadDailyLog() {
+  if (data.fruits.length === 0) {
+    $noFruit.className = 'no-fruit';
+  } else {
+    $noFruit.className = 'no-fruit hidden';
+  }
+  if (data.veggies.length === 0) {
+    $noVeg.className = 'no-veg';
+  } else {
+    $noVeg.className = 'no-veg hidden';
+  }
+  while ($fruitLog.firstChild) {
+    $fruitLog.removeChild($fruitLog.firstChild);
+  }
+  while ($vegLog.firstChild) {
+    $vegLog.removeChild($vegLog.firstChild);
+  }
+  for (var i = 0; i < data.fruits.length; i++) {
+    var renderedEntry = renderLogEntry(data.fruits[i]);
+    $fruitLog.append(renderedEntry);
+  }
+  for (i = 0; i < data.veggies.length; i++) {
+    renderedEntry = renderLogEntry(data.veggies[i]);
+    $vegLog.append(renderedEntry);
+  }
+}
+
 function renderLogEntry(entry) {
   var result = document.createElement('div');
   result.className = 'result-div row';
@@ -475,6 +474,29 @@ function renderLogEntry(entry) {
   return result;
 }
 
+function loadProgress() {
+  var fruitPercent = 100 * data.fruits.length / data.fruitGoal;
+  var vegPercent = 100 * data.veggies.length / data.veggieGoal;
+  var reachedFruitGoal = fruitPercent >= 100;
+  var reachedVegGoal = vegPercent >= 100;
+  $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
+  $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
+  if (reachedFruitGoal) {
+    $fruitBar.style.width = '100%';
+    $fruitBar.style.backgroundColor = 'lightgreen';
+    $fruitBar.textContent = 'You made it!';
+  } else {
+    $fruitBar.style.width = fruitPercent + '%';
+  }
+  if (reachedVegGoal) {
+    $vegBar.style.width = '100%';
+    $vegBar.style.backgroundColor = 'lightgreen';
+    $vegBar.textContent = 'You made it!';
+  } else {
+    $vegBar.style.width = vegPercent + '%';
+  }
+}
+
 function hideAllViews() {
   $goalForm.className = 'goal form hidden';
   $searchForm.className = 'search form hidden';
@@ -484,7 +506,7 @@ function hideAllViews() {
   $progressPage.className = 'progress-page hidden';
 }
 
-function clickExit(event) {
+function clickExitModal(event) {
   modalReset();
   $welcomeModal.className = 'welcome-modal hidden';
   $goalModal.className = 'goal-modal hidden';
@@ -525,13 +547,14 @@ function clickLogContinue(event) {
   $logModal.className = 'log-modal hidden';
   $progressModal.className = 'progress-modal';
   $dailyLogPage.className = 'daily-log-page hidden';
+  loadProgress();
   navProgress();
   $navLog.style.color = 'white';
   $navProgress.style.color = 'green';
 }
 
 function clickGetStarted(event) {
-  clickExit();
+  clickExitModal();
   $goalForm.className = 'goal form';
   $progressPage.className = 'progres-page hidden';
   $navProgress.style.color = 'white';
@@ -552,14 +575,14 @@ function clickInfo(event) {
   $overlay.className = 'overlay';
 }
 
-function clickInfoExitKnow(event) {
-  $infoModalKnow.className = 'info-modal know hidden';
-  $overlay.className = 'overlay hidden';
-}
-
 function clickInfoNext(event) {
   $infoModalKnow.className = 'info-modal know hidden';
   $infoModalGoal.className = 'info-modal goal';
+}
+
+function clickInfoExitKnow(event) {
+  $infoModalKnow.className = 'info-modal know hidden';
+  $overlay.className = 'overlay hidden';
 }
 
 function clickInfoExitGoal(event) {
