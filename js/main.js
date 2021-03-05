@@ -26,6 +26,8 @@ $searchForm.addEventListener('submit', submitSearch);
 var $searchBarSuggestions = document.querySelector('.search-bar-suggestions');
 $searchBarSuggestions.addEventListener('click', clickSuggestion);
 
+var delaySuggestionsID = null;
+
 var $resultsPage = document.querySelector('.results-page');
 var $resultsPageTitle = document.querySelector('.search-results');
 
@@ -125,12 +127,13 @@ var $infoModalGoal = document.querySelector('.info-modal.goal');
 var $infoExitGoal = document.querySelector('.exit.goal');
 $infoExitGoal.addEventListener('click', clickInfoExitGoal);
 
-var delaySuggestionsID = null;
-
-// if (data.newUser) {
-//   $welcomeModal.className = 'welcome-modal';
-//   $overlay.className = 'overlay';
-// }
+if (data.newUser) {
+  $welcomeModal.className = 'welcome-modal';
+  $overlay.className = 'overlay';
+} else {
+  $welcomeModal.className = 'welcome-modal hidden';
+  $overlay.className = 'overlay hidden';
+}
 
 function setGoal(event) {
   event.preventDefault();
@@ -187,19 +190,11 @@ function searchInput(event) {
 function getNutritionFacts(foodName) {
   hideAllViews();
   data.view = 'item details';
+  $addFruitButton.className = 'add-fruit add-button not-added';
+  $addVegButton.className = 'add-veg add-button not-added';
   $itemDetailsImg.setAttribute('alt', foodName);
   $itemDetailsName.textContent = foodName;
   $nutritionFoodName.textContent = foodName;
-  // if (data.fruits.includes(foodName)) {
-  //   $addFruitButton.className = 'added add-fruit add-button';
-  // } else {
-  //   $addFruitButton.className = 'not-added add-fruit add-button';
-  // }
-  // if (data.veggies.includes(foodName)) {
-  //   $addVegButton.className = 'added add-veg add-button';
-  // } else {
-  //   $addVegButton.className = 'not-added add-veg add-button';
-  // }
   var body = {
     query: foodName
   };

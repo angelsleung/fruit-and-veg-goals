@@ -4,13 +4,7 @@ body {
   text-align: center;
   font-family: Poppins, cursive;
   color: rgb(66, 65, 65);
-
-  /* text-align: left; */
 }
-
-/* .main {
-  margin: 0 auto;
-} */
 
 .header {
   color: white;
@@ -18,12 +12,6 @@ body {
   position: fixed;
   width: 100%;
   z-index: 1;
-
-  /* top: 0; */
-
-  /* border-bottom: 1px solid lightgray; */
-
-  /* position: relative; */
 }
 
 .app-name {
@@ -44,7 +32,7 @@ body {
   border-radius: 10px;
   position: absolute;
   background-color: lightgoldenrodyellow;
-  padding: 1rem 2rem;
+  padding: 1rem 1rem 1rem 2rem;
   max-width: 500px;
   color: rgb(66, 65, 65);
 }
@@ -96,9 +84,18 @@ body {
   margin: 0;
 }
 
+.welcome-modal > p,
+.goal-modal > p,
+.search-modal > p,
+.log-modal > p,
+.progress-modal > p,
+.info-modal > p {
+  padding-right: 1rem;
+}
+
 .modal-button {
-  border: 1px solid gray;
-  border-radius: 5px;
+  border: 1px solid darkgray;
+  border-radius: 10%;
   background-color: lightgray;
   padding: 0.2rem 0.3rem;
   margin: 0 auto;
@@ -124,9 +121,6 @@ body {
 }
 
 .exit {
-  /* text-align: right; */
-
-  /* margin: 0 auto; */
   font-size: 1.5em;
   color: gray;
 }
@@ -147,8 +141,6 @@ body {
 
 .form-inputs {
   margin: 0 auto;
-
-  /* text-align: left; */
 }
 
 .goal.form,
@@ -174,11 +166,6 @@ body {
   height: 3rem;
   font-size: 1.3rem;
 }
-
-/* .no-highlight {
-  position: static;
-  border: 1px solid darkgray;
-} */
 
 .highlight {
   position: relative;
@@ -282,23 +269,13 @@ body {
   object-fit: contain;
 }
 
-.result-list-div,
-.daily-log-page,
-.progress-page {
-  /* padding: 0 2rem; */
-}
-
 .result-div {
   align-items: center;
   border-top: 1px solid lightgray;
-
-  /* padding-left: 2rem; */
 }
 
 .result-text {
   flex-grow: 1;
-
-  /* text-align: left; */
   padding-left: 2rem;
 }
 
@@ -366,6 +343,7 @@ body {
 .item-details-name {
   font-size: 1.5em;
   text-transform: capitalize;
+  text-align: center;
 }
 
 .nutrition-title {
@@ -375,8 +353,6 @@ body {
 
 .nutrition-table {
   table-layout: fixed;
-
-  /* text-align: left; */
   border: 1px solid rgb(66, 65, 65);
   padding: 0.5rem;
   border-spacing: 0;
@@ -479,12 +455,13 @@ body {
 }
 
 .add-log-icon {
-  color: rgb(175, 182, 190);
+  color: rgb(217, 219, 221);
   padding: 0.1rem;
 }
 
 .added {
-  background-color: limegreen;
+  background-color: forestgreen;
+  color: rgb(246, 246, 246);
 }
 
 .not-added {
@@ -496,7 +473,7 @@ body {
 }
 
 .not-added-icon {
-  color: rgb(175, 182, 190);
+  color: rgb(217, 219, 221);
 }
 
 .no-fruit,
@@ -514,8 +491,6 @@ body {
 
 .category-title {
   color: gray;
-
-  /* text-align: left; */
   margin: 1rem 0 0.5rem;
   padding-left: 1rem;
   font-style: italic;
@@ -543,6 +518,7 @@ body {
   font-weight: bold;
   font-size: 1.2rem;
   letter-spacing: 0.05em;
+  color: rgb(75, 73, 73);
 }
 
 .fruit-progress,
@@ -556,8 +532,6 @@ body {
   bottom: 0;
   width: 100%;
   justify-content: space-evenly;
-
-  /* border-top: 1px solid lightgray; */
   background-color: limegreen;
 }
 
