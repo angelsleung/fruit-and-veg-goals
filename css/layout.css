@@ -1,8 +1,12 @@
-.container {
+.container,
+.form,
+.results-page,
+.daily-log-page,
+.item-details-page,
+.progress-page {
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 100%;
 }
 
 .row {

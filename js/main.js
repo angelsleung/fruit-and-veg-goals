@@ -26,11 +26,16 @@ $searchForm.addEventListener('submit', submitSearch);
 var $searchBarSuggestions = document.querySelector('.search-bar-suggestions');
 $searchBarSuggestions.addEventListener('click', clickSuggestion);
 
+var delaySuggestionsID = null;
+
 var $resultsPage = document.querySelector('.results-page');
 var $resultsPageTitle = document.querySelector('.search-results');
 
 var $resultList = document.querySelector('.result-list');
 $resultList.addEventListener('click', clickResultList);
+
+var $searchHeader = document.querySelector('.result-header');
+var $noResults = document.querySelector('.no-results');
 
 var $addFruitButton = document.querySelector('.add-fruit');
 $addFruitButton.addEventListener('click', clickAddFruit);
@@ -72,7 +77,63 @@ var $fruitBar = document.querySelector('.fruit-bar');
 var $vegProgress = document.querySelector('.veg-progress');
 var $vegBar = document.querySelector('.veg-bar');
 
-var delaySuggestionsID = null;
+var $overlay = document.querySelector('.overlay');
+var $welcomeModal = document.querySelector('.welcome-modal');
+var $goalModal = document.querySelector('.goal-modal');
+
+var $getStarted = document.querySelector('.get-started');
+$getStarted.addEventListener('click', clickGetStarted);
+
+var $exit = document.querySelectorAll('.exit');
+for (var i = 0; i < $exit.length; i++) {
+  $exit[i].addEventListener('click', clickExit);
+}
+
+var $welcomeContinue = document.querySelector('.welcome.continue');
+$welcomeContinue.addEventListener('click', clickWelcomeContinue);
+
+var $goalContinue = document.querySelector('.goal.continue');
+$goalContinue.addEventListener('click', clickGoalContinue);
+
+var $fruitInput = document.querySelector('.fruit-input');
+var $vegInput = document.querySelector('.veg-input');
+
+var $searchModal = document.querySelector('.search-modal');
+var $searchDiv = document.querySelector('.search-div');
+
+var $searchContinue = document.querySelector('.search.continue');
+$searchContinue.addEventListener('click', clickSearchContinue);
+
+var $logModal = document.querySelector('.log-modal');
+
+var $logContinue = document.querySelector('.log.continue');
+$logContinue.addEventListener('click', clickLogContinue);
+
+var $progressModal = document.querySelector('.progress-modal');
+
+var $info = document.querySelector('.info');
+$info.addEventListener('click', clickInfo);
+
+var $infoModalKnow = document.querySelector('.info-modal.know');
+
+var $infoExitKnow = document.querySelector('.exit.know');
+$infoExitKnow.addEventListener('click', clickInfoExitKnow);
+
+var $infoNext = document.querySelector('.info-next');
+$infoNext.addEventListener('click', clickInfoNext);
+
+var $infoModalGoal = document.querySelector('.info-modal.goal');
+
+var $infoExitGoal = document.querySelector('.exit.goal');
+$infoExitGoal.addEventListener('click', clickInfoExitGoal);
+
+if (data.newUser) {
+  $welcomeModal.className = 'welcome-modal';
+  $overlay.className = 'overlay';
+} else {
+  $welcomeModal.className = 'welcome-modal hidden';
+  $overlay.className = 'overlay hidden';
+}
 
 function setGoal(event) {
   event.preventDefault();
@@ -99,18 +160,25 @@ function searchInput(event) {
   xhr.addEventListener('load', function () {
     data.results = xhr.response.common;
     if (data.view === 'search input') {
-      for (i = 0; i < 4; i++) {
-        $results[i].className = 'result';
-        $results[i].setAttribute('data-food-name', data.results[i].food_name);
-        $textResults[i].textContent = data.results[i].food_name;
-        $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
-        $imgResults[i].setAttribute('alt', data.results[i].food_name);
+      if (data.results.length >= 4) {
+        for (i = 0; i < 4; i++) {
+          $results[i].setAttribute('data-food-name', data.results[i].food_name);
+          $textResults[i].textContent = data.results[i].food_name;
+          $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
+          $imgResults[i].setAttribute('alt', data.results[i].food_name);
+          $results[i].className = 'result';
+        }
       }
     } else {
       $resultsPageTitle.textContent = 'Search results for "' + input + '"';
-      for (i = 0; i < data.results.length; i++) {
-        var resultDiv = renderResult(data.results[i]);
-        $resultList.append(resultDiv);
+      if (data.results.length > 0) {
+        for (i = 0; i < data.results.length; i++) {
+          var resultDiv = renderResult(data.results[i]);
+          $resultList.append(resultDiv);
+        }
+      } else {
+        $noResults.className = 'no-results';
+        $searchHeader.className = 'result-header hidden';
       }
       $resultsPage.className = 'results-page';
       $searchForm.className = 'search form hidden';
@@ -122,19 +190,11 @@ function searchInput(event) {
 function getNutritionFacts(foodName) {
   hideAllViews();
   data.view = 'item details';
+  $addFruitButton.className = 'add-fruit add-button not-added';
+  $addVegButton.className = 'add-veg add-button not-added';
   $itemDetailsImg.setAttribute('alt', foodName);
   $itemDetailsName.textContent = foodName;
   $nutritionFoodName.textContent = foodName;
-  if (data.fruits.includes(foodName)) {
-    $addFruitButton.className = 'added add-fruit add-button';
-  } else {
-    $addFruitButton.className = 'not-added add-fruit add-button';
-  }
-  if (data.veggies.includes(foodName)) {
-    $addVegButton.className = 'added add-veg add-button';
-  } else {
-    $addVegButton.className = 'not-added add-veg add-button';
-  }
   var body = {
     query: foodName
   };
@@ -213,10 +273,24 @@ function navSearch(event) {
 function navProgress(event) {
   var fruitPercent = 100 * data.fruits.length / data.fruitGoal;
   var vegPercent = 100 * data.veggies.length / data.veggieGoal;
+  var reachedFruitGoal = fruitPercent >= 100;
+  var reachedVegGoal = vegPercent >= 100;
   $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
   $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
-  $fruitBar.style.width = fruitPercent + '%';
-  $vegBar.style.width = vegPercent + '%';
+  if (reachedFruitGoal) {
+    $fruitBar.style.width = '100%';
+    $fruitBar.style.backgroundColor = 'lightgreen';
+    $fruitBar.textContent = 'You made it!';
+  } else {
+    $fruitBar.style.width = fruitPercent + '%';
+  }
+  if (reachedVegGoal) {
+    $vegBar.style.width = '100%';
+    $vegBar.style.backgroundColor = 'lightgreen';
+    $vegBar.textContent = 'You made it!';
+  } else {
+    $vegBar.style.width = vegPercent + '%';
+  }
   hideAllViews();
   $progressPage.className = 'progress-page';
   data.view = 'progress page';
@@ -224,7 +298,7 @@ function navProgress(event) {
 
 function renderResult(foodItem) {
   var result = document.createElement('div');
-  result.className = 'result-div row';
+  result.className = 'result-div row pointer';
   result.setAttribute('data-name', foodItem.food_name);
   var servingSize = foodItem.serving_qty + ' ' + foodItem.serving_unit;
   result.setAttribute('data-serving-size', servingSize);
@@ -299,24 +373,32 @@ function clickResultList(event) {
   var resultElement = event.target.closest('.result-div');
   if (event.target.matches('.item-icon')) {
     if (event.target.matches('.not-added-icon')) {
-      if (event.target.matches('.fa-apple-alt')) {
-        event.target.className = 'item-icon added-icon fas fa-apple-alt';
-        addItem('fruits', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
-      } else {
-        event.target.className = 'item-icon added-icon fas fa-carrot';
-        addItem('veggies', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
-      }
+      clickResultListAdd(event.target, resultElement);
     } else {
-      if (event.target.matches('.fa-apple-alt')) {
-        event.target.className = 'item-icon not-added-icon fas fa-apple-alt';
-        removeItem('fruits', resultElement.dataset.name);
-      } else {
-        event.target.className = 'item-icon not-added-icon fas fa-carrot';
-        removeItem('veggies', resultElement.dataset.name);
-      }
+      clickResultListRemove(event.target, resultElement);
     }
   } else {
     getNutritionFacts(resultElement.dataset.name);
+  }
+}
+
+function clickResultListAdd(target, resultElement) {
+  if (target.matches('.fa-apple-alt')) {
+    target.className = 'item-icon added-icon fas fa-apple-alt';
+    addItem('fruits', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
+  } else {
+    target.className = 'item-icon added-icon fas fa-carrot';
+    addItem('veggies', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
+  }
+}
+
+function clickResultListRemove(target, resultElement) {
+  if (target.matches('.fa-apple-alt')) {
+    target.className = 'item-icon not-added-icon fas fa-apple-alt';
+    removeItem('fruits', resultElement.dataset.name);
+  } else {
+    target.className = 'item-icon not-added-icon fas fa-carrot';
+    removeItem('veggies', resultElement.dataset.name);
   }
 }
 
@@ -408,4 +490,87 @@ function hideAllViews() {
   $itemDetailsPage.className = 'item-details-page hidden';
   $dailyLogPage.className = 'daily-log-page hidden';
   $progressPage.className = 'progress-page hidden';
+}
+
+function clickExit(event) {
+  modalReset();
+  $welcomeModal.className = 'welcome-modal hidden';
+  $goalModal.className = 'goal-modal hidden';
+  $overlay.className = 'overlay hidden';
+  $searchModal.className = 'search-modal hidden';
+  $logModal.className = 'log-modal hidden';
+  $progressModal.className = 'progress-modal hidden';
+}
+
+function clickWelcomeContinue(event) {
+  $welcomeModal.className = 'welcome-modal hidden';
+  $goalModal.className = 'goal-modal';
+  $fruitInput.className = 'fruit-input highlight';
+  $vegInput.className = 'veg-input highlight';
+  $navHome.style.color = 'green';
+}
+
+function clickGoalContinue(event) {
+  $goalModal.className = 'goal-modal hidden';
+  $searchModal.className = 'search-modal';
+  $goalForm.className = 'goal form hidden';
+  $searchForm.className = 'search form';
+  $navHome.style.color = 'white';
+  $navSearch.style.color = 'green';
+  $searchDiv.className = 'search-div row highlight';
+}
+
+function clickSearchContinue(event) {
+  $searchModal.className = 'search-modal hidden';
+  $logModal.className = 'log-modal';
+  $searchForm.className = 'search form hidden';
+  $dailyLogPage.className = 'daily-log-page';
+  $navSearch.style.color = 'white';
+  $navLog.style.color = 'green';
+}
+
+function clickLogContinue(event) {
+  $logModal.className = 'log-modal hidden';
+  $progressModal.className = 'progress-modal';
+  $dailyLogPage.className = 'daily-log-page hidden';
+  navProgress();
+  $navLog.style.color = 'white';
+  $navProgress.style.color = 'green';
+}
+
+function clickGetStarted(event) {
+  clickExit();
+  $goalForm.className = 'goal form';
+  $progressPage.className = 'progres-page hidden';
+  $navProgress.style.color = 'white';
+}
+
+function modalReset() {
+  $navHome.style.color = 'white';
+  $navLog.style.color = 'white';
+  $navLog.style.color = 'white';
+  $navProgress.style.color = 'white';
+  $fruitInput.className = 'fruit-input';
+  $vegInput.className = 'veg-input';
+  $searchDiv.className = 'search-div row';
+}
+
+function clickInfo(event) {
+  $infoModalKnow.className = 'info-modal know';
+  $overlay.className = 'overlay';
+}
+
+function clickInfoExitKnow(event) {
+  $infoModalKnow.className = 'info-modal know hidden';
+  $overlay.className = 'overlay hidden';
+}
+
+function clickInfoNext(event) {
+  $infoModalKnow.className = 'info-modal know hidden';
+  $infoModalGoal.className = 'info-modal goal';
+}
+
+function clickInfoExitGoal(event) {
+  $infoModalGoal.className = 'info-modal goal hidden';
+  $overlay.className = 'overlay hidden';
 }

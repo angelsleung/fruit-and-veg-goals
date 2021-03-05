@@ -3,15 +3,17 @@ var data = {
   view: 'home',
   results: null,
   nutrition: null,
-  fruitGoal: 5,
+  fruitGoal: 4,
   veggieGoal: 5,
   fruits: [],
-  veggies: []
+  veggies: [],
+  newUser: true
 };
 
 var previousData = localStorage.getItem('local-data');
 if (previousData !== null) {
   data = JSON.parse(previousData);
+  data.newUser = false;
 }
 window.addEventListener('beforeunload', beforeUnload);
 

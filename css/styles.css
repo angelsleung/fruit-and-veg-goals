@@ -1,21 +1,17 @@
-* {
-  font-family: Poppins, cursive;
-}
-
 body {
   min-height: 100vh;
   display: flex;
   text-align: center;
-}
-
-.main {
-  padding-bottom: 5rem;
+  font-family: Poppins, cursive;
+  color: rgb(66, 65, 65);
 }
 
 .header {
   color: white;
-  background-color: lightgreen;
-  border-bottom: 1px solid lightgray;
+  background-color: rgb(50, 205, 50);
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 }
 
 .app-name {
@@ -23,39 +19,167 @@ body {
   padding: 1rem;
   font-size: 2.2em;
   font-family: 'Caveat', cursive;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
+}
+
+.welcome-modal,
+.goal-modal,
+.search-modal,
+.log-modal,
+.progress-modal,
+.info-modal {
+  border: 1px solid gray;
+  border-radius: 10px;
+  position: absolute;
+  background-color: lightgoldenrodyellow;
+  padding: 1rem 1rem 1rem 2rem;
+  max-width: 500px;
+  color: rgb(66, 65, 65);
+}
+
+.welcome-modal {
+  width: 80%;
+  left: 10%;
+  top: 25%;
+}
+
+.goal-modal {
+  width: 60%;
+  right: 5%;
+  top: 25%;
+}
+
+.search-modal {
+  top: 16rem;
+  width: 90%;
+}
+
+.log-modal,
+.progress-modal {
+  bottom: 12%;
+  width: 90%;
+}
+
+.info-modal.know {
+  width: 90%;
+  top: 15%;
+  padding-bottom: 4.4rem;
+}
+
+.info-modal.know > ul {
+  padding-left: 1.8rem;
+}
+
+.info-modal.goal {
+  width: 90%;
+  top: 15%;
+}
+
+.welcome-modal > h3,
+.goal-modal > h3,
+.search-modal > h3,
+.log-modal > h3,
+.progress-modal > h3,
+.info-modal > h3 {
+  margin: 0;
+}
+
+.welcome-modal > p,
+.goal-modal > p,
+.search-modal > p,
+.log-modal > p,
+.progress-modal > p,
+.info-modal > p {
+  padding-right: 1rem;
+}
+
+.modal-button {
+  border: 1px solid darkgray;
+  border-radius: 10%;
+  background-color: lightgray;
+  padding: 0.2rem 0.3rem;
+  margin: 0 auto;
+  width: 6rem;
+  text-align: center;
+}
+
+.get-started {
+  width: 7rem;
+}
+
+.overlay {
+  background-color: rgb(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.exit-div {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.exit {
+  font-size: 1.5em;
+  color: gray;
+}
+
+.main {
+  position: relative;
+}
+
+.info {
+  color: gray;
 }
 
 .page-title {
-  padding-top: 2rem;
-}
-
-.form,
-.results-page,
-.daily-log-page {
-  display: flex;
-  flex-direction: column;
+  padding-top: 1rem;
+  margin: 1rem auto;
+  font-size: 1.4em;
 }
 
 .form-inputs {
   margin: 0 auto;
-  text-align: left;
 }
 
-.form > p,
-.input > span,
-.input > select {
-  font-size: 1.3rem;
+.goal.form,
+.search.form,
+.daily-log-page,
+.progress-page {
+  min-height: 100vh;
+}
+
+.goal-input {
+  margin: 0 auto;
+  font-size: 1.2rem;
 }
 
 .input {
   padding: 1rem 0;
 }
 
+.input > select {
+  cursor: pointer;
+  color: rgb(66, 65, 65);
+  border-radius: 5px;
+  height: 3rem;
+  font-size: 1.3rem;
+}
+
+.highlight {
+  position: relative;
+  border: 3px solid orange;
+  border-radius: 5px;
+}
+
 .next {
   font-size: 1.3em;
-  margin: 3rem auto;
-  padding: 0.2rem 1rem;
+  margin: 2rem auto;
+  padding: 0.3rem 1rem;
+  border-radius: 10%;
+  border: 1px solid darkgray;
+  color: rgb(66, 65, 65);
 }
 
 .search-bar-suggestions {
@@ -63,24 +187,57 @@ body {
 }
 
 .search-div {
-  padding-top: 2rem;
+  margin-top: 2rem;
   justify-content: center;
 }
 
 .search-bar {
   width: 100%;
+  border: 1px solid darkgray;
+  border-radius: 5px;
 }
 
 .search-bar,
 .search-button {
   font-size: 1.2em;
-  height: 2rem;
+  height: 3rem;
 }
 
-.next,
-.search-button,
-.item-icon {
+.search-bar:focus {
+  border: 1px solid lightgreen;
+}
+
+.search-button {
+  color: rgb(66, 65, 65);
+}
+
+.continue,
+.get-started,
+.info-next {
+  background-color: lightgray;
+}
+
+.continue:hover,
+.get-started:hover,
+.info-next:hover {
   cursor: pointer;
+  background-color: darkgray;
+}
+
+.exit:hover {
+  cursor: pointer;
+  color: rgb(66, 65, 65);
+}
+
+.info:hover {
+  cursor: pointer;
+  color: lime;
+}
+
+.next:hover,
+.search-button:hover {
+  cursor: pointer;
+  background-color: lightgray;
 }
 
 .result {
@@ -89,6 +246,7 @@ body {
   display: flex;
   align-items: center;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .result:hover {
@@ -107,14 +265,8 @@ body {
 
 .img-result {
   width: 100%;
-  margin: 0.1rem;
+  margin: 0.5rem;
   object-fit: contain;
-}
-
-.result-list,
-.result-header,
-.daily-log-page {
-  padding: 0 1rem;
 }
 
 .result-div {
@@ -124,7 +276,6 @@ body {
 
 .result-text {
   flex-grow: 1;
-  text-align: left;
   padding-left: 2rem;
 }
 
@@ -136,6 +287,7 @@ body {
 .result-header-div {
   width: 4rem;
   height: 3rem;
+  text-align: center;
 }
 
 .result-header-text {
@@ -164,40 +316,55 @@ body {
   font-size: 1.5em;
 }
 
+.item-icon:hover {
+  color: lime;
+}
+
 .item-details-page {
-  width: 22rem;
   text-align: center;
   margin: 0 auto;
 }
 
 .item-details-header {
   padding: 0 1rem;
+  justify-content: space-evenly;
+}
+
+.details-img-div {
+  display: flex;
 }
 
 .item-details-img {
-  padding: 1rem;
+  width: 100%;
+  margin: 0.5rem;
+  object-fit: contain;
 }
 
 .item-details-name {
   font-size: 1.5em;
   text-transform: capitalize;
+  text-align: center;
 }
 
 .nutrition-title {
   font-size: 1.8em;
+  white-space: nowrap;
 }
 
 .nutrition-table {
-  text-align: left;
-  border: 1px solid black;
+  table-layout: fixed;
+  border: 1px solid rgb(66, 65, 65);
   padding: 0.5rem;
   border-spacing: 0;
-  font-size: 0.8em;
+  font-size: 1em;
   margin: 0 auto;
+  width: 100%;
+  border-radius: 5px;
 }
 
 .nutrition-food-name {
   text-transform: capitalize;
+  font-weight: normal;
 }
 
 .nutrition-header-last-row {
@@ -206,10 +373,16 @@ body {
 
 .nutrition-calories-last-row {
   border-bottom: 4px solid;
+  white-space: normal;
 }
 
 .nutrition-table > tbody td {
-  border-top: 1px solid black;
+  border-top: 1px solid rgb(66, 65, 65);
+  white-space: nowrap;
+}
+
+.nutrition-table > thead th:nth-child(1) {
+  width: 100px;
 }
 
 .nutrition-category {
@@ -220,13 +393,23 @@ body {
   padding-left: 1rem;
 }
 
+.serving-label {
+  vertical-align: top;
+}
+
 .serving-amount {
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-weight: bold;
+}
+
+.serving-size {
+  text-align: right;
+  font-weight: normal;
 }
 
 .daily-values {
   text-align: right;
+  width: 90%;
 }
 
 .daily-values-message {
@@ -234,6 +417,7 @@ body {
   color: gray;
   list-style-type: '*';
   padding-left: 0.5em;
+  white-space: normal;
 }
 
 .daily-values-message > li {
@@ -245,14 +429,18 @@ body {
 }
 
 .add-button {
-  justify-content: center;
+  text-align: center;
   align-items: center;
   border: 1px solid lightgray;
   border-radius: 10px;
   margin-bottom: 0.4rem;
   padding: 0.2rem 0;
-  width: 10rem;
+  width: 9.6rem;
   cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: lime;
 }
 
 .add-log-div {
@@ -263,14 +451,17 @@ body {
   line-height: 1em;
   font-style: italic;
   color: gray;
+  text-align: center;
 }
 
 .add-log-icon {
-  color: rgb(175, 182, 190);
+  color: rgb(217, 219, 221);
+  padding: 0.1rem;
 }
 
 .added {
-  background-color: lightgreen;
+  background-color: forestgreen;
+  color: rgb(246, 246, 246);
 }
 
 .not-added {
@@ -278,25 +469,39 @@ body {
 }
 
 .added-icon {
-  color: lightgreen;
+  color: limegreen;
 }
 
 .not-added-icon {
-  color: rgb(175, 182, 190);
+  color: rgb(217, 219, 221);
 }
 
 .no-fruit,
-.no-veg {
+.no-veg,
+.no-results {
   color: lightgray;
   font-style: italic;
+  font-size: 1.2em;
+  padding-left: 1rem;
 }
 
 .category-div {
   padding: 0.5rem 0 1rem;
 }
 
+.category-title {
+  color: gray;
+  margin: 1rem 0 0.5rem;
+  padding-left: 1rem;
+  font-style: italic;
+}
+
+.progress-div {
+  margin: 0 auto;
+  width: 100%;
+}
+
 .total {
-  width: 80%;
   height: 3rem;
   border: 1px solid lightgray;
   margin: 0 auto;
@@ -304,10 +509,22 @@ body {
 }
 
 .completed {
-  width: 20%;
   height: 100%;
   border-right: 1px solid lightgray;
-  background-color: lightgreen;
+  background-color: green;
+  vertical-align: center;
+  text-align: center;
+  padding-top: 0.6rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  color: rgb(75, 73, 73);
+}
+
+.fruit-progress,
+.veg-progress {
+  font-size: 1.2em;
+  padding-left: 1rem;
 }
 
 .footer {
@@ -315,19 +532,37 @@ body {
   bottom: 0;
   width: 100%;
   justify-content: space-evenly;
-  border-top: 1px solid lightgray;
-  background-color: white;
+  background-color: limegreen;
 }
 
 .nav {
   font-size: 2em;
-  color: lightgreen;
+  color: white;
   padding: 0.5em 0;
+}
+
+.nav:hover {
+  cursor: pointer;
+  color: green;
+}
+
+.pointer {
   cursor: pointer;
 }
 
 .hidden {
   display: none;
+}
+
+.form,
+.results-page,
+.item-details-page,
+.daily-log-page,
+.progress-page {
+  padding: 5rem 0;
+  margin: 0 auto;
+  text-align: left;
+  width: 90%;
 }
 
 @media screen and (min-width: 768px) {
@@ -340,7 +575,50 @@ body {
   .item-details-page,
   .daily-log-page,
   .progress-page {
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 600px;
+  }
+
+  .nutrition-table {
+    max-width: 500px;
+  }
+
+  .welcome-modal {
+    width: 25%;
+    left: 38%;
+  }
+
+  .goal-modal {
+    width: 27%;
+    right: 26%;
+    top: 20%;
+  }
+
+  .search-modal {
+    width: 35%;
+    left: 35%;
+  }
+
+  .log-modal {
+    bottom: 10%;
+    right: 28%;
+    width: 25%;
+  }
+
+  .progress-modal {
+    bottom: 10%;
+    right: 5%;
+    width: 25%;
+  }
+
+  .info-modal.know {
+    width: 50%;
+    top: 12%;
+    left: 35%;
+  }
+
+  .info-modal.goal {
+    width: 40%;
+    top: 15%;
+    left: 35%;
   }
 }
