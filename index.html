@@ -18,15 +18,40 @@
     <header class="header row">
       <h1 class="app-name">Fruit &amp; Veg Goals</h1>
     </header>
-    <main class="main">
 
+    <main class="main">
+      <div class="overlay"></div>
       <form class="goal form" data-view="goal-form">
-        <h2 class="page-title">What is my goal today?</h2>
+        <div class="welcome-modal">
+          <div class="exit-div row">
+            <i class="fas exit fa-times"></i>
+          </div>
+          <h3>Welcome!</h3>
+          <p>This quick walk-thru will guide you on how to use this app.</p>
+          <div class= "modal-buttons row">
+            <div class="welcome continue modal-button">Continue</div>
+          </div>
+        </div>
+
+        <div class="goal-modal hidden">
+          <div class="exit-div row">
+            <i class="fas exit fa-times"></i>
+          </div>
+          <h3>Set Your Goals</h3>
+          <p>Adjust these amounts to set goals you are comfortable with.</p>
+          <div class="modal-buttons row">
+            <div class="goal continue modal-button">Continue</div>
+          </div>
+        </div>
+
+        <h2 class="page-title">What's my goal today?
+          <i class="fas info fa-info-circle"></i>
+        </h2>
         <div class="goal-input">
           <p>I want to eat...</p>
           <div class="form-inputs">
             <div class="input">
-              <select name="fruit">
+              <select class="fruit-input" name="fruit">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -41,7 +66,7 @@
               <span>servings of fruits</span>
             </div>
             <div class="input">
-              <select name="veg">
+              <select class="veg-input" name="veg">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -61,8 +86,19 @@
         <input type="submit" value="Next" class="next">
       </form>
 
-
+      <!-- <div class="search overlay hidden"></div> -->
       <form class="search form hidden" data-view="search-form">
+        <div class="search-modal hidden">
+          <div class="exit-div row">
+            <i class="fas exit fa-times"></i>
+          </div>
+          <h3>Search</h3>
+          <p>Look up any food item in the Nutritionix.com database to add to your daily log.</p>
+          <div class="modal-buttons row">
+            <div class="search continue modal-button">Continue</div>
+          </div>
+        </div>
+
         <h2 class="page-title">Look up a fruit or veggie</h2>
         <div class="search-div row">
           <div class="search-bar-suggestions">

@@ -75,6 +75,28 @@ var $fruitBar = document.querySelector('.fruit-bar');
 var $vegProgress = document.querySelector('.veg-progress');
 var $vegBar = document.querySelector('.veg-bar');
 
+var $overlay = document.querySelector('.overlay');
+var $welcomeModal = document.querySelector('.welcome-modal');
+var $goalModal = document.querySelector('.goal-modal');
+
+// var $searchOverlay = document.querySelector('.search.overlay');
+
+var $exit = document.querySelectorAll('.exit');
+for (var i = 0; i < $exit.length; i++) {
+  $exit[i].addEventListener('click', clickExit);
+}
+
+var $welcomeContinue = document.querySelector('.welcome.continue');
+$welcomeContinue.addEventListener('click', clickWelcomeContinue);
+
+var $goalContinue = document.querySelector('.goal.continue');
+$goalContinue.addEventListener('click', clickGoalContinue);
+
+var $fruitInput = document.querySelector('.fruit-input');
+var $vegInput = document.querySelector('.veg-input');
+
+var $searchModal = document.querySelector('.search-modal');
+var $searchDiv = document.querySelector('.search-div');
 var delaySuggestionsID = null;
 
 function setGoal(event) {
@@ -432,4 +454,38 @@ function hideAllViews() {
   $itemDetailsPage.className = 'item-details-page hidden';
   $dailyLogPage.className = 'daily-log-page hidden';
   $progressPage.className = 'progress-page hidden';
+}
+
+function clickExit(event) {
+  modalReset();
+  $welcomeModal.className = 'welcome-modal hidden';
+  $goalModal.className = 'goal-modal hidden';
+  $overlay.className = 'overlay hidden';
+  $searchModal.className = 'search-modal hidden';
+}
+
+function clickWelcomeContinue(event) {
+  $welcomeModal.className = 'welcome-modal hidden';
+  $goalModal.className = 'goal-modal';
+  $fruitInput.className = 'fruit-input highlight';
+  $vegInput.className = 'veg-input highlight';
+  $navHome.style.color = 'green';
+}
+
+function clickGoalContinue(event) {
+  modalReset();
+  $goalModal.className = 'goal-modal hidden';
+  $searchModal.className = 'search-modal';
+  $goalForm.className = 'goal form hidden';
+  $searchForm.className = 'search form';
+  $navSearch.style.color = 'green';
+  $searchDiv.className = 'search-div row highlight';
+}
+
+function modalReset() {
+  $navHome.style.color = 'white';
+  $navSearch.style.color = 'white';
+  $fruitInput.className = 'fruit-input';
+  $vegInput.className = 'veg-input';
+  $searchDiv.className = 'search-div row';
 }
