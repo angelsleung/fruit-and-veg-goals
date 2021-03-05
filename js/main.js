@@ -378,24 +378,32 @@ function clickResultList(event) {
   var resultElement = event.target.closest('.result-div');
   if (event.target.matches('.item-icon')) {
     if (event.target.matches('.not-added-icon')) {
-      if (event.target.matches('.fa-apple-alt')) {
-        event.target.className = 'item-icon added-icon fas fa-apple-alt';
-        addItem('fruits', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
-      } else {
-        event.target.className = 'item-icon added-icon fas fa-carrot';
-        addItem('veggies', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
-      }
+      clickResultListAdd(event.target, resultElement);
     } else {
-      if (event.target.matches('.fa-apple-alt')) {
-        event.target.className = 'item-icon not-added-icon fas fa-apple-alt';
-        removeItem('fruits', resultElement.dataset.name);
-      } else {
-        event.target.className = 'item-icon not-added-icon fas fa-carrot';
-        removeItem('veggies', resultElement.dataset.name);
-      }
+      clickResultListRemove(event.target, resultElement);
     }
   } else {
     getNutritionFacts(resultElement.dataset.name);
+  }
+}
+
+function clickResultListAdd(target, resultElement) {
+  if (target.matches('.fa-apple-alt')) {
+    target.className = 'item-icon added-icon fas fa-apple-alt';
+    addItem('fruits', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
+  } else {
+    target.className = 'item-icon added-icon fas fa-carrot';
+    addItem('veggies', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
+  }
+}
+
+function clickResultListRemove(target, resultElement) {
+  if (target.matches('.fa-apple-alt')) {
+    target.className = 'item-icon not-added-icon fas fa-apple-alt';
+    removeItem('fruits', resultElement.dataset.name);
+  } else {
+    target.className = 'item-icon not-added-icon fas fa-carrot';
+    removeItem('veggies', resultElement.dataset.name);
   }
 }
 
@@ -530,7 +538,7 @@ function clickLogContinue(event) {
   $logModal.className = 'log-modal hidden';
   $progressModal.className = 'progress-modal';
   $dailyLogPage.className = 'daily-log-page hidden';
-  $progressPage.className = 'progress-page';
+  navProgress();
   $navLog.style.color = 'white';
   $navProgress.style.color = 'green';
 }

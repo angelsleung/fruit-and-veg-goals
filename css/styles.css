@@ -14,10 +14,16 @@ body {
 
 .header {
   color: white;
-  background-color: limegreen;
+  background-color: rgb(50, 205, 50);
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+
+  /* top: 0; */
 
   /* border-bottom: 1px solid lightgray; */
-  position: relative;
+
+  /* position: relative; */
 }
 
 .app-name {
@@ -46,30 +52,30 @@ body {
 .welcome-modal {
   width: 80%;
   left: 10%;
-  top: 20%;
+  top: 25%;
 }
 
 .goal-modal {
   width: 60%;
   right: 5%;
-  top: 15%;
+  top: 25%;
 }
 
 .search-modal {
-  top: 12rem;
+  top: 16rem;
   width: 90%;
 }
 
 .log-modal,
 .progress-modal {
-  bottom: 28%;
+  bottom: 12%;
   width: 90%;
 }
 
 .info-modal.know {
   width: 90%;
-  top: 2%;
-  margin-bottom: 5rem;
+  top: 15%;
+  padding-bottom: 4.4rem;
 }
 
 .info-modal.know > ul {
@@ -78,7 +84,7 @@ body {
 
 .info-modal.goal {
   width: 90%;
-  top: 10%;
+  top: 15%;
 }
 
 .welcome-modal > h3,
@@ -347,10 +353,6 @@ body {
   justify-content: space-evenly;
 }
 
-.details-name-div {
-  padding-left: 1rem;
-}
-
 .details-img-div {
   display: flex;
 }
@@ -364,7 +366,6 @@ body {
 .item-details-name {
   font-size: 1.5em;
   text-transform: capitalize;
-  text-align: center;
 }
 
 .nutrition-title {
@@ -457,8 +458,8 @@ body {
   border: 1px solid lightgray;
   border-radius: 10px;
   margin-bottom: 0.4rem;
-  padding: 0.2rem 0.2rem;
-  width: 8.6rem;
+  padding: 0.2rem 0;
+  width: 9.6rem;
   cursor: pointer;
 }
 
@@ -584,7 +585,7 @@ body {
 .item-details-page,
 .daily-log-page,
 .progress-page {
-  padding-bottom: 5rem;
+  padding: 5rem 0;
   margin: 0 auto;
   text-align: left;
   width: 90%;
@@ -615,7 +616,7 @@ body {
   .goal-modal {
     width: 27%;
     right: 26%;
-    top: 15%;
+    top: 20%;
   }
 
   .search-modal {
@@ -624,26 +625,26 @@ body {
   }
 
   .log-modal {
-    bottom: 18%;
-    right: 25%;
+    bottom: 10%;
+    right: 28%;
     width: 25%;
   }
 
   .progress-modal {
-    bottom: 18%;
+    bottom: 10%;
     right: 5%;
     width: 25%;
   }
 
   .info-modal.know {
     width: 50%;
-    top: 5%;
+    top: 12%;
     left: 35%;
   }
 
   .info-modal.goal {
     width: 40%;
-    top: 10%;
+    top: 15%;
     left: 35%;
   }
 }
