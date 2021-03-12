@@ -1,5 +1,5 @@
 /* exported data */
-var data = {
+let data = {
   view: 'home',
   results: null,
   nutrition: null,
@@ -12,7 +12,7 @@ var data = {
   progressUpdated: true
 };
 
-var previousData = localStorage.getItem('local-data');
+const previousData = localStorage.getItem('local-data');
 if (previousData !== null) {
   data = JSON.parse(previousData);
   data.newUser = false;
@@ -20,6 +20,6 @@ if (previousData !== null) {
 window.addEventListener('beforeunload', beforeUnload);
 
 function beforeUnload(event) {
-  var localData = JSON.stringify(data);
+  const localData = JSON.stringify(data);
   localStorage.setItem('local-data', localData);
 }

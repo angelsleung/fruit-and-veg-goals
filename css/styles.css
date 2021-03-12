@@ -38,13 +38,20 @@ body {
 .search-modal,
 .log-modal,
 .progress-modal,
-.info-modal {
+.info-modal,
+.network-error-modal {
   border: 1px solid gray;
   border-radius: 10px;
   position: absolute;
   background-color: lightgoldenrodyellow;
   padding: 1rem 1rem 1rem 2rem;
   max-width: 500px;
+}
+
+.network-error-modal {
+  width: 80%;
+  left: 10%;
+  top: 25%;
 }
 
 .welcome-modal {
@@ -90,7 +97,8 @@ body {
 .search-modal > h3,
 .log-modal > h3,
 .progress-modal > h3,
-.info-modal > h3 {
+.info-modal > h3,
+.network-error-modal {
   margin: 0;
 }
 
@@ -99,7 +107,8 @@ body {
 .search-modal > p,
 .log-modal > p,
 .progress-modal > p,
-.info-modal > p {
+.info-modal > p,
+.network-error-modal {
   padding-right: 1rem;
 }
 
@@ -265,6 +274,10 @@ body {
   width: 100%;
   margin: 0.5rem;
   object-fit: contain;
+}
+
+.spinner {
+  margin: 0.5rem;
 }
 
 .result-div {
@@ -512,6 +525,7 @@ body {
 
 .completed {
   height: 100%;
+  width: 0%;
   border-right: 1px solid lightgray;
   background-color: green;
   vertical-align: center;
@@ -565,6 +579,10 @@ body {
   margin: 0 auto;
   text-align: left;
   width: 90%;
+}
+
+.loader {
+  margin: 0 auto;
 }
 
 @media screen and (min-width: 768px) {
