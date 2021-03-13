@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AJAX Project</title>
+  <title>Fruit &amp; Veg Goals </title>
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
@@ -21,6 +21,13 @@
 
     <main class="main">
       <div class="overlay"></div>
+      <div class="network-error-modal hidden">
+        <div class="exit-div row">
+          <i class="fas exit error fa-times"></i>
+        </div>
+        <h3>Network Error</h3>
+        <p>Poor network connection. Please try again.</p>
+      </div>
       <form class="goal form" data-view="goal-form">
         <div class="welcome-modal">
           <div class="exit-div row">
@@ -124,24 +131,28 @@
             <div class="result hidden">
               <div class="img-div">
                 <img class="img-result">
+                <img class="spinner hidden" src="spinner.gif" href="spinner">
               </div>
               <div class="text-result"></div>
             </div>
             <div class="result hidden">
               <div class="img-div">
                 <img class="img-result">
+                <img class="spinner hidden" src="spinner.gif" href="spinner">
               </div>
               <div class="text-result"></div>
             </div>
             <div class="result hidden">
               <div class="img-div">
                 <img class="img-result">
+                <img class="spinner hidden" src="spinner.gif" href="spinner">
               </div>
               <div class="text-result"></div>
             </div>
             <div class="result hidden">
               <div class="img-div">
                 <img class="img-result">
+                <img class="spinner hidden" src="spinner.gif" href="spinner">
               </div>
               <div class="text-result"></div>
             </div>
@@ -152,6 +163,7 @@
 
       <div class="results-page hidden" data-view="search-results">
         <h2 class="search-results page-title"></h2>
+        <img class="search loader hidden" src="bean-eater.gif" alt="loading">
         <div class="result-list-div">
           <p class="no-results hidden">No matching items found</p>
           <div class="result-header column-one-fourth row">
@@ -169,84 +181,85 @@
       </div>
 
       <div class="item-details-page hidden">
-        <div class="item-details-header row">
-          <div class="add-log-div">
-            <div class="details-name-div">
-              <h1 class="item-details-name"></h1>
-              <div class="add-log-title">Add to log</div>
+          <div class="item-details-header row">
+            <div class="add-log-div">
+              <div class="details-name-div">
+                <h1 class="item-details-name"></h1>
+                <div class="add-log-title">Add to log</div>
+              </div>
+              <div class="add-fruit add-button not-added">
+                <i class="add-log-icon fas fa-plus"></i>
+                <span> to fruits </span>
+                <i class="add-log-icon fruit-icon fas fa-apple-alt"></i>
+              </div>
+              <div class="add-veg add-button not-added">
+                <i class="add-log-icon fas fa-plus"></i>
+                <span> to veggies </span>
+                <i class="add-log-icon fas fa-carrot"></i>
+              </div>
             </div>
-            <div class="add-fruit add-button not-added">
-              <i class="add-log-icon fas fa-plus"></i>
-              <span> to fruits </span>
-              <i class="add-log-icon fruit-icon fas fa-apple-alt"></i>
-            </div>
-            <div class="add-veg add-button not-added">
-              <i class="add-log-icon fas fa-plus"></i>
-              <span> to veggies </span>
-              <i class="add-log-icon fas fa-carrot"></i>
+            <div class="details-img-div">
+              <img class="item-details-img">
             </div>
           </div>
-          <div class="details-img-div">
-            <img class="item-details-img">
-          </div>
-        </div>
+          <img class="details loader hidden" src="bean-eater.gif" alt="loading">
           <table class="nutrition-table">
-          <thead>
-            <tr>
-              <th class="nutrition-title">Nutrition Facts</th>
-              <th></th>
-            </tr>
-            <tr>
-              <th class="nutrition-food-name" colspan="2"></th>
-            </tr>
-            <tr>
-              <th class="nutrition-header-last-row serving-label">Serving Size:</th>
-              <th class="nutrition-header-last-row serving-size"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="serving-amount" colspan="2">Amount Per Serving</td>
-            </tr>
-            <tr>
-              <td class="nutrition-calories-last-row"><span class="nutrition-category">Calories </span><span class="calories"></span></td>
-              <td class="nutrition-calories-last-row daily-values">Calories from Fat <span class="calories-fat"></span></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td class="daily-values"><span class="nutrition-category">% Daily Value</span>*</td>
-            </tr>
-            <tr>
-              <td><span class="nutrition-category">Total Fat </span><span class="total-fat"></span></td>
-              <td class="daily-values total-fat-percent"></td>
-            </tr>
-            <tr>
-              <td><span class="nutrition-category">Sodium </span><span class="sodium"></span></td>
-              <td class="daily-values sodium-percent"></td>
-            </tr>
-            <tr>
-              <td><span class="nutrition-category">Potassium </span><span class="potassium"></span></td>
-              <td class="daily-values potassium-percent"></td>
-            </tr>
-            <tr>
-              <td><span class="nutrition-category">Total Carbohydrates </span><span class="total-carbs"></span></td>
-              <td class="daily-values total-carbs-percent"></td>
-            </tr>
-            <tr>
-              <td class="nutrition-subcategory">Dietary Fiber <span class="fiber"></span></td>
-              <td class="daily-values fiber-percent"></td>
-            </tr>
-            <tr>
-              <td colspan="2" class="nutrition-subcategory">Sugars <span class="sugar"></span></td>
-            </tr>
-            <tr>
-              <td colspan="2" class="nutrition-header-last-row"><span class="nutrition-category">Protein </span><span class="protein"></span></td>
-            </tr>
-            <tr>
-              <td colspan="2"><ul class="daily-values-message"><li>Percent Daily Values are based on a 2000 calorie diet</li></ul></td>
-            </tr>
-          </tbody>
-        </table>
+            <thead>
+              <tr>
+                <th class="nutrition-title">Nutrition Facts</th>
+                <th></th>
+              </tr>
+              <tr>
+                <th class="nutrition-food-name" colspan="2"></th>
+              </tr>
+              <tr>
+                <th class="nutrition-header-last-row serving-label">Serving Size:</th>
+                <th class="nutrition-header-last-row serving-size"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="serving-amount" colspan="2">Amount Per Serving</td>
+              </tr>
+              <tr>
+                <td class="nutrition-calories-last-row"><span class="nutrition-category">Calories </span><span class="calories"></span></td>
+                <td class="nutrition-calories-last-row daily-values">Calories from Fat <span class="calories-fat"></span></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="daily-values"><span class="nutrition-category">% Daily Value</span>*</td>
+              </tr>
+              <tr>
+                <td><span class="nutrition-category">Total Fat </span><span class="total-fat"></span></td>
+                <td class="daily-values total-fat-percent"></td>
+              </tr>
+              <tr>
+                <td><span class="nutrition-category">Sodium </span><span class="sodium"></span></td>
+                <td class="daily-values sodium-percent"></td>
+              </tr>
+              <tr>
+                <td><span class="nutrition-category">Potassium </span><span class="potassium"></span></td>
+                <td class="daily-values potassium-percent"></td>
+              </tr>
+              <tr>
+                <td><span class="nutrition-category">Total Carbohydrates </span><span class="total-carbs"></span></td>
+                <td class="daily-values total-carbs-percent"></td>
+              </tr>
+              <tr>
+                <td class="nutrition-subcategory">Dietary Fiber <span class="fiber"></span></td>
+                <td class="daily-values fiber-percent"></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="nutrition-subcategory">Sugars <span class="sugar"></span></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="nutrition-header-last-row"><span class="nutrition-category">Protein </span><span class="protein"></span></td>
+              </tr>
+              <tr>
+                <td colspan="2"><ul class="daily-values-message"><li>Percent Daily Values are based on a 2000 calorie diet</li></ul></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
       <div class="daily-log-page hidden">
@@ -287,14 +300,14 @@
             <div class="total">
               <div class="fruit-bar completed"></div>
             </div>
-            <div class="fruit-progress"></div>
+            <div class="fruit-progress">0/4 completed (0%)</div>
           </div>
           <div class="category-div">
             <h3 class="category-title">Veggies</h3>
             <div class="total">
               <div class="veg-bar completed"></div>
             </div>
-            <div class="veg-progress"></div>
+            <div class="veg-progress">0/5 completed (0%)</div>
           </div>
         </div>
       </div>

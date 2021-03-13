@@ -1,122 +1,130 @@
-var $navHome = document.querySelector('.fa-home');
+const $navHome = document.querySelector('.fa-home');
 $navHome.addEventListener('click', navHome);
 
-var $navSearch = document.querySelector('.fa-search');
+const $navSearch = document.querySelector('.fa-search');
 $navSearch.addEventListener('click', navSearch);
 
-var $navLog = document.querySelector('.fa-list');
+const $navLog = document.querySelector('.fa-list');
 $navLog.addEventListener('click', navLog);
 
-var $navProgress = document.querySelector('.fa-chart-bar');
+const $navProgress = document.querySelector('.fa-chart-bar');
 $navProgress.addEventListener('click', navProgress);
 
-var $goalForm = document.querySelector('.goal.form');
+const $goalForm = document.querySelector('.goal.form');
 $goalForm.addEventListener('submit', setGoal);
 
-var $fruitInput = document.querySelector('.fruit-input');
-var $vegInput = document.querySelector('.veg-input');
+const $fruitInput = document.querySelector('.fruit-input');
+const $vegInput = document.querySelector('.veg-input');
 
-var $searchForm = document.querySelector('.search.form');
+const $searchForm = document.querySelector('.search.form');
 $searchForm.addEventListener('submit', submitSearch);
 
-var $searchBar = document.querySelector('.search-bar');
-$searchBar.addEventListener('input', delaySearchSuggestions);
+const $searchBar = document.querySelector('.search-bar');
+$searchBar.addEventListener('input', displaySearchSuggestions);
 
-var delaySearchSuggestionsID = null;
-
-var $searchBarSuggestions = document.querySelector('.search-bar-suggestions');
+const $searchBarSuggestions = document.querySelector('.search-bar-suggestions');
 $searchBarSuggestions.addEventListener('click', clickSearchSuggestion);
 
-var $results = document.querySelectorAll('.result');
-var $imgResults = document.querySelectorAll('.img-result');
-var $textResults = document.querySelectorAll('.text-result');
-var $resultsPage = document.querySelector('.results-page');
-var $resultsPageTitle = document.querySelector('.search-results');
-var $searchHeader = document.querySelector('.result-header');
-var $noResults = document.querySelector('.no-results');
+const $results = document.querySelectorAll('.result');
+const $imgResults = document.querySelectorAll('.img-result');
+const $spinners = document.querySelectorAll('.spinner');
+const $textResults = document.querySelectorAll('.text-result');
+const $resultsPage = document.querySelector('.results-page');
+const $resultsPageTitle = document.querySelector('.search-results');
+const $resultListDiv = document.querySelector('.result-list-div');
+const $searchHeader = document.querySelector('.result-header');
+const $noResults = document.querySelector('.no-results');
+const $searchLoader = document.querySelector('.search.loader');
+let imagesLoadedCount = 0;
 
-var $resultList = document.querySelector('.result-list');
+const $resultList = document.querySelector('.result-list');
 $resultList.addEventListener('click', clickResultList);
 
-var $addFruitButton = document.querySelector('.add-fruit');
+const $addFruitButton = document.querySelector('.add-fruit');
 $addFruitButton.addEventListener('click', clickAddFruit);
 
-var $addVegButton = document.querySelector('.add-veg');
+const $addVegButton = document.querySelector('.add-veg');
 $addVegButton.addEventListener('click', clickAddVeg);
 
-var $dailyLogPage = document.querySelector('.daily-log-page');
-var $fruitLog = document.querySelector('.fruit-log');
-var $vegLog = document.querySelector('.veg-log');
-var $noFruit = document.querySelector('.no-fruit');
-var $noVeg = document.querySelector('.no-veg');
+const $dailyLogPage = document.querySelector('.daily-log-page');
+const $fruitLog = document.querySelector('.fruit-log');
+const $vegLog = document.querySelector('.veg-log');
+const $noFruit = document.querySelector('.no-fruit');
+const $noVeg = document.querySelector('.no-veg');
 
-var $itemDetailsPage = document.querySelector('.item-details-page');
-var $itemDetailsImg = document.querySelector('.item-details-img');
-var $itemDetailsName = document.querySelector('.item-details-name');
-var $nutritionFoodName = document.querySelector('.nutrition-food-name');
-var $servingSize = document.querySelector('.serving-size');
-var $calories = document.querySelector('.calories');
-var $caloriesFat = document.querySelector('.calories-fat');
-var $totalFat = document.querySelector('.total-fat');
-var $sodium = document.querySelector('.sodium');
-var $potassium = document.querySelector('.potassium');
-var totalCarbs = document.querySelector('.total-carbs');
-var $fiber = document.querySelector('.fiber');
-var $sugar = document.querySelector('.sugar');
-var $protein = document.querySelector('.protein');
-var $totalFatPercent = document.querySelector('.total-fat-percent');
-var $sodiumPercent = document.querySelector('.sodium-percent');
-var $potassiumPercent = document.querySelector('.potassium-percent');
-var $totalCarbsPercent = document.querySelector('.total-carbs-percent');
-var $fiberPercent = document.querySelector('.fiber-percent');
+const $itemDetailsPage = document.querySelector('.item-details-page');
+const $itemDetailsImg = document.querySelector('.item-details-img');
+const $itemDetailsName = document.querySelector('.item-details-name');
+const $detailsLoader = document.querySelector('.details.loader');
+const $nutritionTable = document.querySelector('.nutrition-table');
+const $nutritionFoodName = document.querySelector('.nutrition-food-name');
+const $servingSize = document.querySelector('.serving-size');
+const $calories = document.querySelector('.calories');
+const $caloriesFat = document.querySelector('.calories-fat');
+const $totalFat = document.querySelector('.total-fat');
+const $sodium = document.querySelector('.sodium');
+const $potassium = document.querySelector('.potassium');
+const totalCarbs = document.querySelector('.total-carbs');
+const $fiber = document.querySelector('.fiber');
+const $sugar = document.querySelector('.sugar');
+const $protein = document.querySelector('.protein');
+const $totalFatPercent = document.querySelector('.total-fat-percent');
+const $sodiumPercent = document.querySelector('.sodium-percent');
+const $potassiumPercent = document.querySelector('.potassium-percent');
+const $totalCarbsPercent = document.querySelector('.total-carbs-percent');
+const $fiberPercent = document.querySelector('.fiber-percent');
 
-var $progressPage = document.querySelector('.progress-page');
-var $fruitProgress = document.querySelector('.fruit-progress');
-var $fruitBar = document.querySelector('.fruit-bar');
-var $vegProgress = document.querySelector('.veg-progress');
-var $vegBar = document.querySelector('.veg-bar');
+const $progressPage = document.querySelector('.progress-page');
+const $fruitProgress = document.querySelector('.fruit-progress');
+const $fruitBar = document.querySelector('.fruit-bar');
+const $vegProgress = document.querySelector('.veg-progress');
+const $vegBar = document.querySelector('.veg-bar');
 
-var $overlay = document.querySelector('.overlay');
-var $welcomeModal = document.querySelector('.welcome-modal');
-var $goalModal = document.querySelector('.goal-modal');
-var $searchModal = document.querySelector('.search-modal');
-var $searchDiv = document.querySelector('.search-div');
-var $logModal = document.querySelector('.log-modal');
-var $progressModal = document.querySelector('.progress-modal');
+const $overlay = document.querySelector('.overlay');
+const $welcomeModal = document.querySelector('.welcome-modal');
+const $goalModal = document.querySelector('.goal-modal');
+const $searchModal = document.querySelector('.search-modal');
+const $searchDiv = document.querySelector('.search-div');
+const $logModal = document.querySelector('.log-modal');
+const $progressModal = document.querySelector('.progress-modal');
+const $networkErrorModal = document.querySelector('.network-error-modal');
 
-var $welcomeContinue = document.querySelector('.welcome.continue');
+const $errorExit = document.querySelector('.exit.error');
+$errorExit.addEventListener('click', clickNetworkErrorExit);
+
+const $welcomeContinue = document.querySelector('.welcome.continue');
 $welcomeContinue.addEventListener('click', clickWelcomeContinue);
 
-var $goalContinue = document.querySelector('.goal.continue');
+const $goalContinue = document.querySelector('.goal.continue');
 $goalContinue.addEventListener('click', clickGoalContinue);
 
-var $searchContinue = document.querySelector('.search.continue');
+const $searchContinue = document.querySelector('.search.continue');
 $searchContinue.addEventListener('click', clickSearchContinue);
 
-var $logContinue = document.querySelector('.log.continue');
+const $logContinue = document.querySelector('.log.continue');
 $logContinue.addEventListener('click', clickLogContinue);
 
-var $getStarted = document.querySelector('.get-started');
+const $getStarted = document.querySelector('.get-started');
 $getStarted.addEventListener('click', clickGetStarted);
 
-var $exit = document.querySelectorAll('.exit');
-for (var i = 0; i < $exit.length; i++) {
+const $exit = document.querySelectorAll('.exit');
+for (let i = 0; i < $exit.length; i++) {
   $exit[i].addEventListener('click', clickExitModal);
 }
 
-var $info = document.querySelector('.info');
+const $info = document.querySelector('.info');
 $info.addEventListener('click', clickInfo);
 
-var $infoModalKnow = document.querySelector('.info-modal.know');
-var $infoModalGoal = document.querySelector('.info-modal.goal');
+const $infoModalKnow = document.querySelector('.info-modal.know');
+const $infoModalGoal = document.querySelector('.info-modal.goal');
 
-var $infoNext = document.querySelector('.info-next');
+const $infoNext = document.querySelector('.info-next');
 $infoNext.addEventListener('click', clickInfoNext);
 
-var $infoExitKnow = document.querySelector('.exit.know');
+const $infoExitKnow = document.querySelector('.exit.know');
 $infoExitKnow.addEventListener('click', clickInfoExitKnow);
 
-var $infoExitGoal = document.querySelector('.exit.goal');
+const $infoExitGoal = document.querySelector('.exit.goal');
 $infoExitGoal.addEventListener('click', clickInfoExitGoal);
 
 if (data.newUser) {
@@ -167,19 +175,40 @@ function setGoal(event) {
   navSearch();
 }
 
-function searchInput(event) {
-  var input = $searchBar.value;
-  if (input.length < 2) {
+function displaySearchSuggestions() {
+  const input = $searchBar.value;
+  if (input.length < 3) {
     hideSearchSuggestions();
     return;
   }
-  var xhr = new XMLHttpRequest();
+  for (let i = 0; i < 4; i++) {
+    $spinners[i].className = 'spinner';
+    $imgResults[i].className = 'img-result hidden';
+    $results[i].className = 'result';
+    $textResults[i].textContent = '';
+  }
+  searchInput();
+}
+
+function searchInput(event) {
+  if (!navigator.onLine) {
+    networkError();
+    navSearch();
+    return;
+  }
+  const input = $searchBar.value;
+  const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://trackapi.nutritionix.com/v2/search/instant?branded=false&query=' + input);
   xhr.responseType = 'json';
   xhr.setRequestHeader('x-app-id', 'c1479c3a');
   xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
   xhr.setRequestHeader('x-remote-user-id', 0);
-  xhr.addEventListener('load', function () {
+  xhr.addEventListener('load', () => {
+    if (xhr.status !== 200) {
+      networkError();
+      navSearch();
+      return;
+    }
     data.results = xhr.response.common;
     if (data.view === 'search input') {
       loadSearchSuggestions();
@@ -192,24 +221,24 @@ function searchInput(event) {
 
 function loadSearchSuggestions() {
   if (data.results.length < 4) {
+    hideSearchSuggestions();
     return;
   }
-  for (i = 0; i < 4; i++) {
-    $results[i].setAttribute('data-food-name', data.results[i].food_name);
-    $textResults[i].textContent = data.results[i].food_name;
+  for (let i = 0; i < 4; i++) {
     $imgResults[i].setAttribute('src', data.results[i].photo.thumb);
     $imgResults[i].setAttribute('alt', data.results[i].food_name);
+    $textResults[i].textContent = data.results[i].food_name;
+    $results[i].setAttribute('data-food-name', data.results[i].food_name);
     $results[i].className = 'result';
+    $imgResults[i].addEventListener('load', event => {
+      $spinners[i].className = 'spinner hidden';
+      $imgResults[i].className = 'img-result';
+    });
   }
-}
-
-function delaySearchSuggestions() {
-  clearTimeout(delaySearchSuggestionsID);
-  delaySearchSuggestionsID = setTimeout(searchInput, 500);
 }
 
 function hideSearchSuggestions() {
-  for (var i = 0; i < 4; i++) {
+  for (let i = 0; i < 4; i++) {
     $results[i].className = 'result hidden';
   }
 }
@@ -218,93 +247,106 @@ function clickSearchSuggestion(event) {
   if (event.target.className === 'search-bar') {
     return;
   }
-  var foodResult = event.target.closest('.result');
-  var foodName = foodResult.dataset.foodName;
+  const foodResult = event.target.closest('.result');
+  const foodName = foodResult.dataset.foodName;
   getNutritionFacts(foodName);
 }
 
 function submitSearch(event) {
   event.preventDefault();
   data.view = 'search results';
-  clearTimeout(delaySearchSuggestionsID);
   while ($resultList.firstChild) {
     $resultList.removeChild($resultList.firstChild);
   }
+  $searchLoader.className = 'search loader';
+  $noResults.className = 'no-results hidden';
+  $resultsPageTitle.textContent = 'Search results for "' + $searchBar.value + '"';
+  $resultListDiv.className = 'result-list-div hidden';
+  $resultsPage.className = 'results-page';
+  $searchForm.className = 'search form hidden';
   searchInput();
 }
 
-function loadSearchResults(input) {
-  $resultsPageTitle.textContent = 'Search results for "' + input + '"';
+function loadSearchResults(event) {
   if (data.results.length > 0) {
-    for (i = 0; i < data.results.length; i++) {
-      var resultDiv = renderResult(data.results[i]);
+    for (let i = 0; i < data.results.length; i++) {
+      const resultDiv = renderResult(data.results[i]);
       $resultList.append(resultDiv);
     }
   } else {
+    $searchLoader.className = 'search loader hidden';
+    $resultListDiv.className = 'result-list-div';
     $noResults.className = 'no-results';
     $searchHeader.className = 'result-header hidden';
   }
-  $resultsPage.className = 'results-page';
-  $searchForm.className = 'search form hidden';
 }
 
 function renderResult(foodItem) {
-  var result = document.createElement('div');
-  result.className = 'result-div row pointer';
-  result.setAttribute('data-name', foodItem.food_name);
-  var servingSize = foodItem.serving_qty + ' ' + foodItem.serving_unit;
-  result.setAttribute('data-serving-size', servingSize);
-  result.setAttribute('data-image', foodItem.photo.thumb);
+  const $result = document.createElement('div');
+  $result.className = 'result-div row pointer';
+  $result.setAttribute('data-name', foodItem.food_name);
+  const servingSize = foodItem.serving_qty + ' ' + foodItem.serving_unit;
+  $result.setAttribute('data-serving-size', servingSize);
+  $result.setAttribute('data-image', foodItem.photo.thumb);
 
-  var imgDiv = document.createElement('div');
-  imgDiv.className = 'img-div';
-  result.append(imgDiv);
+  const $imgDiv = document.createElement('div');
+  $imgDiv.className = 'img-div';
+  $result.append($imgDiv);
 
-  var imgResult = document.createElement('img');
-  imgResult.className = 'img-result';
-  imgResult.setAttribute('src', foodItem.photo.thumb);
-  imgResult.setAttribute('alt', foodItem.food_name);
-  imgDiv.append(imgResult);
+  const $imgResult = document.createElement('img');
+  $imgResult.className = 'img-result';
+  $imgResult.setAttribute('src', foodItem.photo.thumb);
+  $imgResult.setAttribute('alt', foodItem.food_name);
+  $imgDiv.append($imgResult);
 
-  var resultText = document.createElement('div');
-  resultText.className = 'result-text';
-  result.append(resultText);
+  $imgResult.addEventListener('load', () => {
+    imagesLoadedCount++;
+    if (imagesLoadedCount >= 18) {
+      $searchLoader.className = 'search loader hidden';
+      $resultListDiv.className = 'result-list-div';
+      imagesLoadedCount = 0;
+    }
+  });
 
-  var resultName = document.createElement('div');
-  resultName.className = 'result-name';
-  resultName.textContent = foodItem.food_name;
-  resultText.append(resultName);
+  const $resultText = document.createElement('div');
+  $resultText.className = 'result-text';
+  $result.append($resultText);
 
-  var resultDescription = document.createElement('div');
-  resultDescription.className = 'result-description';
-  resultDescription.textContent = servingSize;
-  resultText.append(resultDescription);
+  const $resultName = document.createElement('div');
+  $resultName.className = 'result-name';
+  $resultName.textContent = foodItem.food_name;
+  $resultText.append($resultName);
 
-  var columnFourth = document.createElement('div');
-  columnFourth.className = 'column-one-fourth';
-  result.append(columnFourth);
+  const $resultDescription = document.createElement('div');
+  $resultDescription.className = 'result-description';
+  $resultDescription.textContent = servingSize;
+  $resultText.append($resultDescription);
 
-  var fruitIconDiv = document.createElement('div');
-  fruitIconDiv.className = 'icon-div fruit';
-  columnFourth.append(fruitIconDiv);
+  const $columnFourth = document.createElement('div');
+  $columnFourth.className = 'column-one-fourth';
+  $result.append($columnFourth);
 
-  var fruitItemIcon = document.createElement('i');
-  fruitItemIcon.className = 'item-icon not-added-icon fas fa-apple-alt';
-  fruitIconDiv.append(fruitItemIcon);
+  const $fruitIconDiv = document.createElement('div');
+  $fruitIconDiv.className = 'icon-div fruit';
+  $columnFourth.append($fruitIconDiv);
 
-  var vegIconDiv = document.createElement('div');
-  vegIconDiv.className = 'icon-div veg';
-  columnFourth.append(vegIconDiv);
+  const $fruitItemIcon = document.createElement('i');
+  $fruitItemIcon.className = 'item-icon not-added-icon fas fa-apple-alt';
+  $fruitIconDiv.append($fruitItemIcon);
 
-  var vegItemIcon = document.createElement('i');
-  vegItemIcon.className = 'item-icon not-added-icon fas fa-carrot';
-  vegIconDiv.append(vegItemIcon);
+  const $vegIconDiv = document.createElement('div');
+  $vegIconDiv.className = 'icon-div veg';
+  $columnFourth.append($vegIconDiv);
 
-  return result;
+  const $vegItemIcon = document.createElement('i');
+  $vegItemIcon.className = 'item-icon not-added-icon fas fa-carrot';
+  $vegIconDiv.append($vegItemIcon);
+
+  return $result;
 }
 
 function clickResultList(event) {
-  var resultElement = event.target.closest('.result-div');
+  const resultElement = event.target.closest('.result-div');
   if (event.target.matches('.item-icon')) {
     if (event.target.matches('.not-added-icon')) {
       clickResultListAdd(event.target, resultElement);
@@ -357,7 +399,7 @@ function clickAddVeg(event) {
 }
 
 function addItem(foodType, name, servingSize, image) {
-  var foodObject = {
+  const foodObject = {
     name: name,
     servingSize: servingSize,
     image: image
@@ -368,7 +410,7 @@ function addItem(foodType, name, servingSize, image) {
 }
 
 function removeItem(foodType, name) {
-  for (var i = 0; i < data[foodType].length; i++) {
+  for (let i = 0; i < data[foodType].length; i++) {
     if (data[foodType][i].name === name) {
       data[foodType].splice(i, 1);
       return;
@@ -379,24 +421,36 @@ function removeItem(foodType, name) {
 }
 
 function getNutritionFacts(foodName) {
+  if (!navigator.onLine) {
+    networkError();
+    return;
+  }
   hideAllViews();
   data.view = 'item details';
+  $detailsLoader.className = 'details loader';
+  $itemDetailsPage.className = 'item-details-page';
   $addFruitButton.className = 'add-fruit add-button not-added';
   $addVegButton.className = 'add-veg add-button not-added';
+  $itemDetailsImg.className = 'item-details-img hidden';
+  $nutritionTable.className = 'nutrition-table hidden';
   $itemDetailsImg.setAttribute('alt', foodName);
   $itemDetailsName.textContent = foodName;
   $nutritionFoodName.textContent = foodName;
-  var body = {
+  const body = {
     query: foodName
   };
-  var xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.open('POST', 'https://trackapi.nutritionix.com/v2/natural/nutrients');
   xhr.responseType = 'json';
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.setRequestHeader('x-app-id', 'c1479c3a');
   xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
   xhr.setRequestHeader('x-remote-user-id', 0);
-  xhr.addEventListener('load', function () {
+  xhr.addEventListener('load', () => {
+    if (xhr.status !== 200) {
+      networkError();
+      return;
+    }
     data.nutrition = xhr.response.foods[0];
     $itemDetailsImg.setAttribute('src', data.nutrition.photo.thumb);
     data.nutrition.servingSize = data.nutrition.serving_qty + ' ' + data.nutrition.serving_unit + ' (' + data.nutrition.serving_weight_grams + 'g)';
@@ -415,7 +469,11 @@ function getNutritionFacts(foodName) {
     $potassiumPercent.textContent = Math.floor(data.nutrition.nf_potassium * 100 / 4700) + '%';
     $totalCarbsPercent.textContent = Math.floor(data.nutrition.nf_total_carbohydrate * 100 / 275) + '%';
     $fiberPercent.textContent = Math.floor(data.nutrition.nf_dietary_fiber * 100 / 28) + '%';
-    $itemDetailsPage.className = 'item-details-page';
+    $itemDetailsImg.addEventListener('load', event => {
+      $detailsLoader.className = 'details loader hidden';
+      $itemDetailsImg.className = 'item-details-img';
+      $nutritionTable.className = 'nutrition-table';
+    });
   });
   xhr.send(JSON.stringify(body));
 }
@@ -437,53 +495,53 @@ function loadDailyLog() {
   while ($vegLog.firstChild) {
     $vegLog.removeChild($vegLog.firstChild);
   }
-  for (var i = 0; i < data.fruits.length; i++) {
-    var renderedEntry = renderLogEntry(data.fruits[i]);
+  for (let i = 0; i < data.fruits.length; i++) {
+    const renderedEntry = renderLogEntry(data.fruits[i]);
     $fruitLog.append(renderedEntry);
   }
-  for (i = 0; i < data.veggies.length; i++) {
-    renderedEntry = renderLogEntry(data.veggies[i]);
+  for (let i = 0; i < data.veggies.length; i++) {
+    const renderedEntry = renderLogEntry(data.veggies[i]);
     $vegLog.append(renderedEntry);
   }
   data.isUpdated = true;
 }
 
 function renderLogEntry(entry) {
-  var result = document.createElement('div');
-  result.className = 'result-div row';
+  const $result = document.createElement('div');
+  $result.className = 'result-div row';
 
-  var imgDiv = document.createElement('div');
-  imgDiv.className = 'img-div';
-  result.append(imgDiv);
+  const $imgDiv = document.createElement('div');
+  $imgDiv.className = 'img-div';
+  $result.append($imgDiv);
 
-  var imgResult = document.createElement('img');
-  imgResult.className = 'img-result';
-  imgResult.setAttribute('src', entry.image);
-  imgResult.setAttribute('alt', entry.name);
-  imgDiv.append(imgResult);
+  const $imgResult = document.createElement('img');
+  $imgResult.className = 'img-result';
+  $imgResult.setAttribute('src', entry.image);
+  $imgResult.setAttribute('alt', entry.name);
+  $imgDiv.append($imgResult);
 
-  var resultText = document.createElement('div');
-  resultText.className = 'result-text';
-  result.append(resultText);
+  const $resultText = document.createElement('div');
+  $resultText.className = 'result-text';
+  $result.append($resultText);
 
-  var resultName = document.createElement('div');
-  resultName.className = 'result-name';
-  resultName.textContent = entry.name;
-  resultText.append(resultName);
+  const $resultName = document.createElement('div');
+  $resultName.className = 'result-name';
+  $resultName.textContent = entry.name;
+  $resultText.append($resultName);
 
-  var resultDescription = document.createElement('div');
-  resultDescription.className = 'result-description';
-  resultDescription.textContent = entry.servingSize;
-  resultText.append(resultDescription);
+  const $resultDescription = document.createElement('div');
+  $resultDescription.className = 'result-description';
+  $resultDescription.textContent = entry.servingSize;
+  $resultText.append($resultDescription);
 
-  return result;
+  return $result;
 }
 
 function loadProgress() {
-  var fruitPercent = 100 * data.fruits.length / data.fruitGoal;
-  var vegPercent = 100 * data.veggies.length / data.veggieGoal;
-  var reachedFruitGoal = fruitPercent >= 100;
-  var reachedVegGoal = vegPercent >= 100;
+  const fruitPercent = 100 * data.fruits.length / data.fruitGoal;
+  const vegPercent = 100 * data.veggies.length / data.veggieGoal;
+  const reachedFruitGoal = fruitPercent >= 100;
+  const reachedVegGoal = vegPercent >= 100;
   $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
   $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
   if (reachedFruitGoal) {
@@ -592,5 +650,15 @@ function clickInfoExitKnow(event) {
 
 function clickInfoExitGoal(event) {
   $infoModalGoal.className = 'info-modal goal hidden';
+  $overlay.className = 'overlay hidden';
+}
+
+function networkError() {
+  $networkErrorModal.className = 'network-error-modal';
+  $overlay.className = 'overlay';
+}
+
+function clickNetworkErrorExit(event) {
+  $networkErrorModal.className = 'network-error-modal hidden';
   $overlay.className = 'overlay hidden';
 }
