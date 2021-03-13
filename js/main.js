@@ -20,9 +20,7 @@ const $searchForm = document.querySelector('.search.form');
 $searchForm.addEventListener('submit', submitSearch);
 
 const $searchBar = document.querySelector('.search-bar');
-$searchBar.addEventListener('input', delaySearchSuggestions);
-
-let delaySearchSuggestionsID = null;
+$searchBar.addEventListener('input', displaySearchSuggestions);
 
 const $searchBarSuggestions = document.querySelector('.search-bar-suggestions');
 $searchBarSuggestions.addEventListener('click', clickSearchSuggestion);
@@ -177,8 +175,7 @@ function setGoal(event) {
   navSearch();
 }
 
-function delaySearchSuggestions() {
-  clearTimeout(delaySearchSuggestionsID);
+function displaySearchSuggestions() {
   const input = $searchBar.value;
   if (input.length < 3) {
     hideSearchSuggestions();
@@ -188,8 +185,9 @@ function delaySearchSuggestions() {
     $spinners[i].className = 'spinner';
     $imgResults[i].className = 'img-result hidden';
     $results[i].className = 'result';
+    $textResults[i].textContent = '';
   }
-  delaySearchSuggestionsID = setTimeout(searchInput, 500);
+  searchInput();
 }
 
 function searchInput(event) {
@@ -257,7 +255,6 @@ function clickSearchSuggestion(event) {
 function submitSearch(event) {
   event.preventDefault();
   data.view = 'search results';
-  clearTimeout(delaySearchSuggestionsID);
   while ($resultList.firstChild) {
     $resultList.removeChild($resultList.firstChild);
   }
