@@ -50,9 +50,10 @@ body {
 }
 
 .network-error-modal {
-  width: 80%;
-  left: 10%;
-  top: 25%;
+  width: 84%;
+  left: 7%;
+  top: 12rem;
+  position: fixed;
 }
 
 .welcome-modal {
@@ -99,7 +100,7 @@ body {
 .log-modal > h3,
 .progress-modal > h3,
 .info-modal > h3,
-.network-error-modal {
+.network-error-modal > h3 {
   margin: 0;
 }
 
@@ -109,7 +110,7 @@ body {
 .log-modal > p,
 .progress-modal > p,
 .info-modal > p,
-.network-error-modal {
+.network-error-modal > p {
   padding-right: 1rem;
 }
 
@@ -604,8 +605,9 @@ body {
   }
 
   .network-error-modal {
-    width: 25%;
-    left: 38%;
+    width: 34%;
+    left: 32%;
+    top: 20rem;
   }
 
   .welcome-modal {

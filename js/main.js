@@ -90,7 +90,6 @@ const $searchDiv = document.querySelector('.search-div');
 const $logModal = document.querySelector('.log-modal');
 const $progressModal = document.querySelector('.progress-modal');
 const $networkErrorModal = document.querySelector('.network-error-modal');
-let hasNetworkError = false;
 
 const $errorExit = document.querySelector('.exit.error');
 $errorExit.addEventListener('click', clickNetworkErrorExit);
@@ -194,6 +193,11 @@ function delaySearchSuggestions() {
 }
 
 function searchInput(event) {
+  if (!navigator.onLine) {
+    networkError();
+    navSearch();
+    return;
+  }
   const input = $searchBar.value;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://trackapi.nutritionix.com/v2/search/instant?branded=false&query=' + input);
@@ -201,10 +205,12 @@ function searchInput(event) {
   xhr.setRequestHeader('x-app-id', 'c1479c3a');
   xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
   xhr.setRequestHeader('x-remote-user-id', 0);
-  xhr.addEventListener('error', () => {
-    hasNetworkError = true;
-  });
   xhr.addEventListener('load', () => {
+    if (xhr.status !== 200) {
+      networkError();
+      navSearch();
+      return;
+    }
     data.results = xhr.response.common;
     if (data.view === 'search input') {
       loadSearchSuggestions();
@@ -250,10 +256,6 @@ function clickSearchSuggestion(event) {
 
 function submitSearch(event) {
   event.preventDefault();
-  if (hasNetworkError) {
-    networkError();
-    return;
-  }
   data.view = 'search results';
   clearTimeout(delaySearchSuggestionsID);
   while ($resultList.firstChild) {
@@ -302,7 +304,7 @@ function renderResult(foodItem) {
 
   $imgResult.addEventListener('load', () => {
     imagesLoadedCount++;
-    if (imagesLoadedCount === 20) {
+    if (imagesLoadedCount >= 18) {
       $searchLoader.className = 'search loader hidden';
       $resultListDiv.className = 'result-list-div';
       imagesLoadedCount = 0;
@@ -422,6 +424,10 @@ function removeItem(foodType, name) {
 }
 
 function getNutritionFacts(foodName) {
+  if (!navigator.onLine) {
+    networkError();
+    return;
+  }
   hideAllViews();
   data.view = 'item details';
   $detailsLoader.className = 'details loader';
@@ -444,6 +450,10 @@ function getNutritionFacts(foodName) {
   xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
   xhr.setRequestHeader('x-remote-user-id', 0);
   xhr.addEventListener('load', () => {
+    if (xhr.status !== 200) {
+      networkError();
+      return;
+    }
     data.nutrition = xhr.response.foods[0];
     $itemDetailsImg.setAttribute('src', data.nutrition.photo.thumb);
     data.nutrition.servingSize = data.nutrition.serving_qty + ' ' + data.nutrition.serving_unit + ' (' + data.nutrition.serving_weight_grams + 'g)';
@@ -654,6 +664,4 @@ function networkError() {
 function clickNetworkErrorExit(event) {
   $networkErrorModal.className = 'network-error-modal hidden';
   $overlay.className = 'overlay hidden';
-  navSearch();
-  hasNetworkError = false;
 }
