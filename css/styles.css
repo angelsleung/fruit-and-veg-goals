@@ -24,6 +24,7 @@ body {
 
 .main {
   position: relative;
+  min-height: 100vh;
 }
 
 .overlay {
@@ -600,6 +601,11 @@ body {
 
   .nutrition-table {
     max-width: 500px;
+  }
+
+  .network-error-modal {
+    width: 25%;
+    left: 38%;
   }
 
   .welcome-modal {

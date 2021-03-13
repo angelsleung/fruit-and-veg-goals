@@ -89,6 +89,11 @@ const $searchModal = document.querySelector('.search-modal');
 const $searchDiv = document.querySelector('.search-div');
 const $logModal = document.querySelector('.log-modal');
 const $progressModal = document.querySelector('.progress-modal');
+const $networkErrorModal = document.querySelector('.network-error-modal');
+let hasNetworkError = false;
+
+const $errorExit = document.querySelector('.exit.error');
+$errorExit.addEventListener('click', clickNetworkErrorExit);
 
 const $welcomeContinue = document.querySelector('.welcome.continue');
 $welcomeContinue.addEventListener('click', clickWelcomeContinue);
@@ -196,11 +201,9 @@ function searchInput(event) {
   xhr.setRequestHeader('x-app-id', 'c1479c3a');
   xhr.setRequestHeader('x-app-key', '2f7f3b0e2a3ffe42df018fc46a4cc852');
   xhr.setRequestHeader('x-remote-user-id', 0);
-  // console.log('xhr.status:', xhr.status);
-  if (xhr.status !== 200) {
-    hideSearchSuggestions();
-    // console.log('Poor network connection. Please try again.');
-  }
+  xhr.addEventListener('error', () => {
+    hasNetworkError = true;
+  });
   xhr.addEventListener('load', () => {
     data.results = xhr.response.common;
     if (data.view === 'search input') {
@@ -247,6 +250,10 @@ function clickSearchSuggestion(event) {
 
 function submitSearch(event) {
   event.preventDefault();
+  if (hasNetworkError) {
+    networkError();
+    return;
+  }
   data.view = 'search results';
   clearTimeout(delaySearchSuggestionsID);
   while ($resultList.firstChild) {
@@ -639,6 +646,14 @@ function clickInfoExitGoal(event) {
   $overlay.className = 'overlay hidden';
 }
 
-// function networkError() {
+function networkError() {
+  $networkErrorModal.className = 'network-error-modal';
+  $overlay.className = 'overlay';
+}
 
-// }
+function clickNetworkErrorExit(event) {
+  $networkErrorModal.className = 'network-error-modal hidden';
+  $overlay.className = 'overlay hidden';
+  navSearch();
+  hasNetworkError = false;
+}
