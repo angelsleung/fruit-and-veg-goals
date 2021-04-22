@@ -2,7 +2,7 @@
 
 A dynamic HTML, CSS, and JavaScript app that promotes a healthy lifestyle by tracking users' fruit and vegetable intake and assisting users in reaching their daily consumption goals.
 
-[Live Demo](https://angelsleung.github.io/ajax-project/)
+[Live Demo](https://angelsleung.github.io/fruit-and-veg-goals/)
 
 ## Current Feature List
 * User can set goals for the number of fruits and vegetables they want to consume
