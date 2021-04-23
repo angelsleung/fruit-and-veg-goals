@@ -184,7 +184,7 @@ function displaySearchSuggestions() {
   for (let i = 0; i < 4; i++) {
     $spinners[i].className = 'spinner';
     $imgResults[i].className = 'img-result hidden';
-    $results[i].className = 'result';
+    $results[i].className = 'result' + (i + 1);
     $textResults[i].textContent = '';
   }
   searchInput();
@@ -229,7 +229,7 @@ function loadSearchSuggestions() {
     $imgResults[i].setAttribute('alt', data.results[i].food_name);
     $textResults[i].textContent = data.results[i].food_name;
     $results[i].setAttribute('data-food-name', data.results[i].food_name);
-    $results[i].className = 'result';
+    $results[i].className = 'result' + (i + 1);
     $imgResults[i].addEventListener('load', event => {
       $spinners[i].className = 'spinner hidden';
       $imgResults[i].className = 'img-result';
