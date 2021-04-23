@@ -179,13 +179,6 @@ body {
   margin: 0 auto;
 }
 
-.goal.form,
-.search.form,
-.daily-log-page,
-.progress-page {
-  /* min-height: 100vh; */
-}
-
 .goal-input {
   padding: 1rem 0;
   margin: 0 auto;
