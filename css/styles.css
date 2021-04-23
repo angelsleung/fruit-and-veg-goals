@@ -1,5 +1,5 @@
 body {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   text-align: center;
   font-family: 'Imprima', sans-serif;
@@ -24,7 +24,8 @@ body {
 
 .main {
   position: relative;
-  min-height: 100vh;
+
+  /* min-height: 100vh; */
 }
 
 .overlay {
@@ -184,7 +185,7 @@ body {
 .search.form,
 .daily-log-page,
 .progress-page {
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 .goal-input {

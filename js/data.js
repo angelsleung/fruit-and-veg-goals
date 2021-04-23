@@ -16,6 +16,8 @@ const previousData = localStorage.getItem('local-data');
 if (previousData !== null) {
   data = JSON.parse(previousData);
   data.newUser = false;
+  data.logUpdated = false;
+  data.progressUpdated = false;
 }
 window.addEventListener('beforeunload', beforeUnload);
 

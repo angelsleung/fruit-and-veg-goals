@@ -563,6 +563,9 @@ function deleteFruitLogItem(event) {
     foodItem.remove();
     removeItem('fruits', foodItem.dataset.name);
   }
+  if (data.fruits.length === 0) {
+    $noFruit.className = 'no-fruit';
+  }
 }
 
 function deleteVegLogItem(event) {
@@ -571,24 +574,33 @@ function deleteVegLogItem(event) {
     foodItem.remove();
     removeItem('veggies', foodItem.dataset.name);
   }
+  if (data.veggies.length === 0) {
+    $noVeg.className = 'no-veg';
+  }
 }
 
 function loadProgress() {
   const fruitPercent = 100 * data.fruits.length / data.fruitGoal;
   const vegPercent = 100 * data.veggies.length / data.veggieGoal;
-  const reachedFruitGoal = fruitPercent >= 100;
-  const reachedVegGoal = vegPercent >= 100;
   $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
   $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
-  $fruitBar.style.visibility = 'visible';
-  $vegBar.style.visibility = 'visible';
-  if (reachedFruitGoal) {
+  if (fruitPercent > 0) {
+    $fruitBar.style.visibility = 'visible';
+  } else {
+    $fruitBar.style.visibility = 'hidden';
+  }
+  if (vegPercent > 0) {
+    $vegBar.style.visibility = 'visible';
+  } else {
+    $vegBar.style.visibility = 'hidden';
+  }
+  if (fruitPercent >= 100) {
     $fruitBar.className = 'fruit-bar completed reached';
     $fruitBar.textContent = 'You made it!';
   } else {
     $fruitBar.style.width = fruitPercent + '%';
   }
-  if (reachedVegGoal) {
+  if (vegPercent >= 100) {
     $vegBar.className = 'veg-bar completed reached';
     $vegBar.textContent = 'You made it!';
   } else {
