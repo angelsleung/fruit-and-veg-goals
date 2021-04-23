@@ -204,7 +204,7 @@ body {
 .input > select {
   cursor: pointer;
   color: rgb(66, 65, 65);
-  border-radius: 5px;
+  border-radius: 10px;
   height: 3rem;
   font-size: 1.3rem;
 }
@@ -509,13 +509,29 @@ body {
   font-size: 1.2rem;
 }
 
+.log-input-div {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  justify-content: center;
+}
+
+.add-input {
+  padding: 0.5rem 0;
+  margin-left: 0.5rem;
+  border-radius: 10px;
+  font-family: 'Imprima', sans-serif;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
 .add-log-icon {
   color: rgb(217, 219, 221);
   padding: 0.1rem;
 }
 
 .added {
-  background-color: forestgreen;
+  background-color: limegreen;
   color: rgb(246, 246, 246);
 }
 
@@ -537,7 +553,7 @@ body {
   color: lightgray;
   font-style: italic;
   font-size: 1.2rem;
-  padding-left: 1rem;
+  padding: 1rem;
 }
 
 .category-div {
@@ -545,10 +561,9 @@ body {
 }
 
 .category-title {
-  color: gray;
+  color: darkgray;
   margin: 1rem 0 0.5rem;
   padding-left: 1rem;
-  font-style: italic;
   font-size: 1.3rem;
 }
 
@@ -562,6 +577,7 @@ body {
   border: 1px solid lightgray;
   margin: 0 auto;
   border-radius: 50px;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
 .completed {
@@ -582,7 +598,7 @@ body {
 .fruit-progress,
 .veg-progress {
   font-size: 1.2em;
-  padding-left: 1rem;
+  padding: 0.5rem 0 0 1rem;
 }
 
 .footer {
@@ -607,7 +623,7 @@ body {
 .nav-icon-div {
   display: flex;
   flex-direction: column;
-  padding: 0.5rem 0;
+  padding: 0.3rem 0;
 }
 
 .nav-icon-div > span {
@@ -635,6 +651,7 @@ body {
 
 .loader {
   margin: 0 auto;
+  padding-top: 5rem;
 }
 
 @media screen and (min-width: 768px) {
