@@ -2,14 +2,13 @@ body {
   min-height: 100vh;
   display: flex;
   text-align: center;
-  font-family: Poppins, cursive;
+  font-family: 'Imprima', sans-serif;
   color: rgb(66, 65, 65);
 }
 
 .header {
   color: white;
-  background-color: limegreen;
-  position: fixed;
+  background-color: #80f975;
   width: 100%;
   z-index: 1;
 }
@@ -17,8 +16,9 @@ body {
 .app-name {
   margin: 0 auto;
   padding: 1rem;
-  font-size: 2.2em;
-  font-family: 'Caveat', cursive;
+  font-size: 1.8rem;
+  font-weight: normal;
+  font-family: 'Margarine', cursive;
   letter-spacing: 0.1em;
 }
 
@@ -144,7 +144,7 @@ body {
 }
 
 .info {
-  color: gray;
+  color: lightgray;
 }
 
 .info:hover {
@@ -169,6 +169,7 @@ body {
   padding-top: 1rem;
   margin: 1rem auto;
   font-size: 1.4em;
+  letter-spacing: 0.1rem;
 }
 
 .form-inputs {
@@ -183,8 +184,9 @@ body {
 }
 
 .goal-input {
+  padding: 1rem 0;
   margin: 0 auto;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
 .input {
@@ -199,6 +201,11 @@ body {
   font-size: 1.3rem;
 }
 
+.fruit-input,
+.veg-input {
+  font-family: 'Imprima', sans-serif;
+}
+
 .highlight {
   position: relative;
   border: 3px solid orange;
@@ -206,12 +213,15 @@ body {
 }
 
 .next {
-  font-size: 1.3em;
+  font-size: 1.4rem;
   margin: 2rem auto;
-  padding: 0.3rem 1rem;
-  border-radius: 10%;
+  padding: 0.5rem 1rem;
+  width: 10rem;
+  border-radius: 50px;
   border: 1px solid darkgray;
   color: rgb(66, 65, 65);
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  font-family: 'Imprima', sans-serif;
 }
 
 .search-div {
@@ -226,11 +236,18 @@ body {
 .search-bar {
   width: 100%;
   border: 1px solid darkgray;
-  border-radius: 5px;
+  border-radius: 20px 0 0 20px;
+  font-family: 'Imprima', sans-serif;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  padding-left: 1rem;
 }
 
 .search-button {
-  color: rgb(66, 65, 65);
+  /* color: rgb(66, 65, 65); */
+  font-family: 'Imprima', sans-serif;
+  border-radius: 0 20px 20px 0;
+  border: 1px solid lightgray;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
 .search-bar,
@@ -549,19 +566,20 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
-  justify-content: space-evenly;
-  background-color: limegreen;
+  justify-content: space-around;
+  background-color: #fafafa;
+  border-top: 1px solid lightgray;
 }
 
 .nav {
   font-size: 2em;
-  color: white;
+  color: rgb(194, 194, 194);
   padding: 0.5em 0;
 }
 
 .nav:hover {
   cursor: pointer;
-  color: green;
+  color: lightgreen;
 }
 
 .hidden {
