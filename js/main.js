@@ -217,11 +217,7 @@ function searchInput(event) {
       return;
     }
     data.results = xhr.response.common;
-    if (data.view === 'search input') {
-      loadSearchSuggestions();
-    } else {
-      loadSearchResults(input);
-    }
+    data.view === 'search input' ? loadSearchSuggestions() : loadSearchResults(input);
   });
   xhr.send();
 }
@@ -392,9 +388,6 @@ function clickAddFruit(event) {
   if ($addFruitButton.matches('.not-added')) {
     $addFruitButton.className = 'add-fruit add-button added';
     addItem('fruits', count, data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
-  } else {
-    $addFruitButton.className = 'add-fruit add-button not-added';
-    removeItem('fruits', data.nutrition.food_name);
   }
 }
 
@@ -403,9 +396,6 @@ function clickAddVeg(event) {
   if ($addVegButton.matches('.not-added')) {
     $addVegButton.className = 'add-veg add-button added';
     addItem('veggies', count, data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
-  } else {
-    $addVegButton.className = 'add-veg add-button not-added';
-    removeItem('veggies', data.nutrition.food_name);
   }
 }
 
@@ -494,16 +484,8 @@ function getNutritionFacts(foodName) {
 }
 
 function loadDailyLog() {
-  if (data.fruits.length === 0) {
-    $noFruit.className = 'no-fruit';
-  } else {
-    $noFruit.className = 'no-fruit hidden';
-  }
-  if (data.veggies.length === 0) {
-    $noVeg.className = 'no-veg';
-  } else {
-    $noVeg.className = 'no-veg hidden';
-  }
+  $noFruit.className = data.fruits.length === 0 ? 'no-fruit' : 'no-fruit hidden';
+  $noVeg.className = data.veggies.length === 0 ? 'no-veg' : 'no-veg hidden';
   while ($fruitLog.firstChild) {
     $fruitLog.removeChild($fruitLog.firstChild);
   }
@@ -584,28 +566,14 @@ function loadProgress() {
   const vegPercent = 100 * data.veggies.length / data.veggieGoal;
   $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
   $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
-  if (fruitPercent > 0) {
-    $fruitBar.style.visibility = 'visible';
-  } else {
-    $fruitBar.style.visibility = 'hidden';
-  }
-  if (vegPercent > 0) {
-    $vegBar.style.visibility = 'visible';
-  } else {
-    $vegBar.style.visibility = 'hidden';
-  }
-  if (fruitPercent >= 100) {
-    $fruitBar.className = 'fruit-bar completed reached';
-    $fruitBar.textContent = 'You made it!';
-  } else {
-    $fruitBar.style.width = fruitPercent + '%';
-  }
-  if (vegPercent >= 100) {
-    $vegBar.className = 'veg-bar completed reached';
-    $vegBar.textContent = 'You made it!';
-  } else {
-    $vegBar.style.width = vegPercent + '%';
-  }
+  $fruitBar.style.visibility = fruitPercent > 0 ? 'visible' : 'hidden';
+  $vegBar.style.visibility = vegPercent > 0 ? 'visible' : 'hidden';
+  $fruitBar.className = fruitPercent >= 100 ? 'fruit-bar completed reached' : 'fruit-bar completed';
+  $fruitBar.style.width = fruitPercent >= 100 ? '100%' : fruitPercent + '%';
+  $fruitBar.textContent = fruitPercent >= 100 ? 'You made it!' : '';
+  $vegBar.className = vegPercent >= 100 ? 'veg-bar completed reached' : 'veg-bar completed';
+  $vegBar.style.width = vegPercent >= 100 ? '100%' : vegPercent + '%';
+  $vegBar.textContent = vegPercent >= 100 ? 'You made it!' : '';
 }
 
 function hideAllViews() {

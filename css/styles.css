@@ -607,8 +607,7 @@ body {
 }
 
 .reached {
-  width: 100%;
-  background-color: #9ede73;
+  background-color: limegreen;
   color: white;
 }
 
