@@ -597,12 +597,21 @@ body {
 .nav {
   font-size: 2em;
   color: rgb(194, 194, 194);
-  padding: 0.5em 0;
 }
 
 .nav:hover {
   cursor: pointer;
   color: lightgreen;
+}
+
+.nav-icon-div {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+}
+
+.nav-icon-div > span {
+  color: darkgray;
 }
 
 .hidden {
