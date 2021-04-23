@@ -254,6 +254,9 @@ function clickSearchSuggestion(event) {
 
 function submitSearch(event) {
   event.preventDefault();
+  if ($searchBar.value.length === 0) {
+    return;
+  }
   data.view = 'search results';
   while ($resultList.firstChild) {
     $resultList.removeChild($resultList.firstChild);
