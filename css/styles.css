@@ -273,10 +273,7 @@ body {
   background-color: lightgray;
 }
 
-.result1,
-.result2,
-.result3,
-.result4 {
+.result {
   border: 1px solid rgb(189, 189, 189);
   height: 5rem;
   display: flex;
@@ -285,11 +282,11 @@ body {
   font-size: 1.2rem;
 }
 
-.result1 {
+.r1 {
   border-radius: 10px 10px 0 0;
 }
 
-.result4 {
+.r4 {
   border-radius: 0 0 20px 20px;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
@@ -329,6 +326,10 @@ body {
 .result-text {
   flex-grow: 1;
   padding-left: 2rem;
+}
+
+.result-name {
+  font-size: 1.2rem;
 }
 
 .result-description {
@@ -373,7 +374,7 @@ body {
 }
 
 .item-icon:hover {
-  color: lime;
+  color: lightgreen;
 }
 
 .item-details-page {
@@ -415,7 +416,7 @@ body {
   font-size: 1em;
   margin: 0 auto;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 20px;
 }
 
 .nutrition-food-name {
@@ -488,15 +489,12 @@ body {
   text-align: center;
   align-items: center;
   border: 1px solid lightgray;
-  border-radius: 10px;
+  border-radius: 20px;
   margin-bottom: 0.4rem;
-  padding: 0.2rem 0;
+  padding: 0.4rem 0;
   width: 9.6rem;
   cursor: pointer;
-}
-
-.add-button:hover {
-  background-color: lime;
+  font-size: 1.2rem;
 }
 
 .add-log-div {
@@ -508,6 +506,7 @@ body {
   font-style: italic;
   color: gray;
   text-align: center;
+  font-size: 1.2rem;
 }
 
 .add-log-icon {
@@ -537,12 +536,12 @@ body {
 .no-results {
   color: lightgray;
   font-style: italic;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   padding-left: 1rem;
 }
 
 .category-div {
-  padding: 0.5rem 0 1rem;
+  padding: 0.5rem 0 2rem;
 }
 
 .category-title {
@@ -550,6 +549,7 @@ body {
   margin: 1rem 0 0.5rem;
   padding-left: 1rem;
   font-style: italic;
+  font-size: 1.3rem;
 }
 
 .progress-div {
@@ -561,14 +561,14 @@ body {
   height: 3rem;
   border: 1px solid lightgray;
   margin: 0 auto;
-  border-radius: 5px;
+  border-radius: 50px;
 }
 
 .completed {
   height: 100%;
   width: 0%;
   border-right: 1px solid lightgray;
-  background-color: green;
+  background-color: lightgreen;
   vertical-align: center;
   text-align: center;
   padding-top: 0.6rem;
@@ -576,6 +576,7 @@ body {
   font-size: 1.2rem;
   letter-spacing: 0.05em;
   color: rgb(75, 73, 73);
+  border-radius: 50px 0 0 50px;
 }
 
 .fruit-progress,

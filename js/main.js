@@ -52,6 +52,7 @@ const $vegLog = document.querySelector('.veg-log');
 const $noFruit = document.querySelector('.no-fruit');
 const $noVeg = document.querySelector('.no-veg');
 
+const $addLogDiv = document.querySelector('.add-log-div');
 const $itemDetailsPage = document.querySelector('.item-details-page');
 const $itemDetailsImg = document.querySelector('.item-details-img');
 const $itemDetailsName = document.querySelector('.item-details-name');
@@ -184,7 +185,7 @@ function displaySearchSuggestions() {
   for (let i = 0; i < 4; i++) {
     $spinners[i].className = 'spinner';
     $imgResults[i].className = 'img-result hidden';
-    $results[i].className = 'result' + (i + 1);
+    $results[i].className = `result r${i + 1}`;
     $textResults[i].textContent = '';
   }
   searchInput();
@@ -229,7 +230,6 @@ function loadSearchSuggestions() {
     $imgResults[i].setAttribute('alt', data.results[i].food_name);
     $textResults[i].textContent = data.results[i].food_name;
     $results[i].setAttribute('data-food-name', data.results[i].food_name);
-    $results[i].className = 'result' + (i + 1);
     $imgResults[i].addEventListener('load', event => {
       $spinners[i].className = 'spinner hidden';
       $imgResults[i].className = 'img-result';
@@ -433,6 +433,7 @@ function getNutritionFacts(foodName) {
   $addVegButton.className = 'add-veg add-button not-added';
   $itemDetailsImg.className = 'item-details-img hidden';
   $nutritionTable.className = 'nutrition-table hidden';
+  $addLogDiv.className = 'add-log-div hidden';
   $itemDetailsImg.setAttribute('alt', foodName);
   $itemDetailsName.textContent = foodName;
   $nutritionFoodName.textContent = foodName;
@@ -473,6 +474,7 @@ function getNutritionFacts(foodName) {
       $detailsLoader.className = 'details loader hidden';
       $itemDetailsImg.className = 'item-details-img';
       $nutritionTable.className = 'nutrition-table';
+      $addLogDiv.className = 'add-log-div';
     });
   });
   xhr.send(JSON.stringify(body));
@@ -546,14 +548,14 @@ function loadProgress() {
   $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
   if (reachedFruitGoal) {
     $fruitBar.style.width = '100%';
-    $fruitBar.style.backgroundColor = 'lightgreen';
+    $fruitBar.style.backgroundColor = 'green';
     $fruitBar.textContent = 'You made it!';
   } else {
     $fruitBar.style.width = fruitPercent + '%';
   }
   if (reachedVegGoal) {
     $vegBar.style.width = '100%';
-    $vegBar.style.backgroundColor = 'lightgreen';
+    $vegBar.style.backgroundColor = 'green';
     $vegBar.textContent = 'You made it!';
   } else {
     $vegBar.style.width = vegPercent + '%';
