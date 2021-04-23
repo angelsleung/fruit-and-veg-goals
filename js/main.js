@@ -52,8 +52,10 @@ const $vegLog = document.querySelector('.veg-log');
 const $noFruit = document.querySelector('.no-fruit');
 const $noVeg = document.querySelector('.no-veg');
 
+$fruitLog.addEventListener('click', deleteFruitLogItem);
+$vegLog.addEventListener('click', deleteVegLogItem);
+
 const $addLogForm = document.querySelector('.add-log-form');
-// const $addInput = document.querySelector('.add-input');
 const $itemDetailsPage = document.querySelector('.item-details-page');
 const $itemDetailsImg = document.querySelector('.item-details-img');
 const $itemDetailsName = document.querySelector('.item-details-name');
@@ -378,10 +380,10 @@ function clickResultListAdd(target, resultElement) {
 function clickResultListRemove(target, resultElement) {
   if (target.matches('.fa-apple-alt')) {
     target.className = 'item-icon not-added-icon fas fa-apple-alt';
-    removeItem('fruits', 1, resultElement.dataset.name);
+    removeItem('fruits', resultElement.dataset.name);
   } else {
     target.className = 'item-icon not-added-icon fas fa-carrot';
-    removeItem('veggies', 1, resultElement.dataset.name);
+    removeItem('veggies', resultElement.dataset.name);
   }
 }
 
@@ -392,7 +394,7 @@ function clickAddFruit(event) {
     addItem('fruits', count, data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
   } else {
     $addFruitButton.className = 'add-fruit add-button not-added';
-    removeItem('fruits', count, data.nutrition.food_name);
+    removeItem('fruits', data.nutrition.food_name);
   }
 }
 
@@ -403,7 +405,7 @@ function clickAddVeg(event) {
     addItem('veggies', count, data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
   } else {
     $addVegButton.className = 'add-veg add-button not-added';
-    removeItem('veggies', count, data.nutrition.food_name);
+    removeItem('veggies', data.nutrition.food_name);
   }
 }
 
@@ -420,15 +422,11 @@ function addItem(foodType, count, name, servingSize, image) {
   data.progressUpdated = false;
 }
 
-function removeItem(foodType, count, name) {
-  let deleted = 0;
+function removeItem(foodType, name) {
   for (let i = 0; i < data[foodType].length; i++) {
     if (data[foodType][i].name === name) {
       data[foodType].splice(i, 1);
-      deleted++;
-      if (deleted === count) {
-        break;
-      }
+      break;
     }
   }
   data.logUpdated = false;
@@ -520,12 +518,13 @@ function loadDailyLog() {
     const renderedEntry = renderLogEntry(data.veggies[i]);
     $vegLog.append(renderedEntry);
   }
-  data.isUpdated = true;
+  data.logUpdated = true;
 }
 
 function renderLogEntry(entry) {
   const $result = document.createElement('div');
   $result.className = 'result-div row';
+  $result.setAttribute('data-name', entry.name);
 
   const $imgDiv = document.createElement('div');
   $imgDiv.className = 'img-div';
@@ -551,7 +550,27 @@ function renderLogEntry(entry) {
   $resultDescription.textContent = entry.servingSize;
   $resultText.append($resultDescription);
 
+  const $deleteIcon = document.createElement('i');
+  $deleteIcon.className = 'delete-icon far fa-times-circle';
+  $result.append($deleteIcon);
+
   return $result;
+}
+
+function deleteFruitLogItem(event) {
+  const foodItem = event.target.closest('.result-div');
+  if (event.target.matches('.delete-icon')) {
+    foodItem.remove();
+    removeItem('fruits', foodItem.dataset.name);
+  }
+}
+
+function deleteVegLogItem(event) {
+  const foodItem = event.target.closest('.result-div');
+  if (event.target.matches('.delete-icon')) {
+    foodItem.remove();
+    removeItem('veggies', foodItem.dataset.name);
+  }
 }
 
 function loadProgress() {

@@ -565,6 +565,17 @@ body {
   font-size: 1.3rem;
 }
 
+.delete-icon {
+  padding: 0 1rem;
+  font-size: 1.2rem;
+  color: lightgray;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  color: darkgray;
+}
+
 .progress-div {
   margin: 0 auto;
   width: 100%;
