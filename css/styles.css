@@ -1,5 +1,4 @@
 body {
-  /* min-height: 100vh; */
   display: flex;
   text-align: center;
   font-family: 'Imprima', sans-serif;
@@ -24,8 +23,7 @@ body {
 
 .main {
   position: relative;
-
-  /* min-height: 100vh; */
+  min-height: 90vh;
 }
 
 .overlay {
@@ -73,13 +71,13 @@ body {
 }
 
 .search-modal {
-  top: 16rem;
+  top: 13rem;
   width: 90%;
 }
 
 .log-modal,
 .progress-modal {
-  bottom: 12%;
+  bottom: 4rem;
   width: 90%;
 }
 
@@ -232,7 +230,7 @@ body {
 .search-div {
   margin-top: 2rem;
   justify-content: center;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
 }
 
 .search-bar-suggestions {
@@ -711,13 +709,13 @@ body {
 
   .log-modal {
     bottom: 10%;
-    right: 28%;
+    right: 25%;
     width: 25%;
   }
 
   .progress-modal {
     bottom: 10%;
-    right: 5%;
+    right: 1%;
     width: 25%;
   }
 
