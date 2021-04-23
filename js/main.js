@@ -52,6 +52,10 @@ const $vegLog = document.querySelector('.veg-log');
 const $noFruit = document.querySelector('.no-fruit');
 const $noVeg = document.querySelector('.no-veg');
 
+$fruitLog.addEventListener('click', deleteFruitLogItem);
+$vegLog.addEventListener('click', deleteVegLogItem);
+
+const $addLogForm = document.querySelector('.add-log-form');
 const $itemDetailsPage = document.querySelector('.item-details-page');
 const $itemDetailsImg = document.querySelector('.item-details-img');
 const $itemDetailsName = document.querySelector('.item-details-name');
@@ -87,10 +91,13 @@ const $searchModal = document.querySelector('.search-modal');
 const $searchDiv = document.querySelector('.search-div');
 const $logModal = document.querySelector('.log-modal');
 const $progressModal = document.querySelector('.progress-modal');
-const $networkErrorModal = document.querySelector('.network-error-modal');
+const $errorModal = document.querySelector('.error-modal');
 
 const $errorExit = document.querySelector('.exit.error');
-$errorExit.addEventListener('click', clickNetworkErrorExit);
+$errorExit.addEventListener('click', clickErrorExit);
+
+const $errorTitle = document.querySelector('.error-title');
+const $errorMessage = document.querySelector('.error-message');
 
 const $welcomeContinue = document.querySelector('.welcome.continue');
 $welcomeContinue.addEventListener('click', clickWelcomeContinue);
@@ -184,7 +191,7 @@ function displaySearchSuggestions() {
   for (let i = 0; i < 4; i++) {
     $spinners[i].className = 'spinner';
     $imgResults[i].className = 'img-result hidden';
-    $results[i].className = 'result';
+    $results[i].className = `result r${i + 1}`;
     $textResults[i].textContent = '';
   }
   searchInput();
@@ -192,7 +199,7 @@ function displaySearchSuggestions() {
 
 function searchInput(event) {
   if (!navigator.onLine) {
-    networkError();
+    displayErrorMessage();
     navSearch();
     return;
   }
@@ -205,16 +212,12 @@ function searchInput(event) {
   xhr.setRequestHeader('x-remote-user-id', 0);
   xhr.addEventListener('load', () => {
     if (xhr.status !== 200) {
-      networkError();
+      displayErrorMessage(xhr.status);
       navSearch();
       return;
     }
     data.results = xhr.response.common;
-    if (data.view === 'search input') {
-      loadSearchSuggestions();
-    } else {
-      loadSearchResults(input);
-    }
+    data.view === 'search input' ? loadSearchSuggestions() : loadSearchResults(input);
   });
   xhr.send();
 }
@@ -229,7 +232,6 @@ function loadSearchSuggestions() {
     $imgResults[i].setAttribute('alt', data.results[i].food_name);
     $textResults[i].textContent = data.results[i].food_name;
     $results[i].setAttribute('data-food-name', data.results[i].food_name);
-    $results[i].className = 'result';
     $imgResults[i].addEventListener('load', event => {
       $spinners[i].className = 'spinner hidden';
       $imgResults[i].className = 'img-result';
@@ -254,6 +256,9 @@ function clickSearchSuggestion(event) {
 
 function submitSearch(event) {
   event.preventDefault();
+  if ($searchBar.value.length === 0) {
+    return;
+  }
   data.view = 'search results';
   while ($resultList.firstChild) {
     $resultList.removeChild($resultList.firstChild);
@@ -361,10 +366,10 @@ function clickResultList(event) {
 function clickResultListAdd(target, resultElement) {
   if (target.matches('.fa-apple-alt')) {
     target.className = 'item-icon added-icon fas fa-apple-alt';
-    addItem('fruits', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
+    addItem('fruits', 1, resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
   } else {
     target.className = 'item-icon added-icon fas fa-carrot';
-    addItem('veggies', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
+    addItem('veggies', 1, resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
   }
 }
 
@@ -379,32 +384,30 @@ function clickResultListRemove(target, resultElement) {
 }
 
 function clickAddFruit(event) {
+  const count = $addLogForm.elements.add.value;
   if ($addFruitButton.matches('.not-added')) {
     $addFruitButton.className = 'add-fruit add-button added';
-    addItem('fruits', data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
-  } else {
-    $addFruitButton.className = 'add-fruit add-button not-added';
-    removeItem('fruits', data.nutrition.food_name);
+    addItem('fruits', count, data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
   }
 }
 
 function clickAddVeg(event) {
+  const count = $addLogForm.elements.add.value;
   if ($addVegButton.matches('.not-added')) {
     $addVegButton.className = 'add-veg add-button added';
-    addItem('veggies', data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
-  } else {
-    $addVegButton.className = 'add-veg add-button not-added';
-    removeItem('veggies', data.nutrition.food_name);
+    addItem('veggies', count, data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
   }
 }
 
-function addItem(foodType, name, servingSize, image) {
+function addItem(foodType, count, name, servingSize, image) {
   const foodObject = {
     name: name,
     servingSize: servingSize,
     image: image
   };
-  data[foodType].push(foodObject);
+  for (let i = 0; i < count; i++) {
+    data[foodType].push(foodObject);
+  }
   data.logUpdated = false;
   data.progressUpdated = false;
 }
@@ -413,7 +416,7 @@ function removeItem(foodType, name) {
   for (let i = 0; i < data[foodType].length; i++) {
     if (data[foodType][i].name === name) {
       data[foodType].splice(i, 1);
-      return;
+      break;
     }
   }
   data.logUpdated = false;
@@ -422,7 +425,7 @@ function removeItem(foodType, name) {
 
 function getNutritionFacts(foodName) {
   if (!navigator.onLine) {
-    networkError();
+    displayErrorMessage();
     return;
   }
   hideAllViews();
@@ -433,6 +436,7 @@ function getNutritionFacts(foodName) {
   $addVegButton.className = 'add-veg add-button not-added';
   $itemDetailsImg.className = 'item-details-img hidden';
   $nutritionTable.className = 'nutrition-table hidden';
+  $addLogForm.className = 'add-log-form hidden';
   $itemDetailsImg.setAttribute('alt', foodName);
   $itemDetailsName.textContent = foodName;
   $nutritionFoodName.textContent = foodName;
@@ -448,7 +452,7 @@ function getNutritionFacts(foodName) {
   xhr.setRequestHeader('x-remote-user-id', 0);
   xhr.addEventListener('load', () => {
     if (xhr.status !== 200) {
-      networkError();
+      displayErrorMessage(xhr.status);
       return;
     }
     data.nutrition = xhr.response.foods[0];
@@ -473,22 +477,15 @@ function getNutritionFacts(foodName) {
       $detailsLoader.className = 'details loader hidden';
       $itemDetailsImg.className = 'item-details-img';
       $nutritionTable.className = 'nutrition-table';
+      $addLogForm.className = 'add-log-form';
     });
   });
   xhr.send(JSON.stringify(body));
 }
 
 function loadDailyLog() {
-  if (data.fruits.length === 0) {
-    $noFruit.className = 'no-fruit';
-  } else {
-    $noFruit.className = 'no-fruit hidden';
-  }
-  if (data.veggies.length === 0) {
-    $noVeg.className = 'no-veg';
-  } else {
-    $noVeg.className = 'no-veg hidden';
-  }
+  $noFruit.className = data.fruits.length === 0 ? 'no-fruit' : 'no-fruit hidden';
+  $noVeg.className = data.veggies.length === 0 ? 'no-veg' : 'no-veg hidden';
   while ($fruitLog.firstChild) {
     $fruitLog.removeChild($fruitLog.firstChild);
   }
@@ -503,12 +500,13 @@ function loadDailyLog() {
     const renderedEntry = renderLogEntry(data.veggies[i]);
     $vegLog.append(renderedEntry);
   }
-  data.isUpdated = true;
+  data.logUpdated = true;
 }
 
 function renderLogEntry(entry) {
   const $result = document.createElement('div');
   $result.className = 'result-div row';
+  $result.setAttribute('data-name', entry.name);
 
   const $imgDiv = document.createElement('div');
   $imgDiv.className = 'img-div';
@@ -534,30 +532,48 @@ function renderLogEntry(entry) {
   $resultDescription.textContent = entry.servingSize;
   $resultText.append($resultDescription);
 
+  const $deleteIcon = document.createElement('i');
+  $deleteIcon.className = 'delete-icon far fa-times-circle';
+  $result.append($deleteIcon);
+
   return $result;
+}
+
+function deleteFruitLogItem(event) {
+  const foodItem = event.target.closest('.result-div');
+  if (event.target.matches('.delete-icon')) {
+    foodItem.remove();
+    removeItem('fruits', foodItem.dataset.name);
+  }
+  if (data.fruits.length === 0) {
+    $noFruit.className = 'no-fruit';
+  }
+}
+
+function deleteVegLogItem(event) {
+  const foodItem = event.target.closest('.result-div');
+  if (event.target.matches('.delete-icon')) {
+    foodItem.remove();
+    removeItem('veggies', foodItem.dataset.name);
+  }
+  if (data.veggies.length === 0) {
+    $noVeg.className = 'no-veg';
+  }
 }
 
 function loadProgress() {
   const fruitPercent = 100 * data.fruits.length / data.fruitGoal;
   const vegPercent = 100 * data.veggies.length / data.veggieGoal;
-  const reachedFruitGoal = fruitPercent >= 100;
-  const reachedVegGoal = vegPercent >= 100;
   $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
   $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
-  if (reachedFruitGoal) {
-    $fruitBar.style.width = '100%';
-    $fruitBar.style.backgroundColor = 'lightgreen';
-    $fruitBar.textContent = 'You made it!';
-  } else {
-    $fruitBar.style.width = fruitPercent + '%';
-  }
-  if (reachedVegGoal) {
-    $vegBar.style.width = '100%';
-    $vegBar.style.backgroundColor = 'lightgreen';
-    $vegBar.textContent = 'You made it!';
-  } else {
-    $vegBar.style.width = vegPercent + '%';
-  }
+  $fruitBar.style.visibility = fruitPercent > 0 ? 'visible' : 'hidden';
+  $vegBar.style.visibility = vegPercent > 0 ? 'visible' : 'hidden';
+  $fruitBar.className = fruitPercent >= 100 ? 'fruit-bar completed reached' : 'fruit-bar completed';
+  $fruitBar.style.width = fruitPercent >= 100 ? '100%' : fruitPercent + '%';
+  $fruitBar.textContent = fruitPercent >= 100 ? 'You made it!' : '';
+  $vegBar.className = vegPercent >= 100 ? 'veg-bar completed reached' : 'veg-bar completed';
+  $vegBar.style.width = vegPercent >= 100 ? '100%' : vegPercent + '%';
+  $vegBar.textContent = vegPercent >= 100 ? 'You made it!' : '';
 }
 
 function hideAllViews() {
@@ -584,7 +600,7 @@ function clickWelcomeContinue(event) {
   $goalModal.className = 'goal-modal';
   $fruitInput.className = 'fruit-input highlight';
   $vegInput.className = 'veg-input highlight';
-  $navHome.style.color = 'green';
+  $navHome.style.color = 'lightgreen';
 }
 
 function clickGoalContinue(event) {
@@ -592,8 +608,8 @@ function clickGoalContinue(event) {
   $searchModal.className = 'search-modal';
   $goalForm.className = 'goal form hidden';
   $searchForm.className = 'search form';
-  $navHome.style.color = 'white';
-  $navSearch.style.color = 'green';
+  $navHome.style.color = 'rgb(194, 194, 194)';
+  $navSearch.style.color = 'lightgreen';
   $searchDiv.className = 'search-div row highlight';
 }
 
@@ -602,8 +618,8 @@ function clickSearchContinue(event) {
   $logModal.className = 'log-modal';
   $searchForm.className = 'search form hidden';
   $dailyLogPage.className = 'daily-log-page';
-  $navSearch.style.color = 'white';
-  $navLog.style.color = 'green';
+  $navSearch.style.color = 'rgb(194, 194, 194)';
+  $navLog.style.color = 'lightgreen';
 }
 
 function clickLogContinue(event) {
@@ -612,22 +628,22 @@ function clickLogContinue(event) {
   $dailyLogPage.className = 'daily-log-page hidden';
   loadProgress();
   navProgress();
-  $navLog.style.color = 'white';
-  $navProgress.style.color = 'green';
+  $navLog.style.color = 'rgb(194, 194, 194)';
+  $navProgress.style.color = 'lightgreen';
 }
 
 function clickGetStarted(event) {
   clickExitModal();
   $goalForm.className = 'goal form';
   $progressPage.className = 'progres-page hidden';
-  $navProgress.style.color = 'white';
+  $navProgress.style.color = 'rgb(194, 194, 194)';
 }
 
 function modalReset() {
-  $navHome.style.color = 'white';
-  $navLog.style.color = 'white';
-  $navLog.style.color = 'white';
-  $navProgress.style.color = 'white';
+  $navHome.style.color = 'rgb(194, 194, 194)';
+  $navLog.style.color = 'rgb(194, 194, 194)';
+  $navLog.style.color = 'rgb(194, 194, 194)';
+  $navProgress.style.color = 'rgb(194, 194, 194)';
   $fruitInput.className = 'fruit-input';
   $vegInput.className = 'veg-input';
   $searchDiv.className = 'search-div row';
@@ -653,12 +669,19 @@ function clickInfoExitGoal(event) {
   $overlay.className = 'overlay hidden';
 }
 
-function networkError() {
-  $networkErrorModal.className = 'network-error-modal';
+function displayErrorMessage(status) {
+  if (status === 400) {
+    $errorTitle.textContent = 'Bad Request';
+    $errorMessage.textContent = 'Item does not exist in the database.';
+  } else {
+    $errorTitle.textContent = 'Network Error';
+    $errorMessage.textContent = 'Poor network connection.';
+  }
+  $errorModal.className = 'error-modal';
   $overlay.className = 'overlay';
 }
 
-function clickNetworkErrorExit(event) {
-  $networkErrorModal.className = 'network-error-modal hidden';
+function clickErrorExit(event) {
+  $errorModal.className = 'error-modal hidden';
   $overlay.className = 'overlay hidden';
 }

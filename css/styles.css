@@ -1,15 +1,13 @@
 body {
-  min-height: 100vh;
   display: flex;
   text-align: center;
-  font-family: Poppins, cursive;
+  font-family: 'Imprima', sans-serif;
   color: rgb(66, 65, 65);
 }
 
 .header {
   color: white;
-  background-color: limegreen;
-  position: fixed;
+  background-color: #9ede73;
   width: 100%;
   z-index: 1;
 }
@@ -17,21 +15,23 @@ body {
 .app-name {
   margin: 0 auto;
   padding: 1rem;
-  font-size: 2.2em;
-  font-family: 'Caveat', cursive;
+  font-size: 1.8rem;
+  font-weight: normal;
+  font-family: 'Margarine', cursive;
   letter-spacing: 0.1em;
 }
 
 .main {
   position: relative;
-  min-height: 100vh;
+  min-height: 90vh;
 }
 
 .overlay {
   background-color: rgb(0, 0, 0, 0.5);
+  top: 0;
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
 }
 
 .welcome-modal,
@@ -40,16 +40,18 @@ body {
 .log-modal,
 .progress-modal,
 .info-modal,
-.network-error-modal {
+.error-modal {
   border: 1px solid gray;
-  border-radius: 10px;
+  border-radius: 20px;
   position: absolute;
   background-color: lightgoldenrodyellow;
-  padding: 1rem 1rem 1rem 2rem;
+  padding: 1rem 1rem 2rem 2rem;
   max-width: 500px;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
-.network-error-modal {
+.error-modal {
   width: 84%;
   left: 7%;
   top: 12rem;
@@ -69,20 +71,20 @@ body {
 }
 
 .search-modal {
-  top: 16rem;
+  top: 13rem;
   width: 90%;
 }
 
 .log-modal,
 .progress-modal {
-  bottom: 12%;
+  bottom: 4rem;
   width: 90%;
 }
 
 .info-modal.know {
   width: 90%;
-  top: 15%;
-  margin-bottom: 3.4rem;
+  top: 3%;
+  padding-bottom: 4.5rem;
 }
 
 .info-modal.know > ul {
@@ -91,7 +93,7 @@ body {
 
 .info-modal.goal {
   width: 90%;
-  top: 15%;
+  top: 5%;
 }
 
 .welcome-modal > h3,
@@ -100,7 +102,7 @@ body {
 .log-modal > h3,
 .progress-modal > h3,
 .info-modal > h3,
-.network-error-modal > h3 {
+.error-modal > h3 {
   margin: 0;
 }
 
@@ -110,22 +112,23 @@ body {
 .log-modal > p,
 .progress-modal > p,
 .info-modal > p,
-.network-error-modal > p {
+.error-modal > p {
   padding-right: 1rem;
+}
+
+.info-modal-list {
+  line-height: 1.5;
 }
 
 .modal-button {
   border: 1px solid darkgray;
-  border-radius: 10%;
+  border-radius: 50px;
   background-color: lightgray;
-  padding: 0.2rem 0.3rem;
+  padding: 0.4rem 0.3rem;
   margin: 0 auto;
-  width: 6rem;
+  width: 8rem;
   text-align: center;
-}
-
-.get-started {
-  width: 7rem;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
 .exit-div {
@@ -144,12 +147,12 @@ body {
 }
 
 .info {
-  color: gray;
+  color: lightgray;
 }
 
 .info:hover {
   cursor: pointer;
-  color: lime;
+  color: lightgreen;
 }
 
 .continue,
@@ -169,22 +172,17 @@ body {
   padding-top: 1rem;
   margin: 1rem auto;
   font-size: 1.4em;
+  letter-spacing: 0.1rem;
 }
 
 .form-inputs {
   margin: 0 auto;
 }
 
-.goal.form,
-.search.form,
-.daily-log-page,
-.progress-page {
-  min-height: 100vh;
-}
-
 .goal-input {
+  padding: 1rem 0;
   margin: 0 auto;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
 .input {
@@ -194,9 +192,14 @@ body {
 .input > select {
   cursor: pointer;
   color: rgb(66, 65, 65);
-  border-radius: 5px;
+  border-radius: 10px;
   height: 3rem;
   font-size: 1.3rem;
+}
+
+.fruit-input,
+.veg-input {
+  font-family: 'Imprima', sans-serif;
 }
 
 .highlight {
@@ -206,31 +209,41 @@ body {
 }
 
 .next {
-  font-size: 1.3em;
+  font-size: 1.4rem;
   margin: 2rem auto;
-  padding: 0.3rem 1rem;
-  border-radius: 10%;
+  padding: 0.5rem 1rem;
+  width: 10rem;
+  border-radius: 50px;
   border: 1px solid darkgray;
   color: rgb(66, 65, 65);
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  font-family: 'Imprima', sans-serif;
 }
 
 .search-div {
   margin-top: 2rem;
   justify-content: center;
+  padding: 0.5rem 0;
 }
 
 .search-bar-suggestions {
-  width: 70%;
+  width: 100%;
 }
 
 .search-bar {
   width: 100%;
   border: 1px solid darkgray;
-  border-radius: 5px;
+  border-radius: 20px 0 0 20px;
+  font-family: 'Imprima', sans-serif;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+  padding: 0 1rem;
 }
 
 .search-button {
-  color: rgb(66, 65, 65);
+  font-family: 'Imprima', sans-serif;
+  border-radius: 0 20px 20px 0;
+  border: 1px solid lightgray;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
 .search-bar,
@@ -250,15 +263,27 @@ body {
 }
 
 .result {
-  border: 1px solid gray;
+  border: 1px solid rgb(189, 189, 189);
   height: 5rem;
   display: flex;
   align-items: center;
   cursor: pointer;
-  border-radius: 5px;
+  font-size: 1.2rem;
 }
 
-.result:hover {
+.r1 {
+  border-radius: 10px 10px 0 0;
+}
+
+.r4 {
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+}
+
+.result1:hover,
+.result2:hover,
+.result3:hover,
+.result4:hover {
   background-color: rgb(235, 235, 235);
 }
 
@@ -290,6 +315,10 @@ body {
 .result-text {
   flex-grow: 1;
   padding-left: 2rem;
+}
+
+.result-name {
+  font-size: 1.2rem;
 }
 
 .result-description {
@@ -334,7 +363,7 @@ body {
 }
 
 .item-icon:hover {
-  color: lime;
+  color: lightgreen;
 }
 
 .item-details-page {
@@ -376,7 +405,7 @@ body {
   font-size: 1em;
   margin: 0 auto;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 20px;
 }
 
 .nutrition-food-name {
@@ -449,18 +478,16 @@ body {
   text-align: center;
   align-items: center;
   border: 1px solid lightgray;
-  border-radius: 10px;
+  border-radius: 20px;
   margin-bottom: 0.4rem;
-  padding: 0.2rem 0;
+  padding: 0.4rem 0;
   width: 9.6rem;
   cursor: pointer;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
-.add-button:hover {
-  background-color: lime;
-}
-
-.add-log-div {
+.add-log-form {
   padding-top: 0.5rem;
 }
 
@@ -469,6 +496,23 @@ body {
   font-style: italic;
   color: gray;
   text-align: center;
+  font-size: 1.2rem;
+}
+
+.log-input-div {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  justify-content: center;
+}
+
+.add-input {
+  padding: 0.5rem 0;
+  margin-left: 0.5rem;
+  border-radius: 10px;
+  font-family: 'Imprima', sans-serif;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .add-log-icon {
@@ -477,7 +521,7 @@ body {
 }
 
 .added {
-  background-color: forestgreen;
+  background-color: limegreen;
   color: rgb(246, 246, 246);
 }
 
@@ -498,19 +542,30 @@ body {
 .no-results {
   color: lightgray;
   font-style: italic;
-  font-size: 1.2em;
-  padding-left: 1rem;
+  font-size: 1.2rem;
+  padding: 1rem;
 }
 
 .category-div {
-  padding: 0.5rem 0 1rem;
+  padding: 0.5rem 0 2rem;
 }
 
 .category-title {
-  color: gray;
+  color: darkgray;
   margin: 1rem 0 0.5rem;
   padding-left: 1rem;
-  font-style: italic;
+  font-size: 1.3rem;
+}
+
+.delete-icon {
+  padding: 0 1rem;
+  font-size: 1.2rem;
+  color: lightgray;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  color: darkgray;
 }
 
 .progress-div {
@@ -522,14 +577,16 @@ body {
   height: 3rem;
   border: 1px solid lightgray;
   margin: 0 auto;
-  border-radius: 5px;
+  border-radius: 50px;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
 .completed {
   height: 100%;
   width: 0%;
+  visibility: hidden;
+  background-color: lightgreen;
   border-right: 1px solid lightgray;
-  background-color: green;
   vertical-align: center;
   text-align: center;
   padding-top: 0.6rem;
@@ -537,31 +594,47 @@ body {
   font-size: 1.2rem;
   letter-spacing: 0.05em;
   color: rgb(75, 73, 73);
+  border-radius: 50px;
+}
+
+.reached {
+  background-color: limegreen;
+  color: white;
 }
 
 .fruit-progress,
 .veg-progress {
   font-size: 1.2em;
-  padding-left: 1rem;
+  padding: 0.5rem 0 0 1rem;
 }
 
 .footer {
   position: fixed;
   bottom: 0;
   width: 100%;
-  justify-content: space-evenly;
-  background-color: limegreen;
+  justify-content: space-around;
+  background-color: #fafafa;
+  border-top: 1px solid lightgray;
 }
 
 .nav {
   font-size: 2em;
-  color: white;
-  padding: 0.5em 0;
+  color: rgb(194, 194, 194);
 }
 
 .nav:hover {
   cursor: pointer;
-  color: green;
+  color: lightgreen;
+}
+
+.nav-icon-div {
+  display: flex;
+  flex-direction: column;
+  padding: 0.3rem 0;
+}
+
+.nav-icon-div > span {
+  color: darkgray;
 }
 
 .hidden {
@@ -577,7 +650,7 @@ body {
 .item-details-page,
 .daily-log-page,
 .progress-page {
-  padding: 5rem 0;
+  padding: 2rem 0;
   margin: 0 auto;
   text-align: left;
   width: 90%;
@@ -585,6 +658,7 @@ body {
 
 .loader {
   margin: 0 auto;
+  padding-top: 5rem;
 }
 
 @media screen and (min-width: 768px) {
@@ -604,7 +678,7 @@ body {
     max-width: 500px;
   }
 
-  .network-error-modal {
+  .error-modal {
     width: 34%;
     left: 32%;
     top: 20rem;
@@ -628,19 +702,19 @@ body {
 
   .log-modal {
     bottom: 10%;
-    right: 28%;
+    right: 25%;
     width: 25%;
   }
 
   .progress-modal {
     bottom: 10%;
-    right: 5%;
+    right: 1%;
     width: 25%;
   }
 
   .info-modal.know {
     width: 50%;
-    top: 12%;
+    top: 15%;
     left: 35%;
   }
 
@@ -648,5 +722,9 @@ body {
     width: 40%;
     top: 15%;
     left: 35%;
+  }
+
+  .search-bar-suggestions {
+    width: 70%;
   }
 }

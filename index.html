@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Imprima&family=Margarine&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 
@@ -21,12 +23,13 @@
 
     <main class="main">
       <div class="overlay"></div>
-      <div class="network-error-modal hidden">
+      <div class="error-modal hidden">
         <div class="exit-div row">
           <i class="fas exit error fa-times"></i>
         </div>
-        <h3>Network Error</h3>
-        <p>Poor network connection. Please try again.</p>
+        <h3 class="error-title"></h3>
+        <p class="error-message"></p>
+        <p>Please try again.</p>
       </div>
       <form class="goal form" data-view="goal-form">
         <div class="welcome-modal">
@@ -43,14 +46,15 @@
             <i class="fas exit know fa-times"></i>
           </div>
           <h3 class="info-modal-header">Did you know?</h3>
-          <p class="info-modal-text">Fruits and veggies can help you live longer! A diet rich in vegetables and fruits can:
-          <ul>
-            <li>lower blood pressure</li>
-            <li>reduce the risk of heart disease and stroke</li>
-            <li>prevent some types of cancer</li>
-            <li>lower risk of eye and digestive problems</li>
-            <li>have a positive effect on blood sugar</li>
-          </ul>
+          <p class="info-modal-text">Fruits and veggies can help you live longer!</p>
+          <p class="info-modal-text">A diet rich in vegetables and fruits can:
+            <ul class="info-modal-list">
+              <li>lower blood pressure</li>
+              <li>reduce the risk of heart disease and stroke</li>
+              <li>prevent some types of cancer</li>
+              <li>lower risk of eye and digestive problems</li>
+              <li>have a positive effect on blood sugar</li>
+            </ul>
           </p>
           <div class="info-next modal-button">Next</div>
         </div>
@@ -77,7 +81,7 @@
           <i class="fas info fa-info-circle"></i>
         </h2>
         <div class="goal-input">
-          <p>I want to eat...</p>
+          <p>I want to eat</p>
           <div class="form-inputs">
             <div class="input">
               <select class="fruit-input" name="fruit">
@@ -127,7 +131,7 @@
         <h2 class="page-title">Look up a fruit or veggie</h2>
         <div class="search-div row">
           <div class="search-bar-suggestions">
-            <input type="text" class="search-bar" placeholder="apple, banana, carrot, etc...">
+            <input type="text" class="search-bar" placeholder="apple, banana, carrot, etc.">
             <div class="result hidden">
               <div class="img-div">
                 <img class="img-result">
@@ -182,10 +186,24 @@
 
       <div class="item-details-page hidden">
           <div class="item-details-header row">
-            <div class="add-log-div">
+            <form class="add-log-form">
               <div class="details-name-div">
                 <h1 class="item-details-name"></h1>
-                <div class="add-log-title">Add to log</div>
+                <div class="log-input-div">
+                  <label for="add-select" class="add-log-title">Add to log:</label>
+                  <select class="add-input" name="add" id="add-select">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                </div>
               </div>
               <div class="add-fruit add-button not-added">
                 <i class="add-log-icon fas fa-plus"></i>
@@ -197,7 +215,7 @@
                 <span> to veggies </span>
                 <i class="add-log-icon fas fa-carrot"></i>
               </div>
-            </div>
+            </form>
             <div class="details-img-div">
               <img class="item-details-img">
             </div>
@@ -256,7 +274,7 @@
                 <td colspan="2" class="nutrition-header-last-row"><span class="nutrition-category">Protein </span><span class="protein"></span></td>
               </tr>
               <tr>
-                <td colspan="2"><ul class="daily-values-message"><li>Percent Daily Values are based on a 2000 calorie diet</li></ul></td>
+                <td colspan="2"><ul class="daily-values-message"><li>Percent Daily Values are based on a 2,000 calorie diet</li></ul></td>
               </tr>
             </tbody>
           </table>
@@ -313,10 +331,22 @@
       </div>
     </main>
     <footer class="footer row">
-      <i class="nav fas fa-home"></i>
-      <i class="nav fas fa-search"></i>
-      <i class="nav fas fa-list"></i>
-      <i class="nav fas fa-chart-bar"></i>
+      <div class="nav-icon-div">
+        <i class="nav fas fa-home"></i>
+        <span>set goals</span>
+      </div>
+      <div class="nav-icon-div">
+        <i class="nav fas fa-search"></i>
+        <span>look up</span>
+      </div>
+      <div class="nav-icon-div">
+        <i class="nav fas fa-list"></i>
+        <span>daily log</span>
+      </div>
+      <div class="nav-icon-div">
+        <i class="nav fas fa-chart-bar"></i>
+        <span>progress</span>
+      </div>
     </footer>
   </div>
   <script src="js/data.js"></script>
