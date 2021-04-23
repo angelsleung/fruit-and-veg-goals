@@ -185,12 +185,12 @@
 
       <div class="item-details-page hidden">
           <div class="item-details-header row">
-            <div class="add-log-div">
+            <form class="add-log-form">
               <div class="details-name-div">
                 <h1 class="item-details-name"></h1>
                 <div class="log-input-div">
-                  <div class="add-log-title">Add to log:</div>
-                  <select class="add-input" name="add">
+                  <label for="add-select" class="add-log-title">Add to log:</label>
+                  <select class="add-input" name="add" id="add-select">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -214,7 +214,7 @@
                 <span> to veggies </span>
                 <i class="add-log-icon fas fa-carrot"></i>
               </div>
-            </div>
+            </form>
             <div class="details-img-div">
               <img class="item-details-img">
             </div>
@@ -273,7 +273,7 @@
                 <td colspan="2" class="nutrition-header-last-row"><span class="nutrition-category">Protein </span><span class="protein"></span></td>
               </tr>
               <tr>
-                <td colspan="2"><ul class="daily-values-message"><li>Percent Daily Values are based on a 2000 calorie diet</li></ul></td>
+                <td colspan="2"><ul class="daily-values-message"><li>Percent Daily Values are based on a 2,000 calorie diet</li></ul></td>
               </tr>
             </tbody>
           </table>

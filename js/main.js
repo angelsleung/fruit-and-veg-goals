@@ -52,7 +52,8 @@ const $vegLog = document.querySelector('.veg-log');
 const $noFruit = document.querySelector('.no-fruit');
 const $noVeg = document.querySelector('.no-veg');
 
-const $addLogDiv = document.querySelector('.add-log-div');
+const $addLogForm = document.querySelector('.add-log-form');
+// const $addInput = document.querySelector('.add-input');
 const $itemDetailsPage = document.querySelector('.item-details-page');
 const $itemDetailsImg = document.querySelector('.item-details-img');
 const $itemDetailsName = document.querySelector('.item-details-name');
@@ -382,41 +383,49 @@ function clickResultListRemove(target, resultElement) {
 }
 
 function clickAddFruit(event) {
+  const count = $addLogForm.elements.add.value;
   if ($addFruitButton.matches('.not-added')) {
     $addFruitButton.className = 'add-fruit add-button added';
-    addItem('fruits', data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
+    addItem('fruits', count, data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
   } else {
     $addFruitButton.className = 'add-fruit add-button not-added';
-    removeItem('fruits', data.nutrition.food_name);
+    removeItem('fruits', count, data.nutrition.food_name);
   }
 }
 
 function clickAddVeg(event) {
+  const count = $addLogForm.elements.add.value;
   if ($addVegButton.matches('.not-added')) {
     $addVegButton.className = 'add-veg add-button added';
-    addItem('veggies', data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
+    addItem('veggies', count, data.nutrition.food_name, data.nutrition.servingSize, data.nutrition.photo.thumb);
   } else {
     $addVegButton.className = 'add-veg add-button not-added';
-    removeItem('veggies', data.nutrition.food_name);
+    removeItem('veggies', count, data.nutrition.food_name);
   }
 }
 
-function addItem(foodType, name, servingSize, image) {
+function addItem(foodType, count, name, servingSize, image) {
   const foodObject = {
     name: name,
     servingSize: servingSize,
     image: image
   };
-  data[foodType].push(foodObject);
+  for (let i = 0; i < count; i++) {
+    data[foodType].push(foodObject);
+  }
   data.logUpdated = false;
   data.progressUpdated = false;
 }
 
-function removeItem(foodType, name) {
+function removeItem(foodType, count, name) {
+  let deleted = 0;
   for (let i = 0; i < data[foodType].length; i++) {
     if (data[foodType][i].name === name) {
       data[foodType].splice(i, 1);
-      return;
+      deleted++;
+      if (deleted === count) {
+        break;
+      }
     }
   }
   data.logUpdated = false;
@@ -436,7 +445,7 @@ function getNutritionFacts(foodName) {
   $addVegButton.className = 'add-veg add-button not-added';
   $itemDetailsImg.className = 'item-details-img hidden';
   $nutritionTable.className = 'nutrition-table hidden';
-  $addLogDiv.className = 'add-log-div hidden';
+  $addLogForm.className = 'add-log-form hidden';
   $itemDetailsImg.setAttribute('alt', foodName);
   $itemDetailsName.textContent = foodName;
   $nutritionFoodName.textContent = foodName;
@@ -477,7 +486,7 @@ function getNutritionFacts(foodName) {
       $detailsLoader.className = 'details loader hidden';
       $itemDetailsImg.className = 'item-details-img';
       $nutritionTable.className = 'nutrition-table';
-      $addLogDiv.className = 'add-log-div';
+      $addLogForm.className = 'add-log-form';
     });
   });
   xhr.send(JSON.stringify(body));
@@ -551,14 +560,16 @@ function loadProgress() {
   $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
   if (reachedFruitGoal) {
     $fruitBar.style.width = '100%';
-    $fruitBar.style.backgroundColor = 'green';
+    $fruitBar.style.backgroundColor = 'limegreen';
+    $fruitBar.style.color = 'white';
     $fruitBar.textContent = 'You made it!';
   } else {
     $fruitBar.style.width = fruitPercent + '%';
   }
   if (reachedVegGoal) {
     $vegBar.style.width = '100%';
-    $vegBar.style.backgroundColor = 'green';
+    $vegBar.style.backgroundColor = 'limegreen';
+    $vegBar.style.color = 'white';
     $vegBar.textContent = 'You made it!';
   } else {
     $vegBar.style.width = vegPercent + '%';

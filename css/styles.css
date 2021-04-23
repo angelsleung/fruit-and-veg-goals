@@ -495,9 +495,10 @@ body {
   width: 9.6rem;
   cursor: pointer;
   font-size: 1.2rem;
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
-.add-log-div {
+.add-log-form {
   padding-top: 0.5rem;
 }
 
@@ -592,7 +593,7 @@ body {
   font-size: 1.2rem;
   letter-spacing: 0.05em;
   color: rgb(75, 73, 73);
-  border-radius: 50px 0 0 50px;
+  border-radius: 50px;
 }
 
 .fruit-progress,
