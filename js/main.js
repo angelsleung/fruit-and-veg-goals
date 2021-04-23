@@ -89,10 +89,13 @@ const $searchModal = document.querySelector('.search-modal');
 const $searchDiv = document.querySelector('.search-div');
 const $logModal = document.querySelector('.log-modal');
 const $progressModal = document.querySelector('.progress-modal');
-const $networkErrorModal = document.querySelector('.network-error-modal');
+const $errorModal = document.querySelector('.error-modal');
 
 const $errorExit = document.querySelector('.exit.error');
-$errorExit.addEventListener('click', clickNetworkErrorExit);
+$errorExit.addEventListener('click', clickErrorExit);
+
+const $errorTitle = document.querySelector('.error-title');
+const $errorMessage = document.querySelector('.error-message');
 
 const $welcomeContinue = document.querySelector('.welcome.continue');
 $welcomeContinue.addEventListener('click', clickWelcomeContinue);
@@ -194,7 +197,7 @@ function displaySearchSuggestions() {
 
 function searchInput(event) {
   if (!navigator.onLine) {
-    networkError();
+    displayErrorMessage();
     navSearch();
     return;
   }
@@ -207,7 +210,7 @@ function searchInput(event) {
   xhr.setRequestHeader('x-remote-user-id', 0);
   xhr.addEventListener('load', () => {
     if (xhr.status !== 200) {
-      networkError();
+      displayErrorMessage(xhr.status);
       navSearch();
       return;
     }
@@ -365,20 +368,20 @@ function clickResultList(event) {
 function clickResultListAdd(target, resultElement) {
   if (target.matches('.fa-apple-alt')) {
     target.className = 'item-icon added-icon fas fa-apple-alt';
-    addItem('fruits', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
+    addItem('fruits', 1, resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
   } else {
     target.className = 'item-icon added-icon fas fa-carrot';
-    addItem('veggies', resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
+    addItem('veggies', 1, resultElement.dataset.name, resultElement.dataset.servingSize, resultElement.dataset.image);
   }
 }
 
 function clickResultListRemove(target, resultElement) {
   if (target.matches('.fa-apple-alt')) {
     target.className = 'item-icon not-added-icon fas fa-apple-alt';
-    removeItem('fruits', resultElement.dataset.name);
+    removeItem('fruits', 1, resultElement.dataset.name);
   } else {
     target.className = 'item-icon not-added-icon fas fa-carrot';
-    removeItem('veggies', resultElement.dataset.name);
+    removeItem('veggies', 1, resultElement.dataset.name);
   }
 }
 
@@ -434,7 +437,7 @@ function removeItem(foodType, count, name) {
 
 function getNutritionFacts(foodName) {
   if (!navigator.onLine) {
-    networkError();
+    displayErrorMessage();
     return;
   }
   hideAllViews();
@@ -461,7 +464,7 @@ function getNutritionFacts(foodName) {
   xhr.setRequestHeader('x-remote-user-id', 0);
   xhr.addEventListener('load', () => {
     if (xhr.status !== 200) {
-      networkError();
+      displayErrorMessage(xhr.status);
       return;
     }
     data.nutrition = xhr.response.foods[0];
@@ -558,18 +561,16 @@ function loadProgress() {
   const reachedVegGoal = vegPercent >= 100;
   $fruitProgress.textContent = data.fruits.length + '/' + data.fruitGoal + ' completed (' + Math.floor(fruitPercent) + '%)';
   $vegProgress.textContent = data.veggies.length + '/' + data.veggieGoal + ' completed (' + Math.floor(vegPercent) + '%)';
+  $fruitBar.style.visibility = 'visible';
+  $vegBar.style.visibility = 'visible';
   if (reachedFruitGoal) {
-    $fruitBar.style.width = '100%';
-    $fruitBar.style.backgroundColor = 'limegreen';
-    $fruitBar.style.color = 'white';
+    $fruitBar.className = 'fruit-bar completed reached';
     $fruitBar.textContent = 'You made it!';
   } else {
     $fruitBar.style.width = fruitPercent + '%';
   }
   if (reachedVegGoal) {
-    $vegBar.style.width = '100%';
-    $vegBar.style.backgroundColor = 'limegreen';
-    $vegBar.style.color = 'white';
+    $vegBar.className = 'veg-bar completed reached';
     $vegBar.textContent = 'You made it!';
   } else {
     $vegBar.style.width = vegPercent + '%';
@@ -600,7 +601,7 @@ function clickWelcomeContinue(event) {
   $goalModal.className = 'goal-modal';
   $fruitInput.className = 'fruit-input highlight';
   $vegInput.className = 'veg-input highlight';
-  $navHome.style.color = 'green';
+  $navHome.style.color = 'lightgreen';
 }
 
 function clickGoalContinue(event) {
@@ -608,8 +609,8 @@ function clickGoalContinue(event) {
   $searchModal.className = 'search-modal';
   $goalForm.className = 'goal form hidden';
   $searchForm.className = 'search form';
-  $navHome.style.color = 'white';
-  $navSearch.style.color = 'green';
+  $navHome.style.color = 'rgb(194, 194, 194)';
+  $navSearch.style.color = 'lightgreen';
   $searchDiv.className = 'search-div row highlight';
 }
 
@@ -618,8 +619,8 @@ function clickSearchContinue(event) {
   $logModal.className = 'log-modal';
   $searchForm.className = 'search form hidden';
   $dailyLogPage.className = 'daily-log-page';
-  $navSearch.style.color = 'white';
-  $navLog.style.color = 'green';
+  $navSearch.style.color = 'rgb(194, 194, 194)';
+  $navLog.style.color = 'lightgreen';
 }
 
 function clickLogContinue(event) {
@@ -628,22 +629,22 @@ function clickLogContinue(event) {
   $dailyLogPage.className = 'daily-log-page hidden';
   loadProgress();
   navProgress();
-  $navLog.style.color = 'white';
-  $navProgress.style.color = 'green';
+  $navLog.style.color = 'rgb(194, 194, 194)';
+  $navProgress.style.color = 'lightgreen';
 }
 
 function clickGetStarted(event) {
   clickExitModal();
   $goalForm.className = 'goal form';
   $progressPage.className = 'progres-page hidden';
-  $navProgress.style.color = 'white';
+  $navProgress.style.color = 'rgb(194, 194, 194)';
 }
 
 function modalReset() {
-  $navHome.style.color = 'white';
-  $navLog.style.color = 'white';
-  $navLog.style.color = 'white';
-  $navProgress.style.color = 'white';
+  $navHome.style.color = 'rgb(194, 194, 194)';
+  $navLog.style.color = 'rgb(194, 194, 194)';
+  $navLog.style.color = 'rgb(194, 194, 194)';
+  $navProgress.style.color = 'rgb(194, 194, 194)';
   $fruitInput.className = 'fruit-input';
   $vegInput.className = 'veg-input';
   $searchDiv.className = 'search-div row';
@@ -669,12 +670,19 @@ function clickInfoExitGoal(event) {
   $overlay.className = 'overlay hidden';
 }
 
-function networkError() {
-  $networkErrorModal.className = 'network-error-modal';
+function displayErrorMessage(status) {
+  if (status === 400) {
+    $errorTitle.textContent = 'Bad Request';
+    $errorMessage.textContent = 'Item does not exist in the database.';
+  } else {
+    $errorTitle.textContent = 'Network Error';
+    $errorMessage.textContent = 'Poor network connection.';
+  }
+  $errorModal.className = 'error-modal';
   $overlay.className = 'overlay';
 }
 
-function clickNetworkErrorExit(event) {
-  $networkErrorModal.className = 'network-error-modal hidden';
+function clickErrorExit(event) {
+  $errorModal.className = 'error-modal hidden';
   $overlay.className = 'overlay hidden';
 }

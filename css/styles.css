@@ -41,7 +41,7 @@ body {
 .log-modal,
 .progress-modal,
 .info-modal,
-.network-error-modal {
+.error-modal {
   border: 1px solid gray;
   border-radius: 20px;
   position: absolute;
@@ -52,7 +52,7 @@ body {
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
-.network-error-modal {
+.error-modal {
   width: 84%;
   left: 7%;
   top: 12rem;
@@ -103,7 +103,7 @@ body {
 .log-modal > h3,
 .progress-modal > h3,
 .info-modal > h3,
-.network-error-modal > h3 {
+.error-modal > h3 {
   margin: 0;
 }
 
@@ -113,7 +113,7 @@ body {
 .log-modal > p,
 .progress-modal > p,
 .info-modal > p,
-.network-error-modal > p {
+.error-modal > p {
   padding-right: 1rem;
 }
 
@@ -127,13 +127,9 @@ body {
   background-color: lightgray;
   padding: 0.4rem 0.3rem;
   margin: 0 auto;
-  width: 6rem;
+  width: 8rem;
   text-align: center;
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-}
-
-.get-started {
-  width: 7rem;
 }
 
 .exit-div {
@@ -235,6 +231,7 @@ body {
 .search-div {
   margin-top: 2rem;
   justify-content: center;
+  padding: 1rem 0;
 }
 
 .search-bar-suggestions {
@@ -584,8 +581,9 @@ body {
 .completed {
   height: 100%;
   width: 0%;
-  border-right: 1px solid lightgray;
+  visibility: hidden;
   background-color: lightgreen;
+  border-right: 1px solid lightgray;
   vertical-align: center;
   text-align: center;
   padding-top: 0.6rem;
@@ -594,6 +592,12 @@ body {
   letter-spacing: 0.05em;
   color: rgb(75, 73, 73);
   border-radius: 50px;
+}
+
+.reached {
+  width: 100%;
+  background-color: #9ede73;
+  color: white;
 }
 
 .fruit-progress,
@@ -672,7 +676,7 @@ body {
     max-width: 500px;
   }
 
-  .network-error-modal {
+  .error-modal {
     width: 34%;
     left: 32%;
     top: 20rem;
