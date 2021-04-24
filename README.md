@@ -9,11 +9,10 @@ A dynamic HTML, CSS, and JavaScript app that promotes a healthy lifestyle by tra
 * User can search for a food item
 * User can view the search results
 * User can view the food item's nutrition facts and add the item to their daily log
-* User can view their daily log
+* User can view their daily log and delete items from their log
 * User can view their progress toward their goals
 
 ## Planned Additions
-* User can edit their daily log
 * User can add a food item as a favorite, which saves the food categorization of fruit or vegetable
 * User can view their daily log from previous days
 * User can view their fiber intake from fruits and vegetables
