@@ -280,10 +280,7 @@ body {
   box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
-.result1:hover,
-.result2:hover,
-.result3:hover,
-.result4:hover {
+.result:hover {
   background-color: rgb(235, 235, 235);
 }
 
