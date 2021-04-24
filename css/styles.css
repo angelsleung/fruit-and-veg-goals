@@ -656,6 +656,10 @@ body {
   width: 90%;
 }
 
+.results-page {
+  padding-bottom: 4rem;
+}
+
 .loader {
   margin: 0 auto;
   padding-top: 5rem;
