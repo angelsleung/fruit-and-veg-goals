@@ -5,12 +5,14 @@ A dynamic HTML, CSS, and JavaScript app that promotes a healthy lifestyle by tra
 [Live Demo](https://angelsleung.github.io/fruit-and-veg-goals/)
 
 ## Current Feature List
-* User can set goals for the number of fruits and vegetables they want to consume
-* User can search for a food item
-* User can view the search results
-* User can view the food item's nutrition facts and add the item to their daily log
-* User can view their daily log and delete items from their log
-* User can view their progress toward their goals
+1. User can set goals for the number of fruits and vegetables they want to consume
+2. User can search for a food item
+3. User can view the search results
+4. User can view the food item's nutrition facts
+5. User can add a food item to their daily log
+6. User can remove an item from their daily log
+7. User can view their daily log and delete items from their log
+8. User can view their progress toward their goals
 
 ## Planned Additions
 * User can add a food item as a favorite, which saves the food categorization of fruit or vegetable
@@ -23,5 +25,7 @@ A dynamic HTML, CSS, and JavaScript app that promotes a healthy lifestyle by tra
 * Be flexible - must structure the app's features around the data available in the API
 * Always keep the user and UX as the primary focus when designing the UI
 
-## Screenshots
-<a href="https://github.com/angelsleung/fruit-and-veg-goals"><img src="https://user-images.githubusercontent.com/65578254/115626637-a4eff600-a2b2-11eb-9ed0-a7eb96e186ff.png" width="200px"></a> <a href="https://github.com/angelsleung/fruit-and-veg-goals"><img src="https://user-images.githubusercontent.com/65578254/115626691-b33e1200-a2b2-11eb-892f-032be886e74f.png" width="200px"></a> <a href="https://github.com/angelsleung/fruit-and-veg-goals"><img src="https://user-images.githubusercontent.com/65578254/115626730-be913d80-a2b2-11eb-9ce5-f3e0dac8639f.png" width="200px"></a> <a href="https://github.com/angelsleung/fruit-and-veg-goals"><img src="https://user-images.githubusercontent.com/65578254/115626862-ef717280-a2b2-11eb-8eb1-d7651fe41b61.png" width="200px"></a> <a href="https://github.com/angelsleung/fruit-and-veg-goals"><img src="https://user-images.githubusercontent.com/65578254/115626988-22b40180-a2b3-11eb-82e6-5bd8017a2a3e.png" width="200px"></a> <a href="https://user-images.githubusercontent.com/65578254/115627295-9c4bef80-a2b3-11eb-9df5-8f0d935a5dc1.png"><img src="https://user-images.githubusercontent.com/65578254/115627295-9c4bef80-a2b3-11eb-9df5-8f0d935a5dc1.png" width="200px"></a> <a href="https://github.com/angelsleung/fruit-and-veg-goals"><img src="https://user-images.githubusercontent.com/65578254/115627037-35c6d180-a2b3-11eb-9717-3f06ff7cc634.png" width="200px"></a> <a href="https://github.com/angelsleung/fruit-and-veg-goals"><img src="https://user-images.githubusercontent.com/65578254/115627070-4119fd00-a2b3-11eb-9783-8f6a074d353e.png" width="200px"></a>
+## Preview
+<img src="https://user-images.githubusercontent.com/65578254/116644404-1ae60400-a928-11eb-8d08-0caec2d0a701.png" width="200px"> <img src="https://user-images.githubusercontent.com/65578254/116644422-29342000-a928-11eb-8615-ed265baab773.png" width="200px"> <img src="https://user-images.githubusercontent.com/65578254/116644459-41a43a80-a928-11eb-868b-50c8465d6858.png" width="200px"> <img src="https://user-images.githubusercontent.com/65578254/116644493-5f719f80-a928-11eb-9d73-24615f950a4b.png" width="200px">
+
+<img src="https://user-images.githubusercontent.com/65578254/116644032-2c7adc00-a927-11eb-9143-5a0aa5f42c65.gif" width="250px">
