@@ -2,7 +2,7 @@
 
 A dynamic HTML, CSS, and JavaScript app that promotes a healthy lifestyle by tracking users' fruit and vegetable intake and assisting users in reaching their daily consumption goals.
 
-[Live Demo](https://angelsleung.github.io/fruit-and-veg-goals/)
+[Live Site](https://angelsleung.github.io/fruit-and-veg-goals/)
 
 <img src="https://user-images.githubusercontent.com/65578254/116644404-1ae60400-a928-11eb-8d08-0caec2d0a701.png" width="200px"> <img src="https://user-images.githubusercontent.com/65578254/116644422-29342000-a928-11eb-8615-ed265baab773.png" width="200px"> <img src="https://user-images.githubusercontent.com/65578254/116644459-41a43a80-a928-11eb-868b-50c8465d6858.png" width="200px"> <img src="https://user-images.githubusercontent.com/65578254/116644493-5f719f80-a928-11eb-9d73-24615f950a4b.png" width="200px">
 
