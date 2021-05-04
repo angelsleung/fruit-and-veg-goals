@@ -253,7 +253,8 @@ body {
 }
 
 .search-bar:focus {
-  border: 1px solid lightgreen;
+  outline: none;
+  border: 2px solid limegreen;
 }
 
 .next:hover,
